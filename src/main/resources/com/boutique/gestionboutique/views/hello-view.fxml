@@ -9,7 +9,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.boutique.gestionboutique.LoginController"
+            fx:controller="com.boutique.gestionboutique.controller.LoginController"
             stylesheets="@../stylesheets/styles.css"
             prefWidth="900" prefHeight="650">
 

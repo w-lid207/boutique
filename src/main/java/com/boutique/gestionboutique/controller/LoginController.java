@@ -1,5 +1,6 @@
-package com.boutique.gestionboutique;
+package com.boutique.gestionboutique.controller;
 
+import com.boutique.gestionboutique.database.Database;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
 
 public class LoginController {
 
@@ -55,7 +57,7 @@ public class LoginController {
     private void redirectToDashboard() {
         try {
             // Charger le fichier FXML du dashboard
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("views/dashboard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/boutique/gestionboutique/views/dashboard.fxml"));
             Parent dashboardRoot = loader.load();
 
             // Obtenir la scène actuelle et la fenêtre
@@ -84,4 +86,15 @@ public class LoginController {
         errorLabel.setTextFill(Color.RED);
         errorLabel.setVisible(true);
     }
+
+        public static void main(String[] args) {
+            Connection conn = Database.getConnection();
+
+            if (conn != null) {
+                System.out.println("✅ Base de données bien liée !");
+            } else {
+                System.out.println("❌ Connexion échouée !");
+            }
+        }
+
 }

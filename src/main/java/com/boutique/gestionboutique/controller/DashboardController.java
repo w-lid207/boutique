@@ -1,4 +1,4 @@
-package com.boutique.gestionboutique;
+package com.boutique.gestionboutique.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
