@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.boutique.gestionboutique.LoginController"
+            stylesheets="@../stylesheets/styles.css"
+            prefWidth="900" prefHeight="650">
+
+    <!-- Background avec effet dégradé -->
+    <center>
+        <Pane style="-fx-background-color: linear-gradient(to bottom right, #f5f5f5, #e0e0e0);">
+
+            <!-- Carte de login avec ombre -->
+            <StackPane styleClass="login-card" layoutX="250" layoutY="100">
+                <!-- Décoration de forme abstraite -->
+                <Circle radius="80" styleClass="decor-circle-1"/>
+                <Circle radius="60" styleClass="decor-circle-2"/>
+                <Rectangle width="120" height="120" styleClass="decor-square"/>
+
+                <!-- Contenu du formulaire -->
+                <VBox spacing="25" alignment="CENTER" styleClass="form-container">
+
+                    <!-- En-tête avec icône -->
+                    <VBox spacing="5" alignment="CENTER">
+
+                        <Text text="LOGIN" styleClass="main-title"/>
+                        <Text text="Access your account" styleClass="subtitle"/>
+                    </VBox>
+
+                    <!-- Formulaire -->
+                    <VBox spacing="20" alignment="CENTER" styleClass="form-fields">
+
+                        <!-- Champ Email -->
+                        <VBox spacing="5">
+                            <Label text="EMAIL" styleClass="field-label"/>
+                            <TextField fx:id="emailField"
+                                       prefWidth="320"
+                                       prefHeight="45"
+                                       promptText="admin@gmail.com"
+                                       styleClass="input-field"/>
+                            <HBox spacing="5" alignment="CENTER_LEFT">
+                                <Rectangle width="8" height="8" styleClass="dot-indicator"/>
+                                <Label text="Enter your email address" styleClass="hint-text"/>
+                            </HBox>
+                        </VBox>
+
+                        <!-- Champ Password -->
+                        <VBox spacing="5">
+                            <Label text="PASSWORD" styleClass="field-label"/>
+                            <PasswordField fx:id="passwordField"
+                                           prefWidth="320"
+                                           prefHeight="45"
+                                           promptText="••••••••"
+                                           styleClass="input-field"/>
+                            <HBox spacing="5" alignment="CENTER_LEFT">
+                                <Rectangle width="8" height="8" styleClass="dot-indicator"/>
+                                <Label text="Enter your password" styleClass="hint-text"/>
+                            </HBox>
+                        </VBox>
+
+                        <!-- Bouton Login -->
+                        <Button text="LOGIN"
+                                fx:id="loginButton"
+                                prefWidth="320"
+                                prefHeight="50"
+                                styleClass="login-button"
+                                onAction="#handleLogin"/>
+
+                        <!-- Message d'erreur -->
+                        <Label fx:id="errorLabel"
+                               styleClass="error-message"
+                               visible="false"/>
+                    </VBox>
+
+                    <!-- Footer avec ligne décorative -->
+                    <VBox spacing="15" alignment="CENTER">
+                        <Line startX="0" endX="200" styleClass="divider-line"/>
+                        <Label text="Secure Login System" styleClass="footer-text"/>
+                    </VBox>
+                </VBox>
+            </StackPane>
+
+            <!-- Décoration supplémentaire (cercles) -->
+            <Circle radius="40" styleClass="floating-circle-1" layoutX="150" layoutY="500"/>
+            <Circle radius="30" styleClass="floating-circle-2" layoutX="700" layoutY="200"/>
+            <Circle radius="25" styleClass="floating-circle-3" layoutX="800" layoutY="400"/>
+        </Pane>
+    </center>
+</BorderPane>

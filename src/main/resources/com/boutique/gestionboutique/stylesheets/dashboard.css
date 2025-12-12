@@ -1,0 +1,148 @@
+/*
+ * ------------------------------------------------------------------
+ * 1. FONT DEFINITIONS (Assuming fonts are in ../fonts/)
+ * ------------------------------------------------------------------
+ */
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins-Regular.ttf');
+    font-weight: 400; /* Normal weight */
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins-Light.ttf');
+    font-weight: 300; /* Light weight */
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins-SemiBold.ttf');
+    font-weight: 600; /* Semi-Bold weight */
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins-Bold.ttf');
+    font-weight: 700; /* Bold weight */
+}
+/* General Font Settings */
+.root {
+    -fx-font-family: "Poppins";
+    -fx-background-color: #ECECEF;/* Clean sans-serif font */
+}
+
+/* --- LEFT SIDEBAR --- */
+
+.sidebar {
+    -fx-background-color: #2C2C2C; /* Dark background matching the image */
+    -fx-padding: 20 20 20 20;
+    -fx-spacing: 30px;
+}
+ .nav {
+     -fx-alignment: center;
+     -fx-spacing: 35px;
+     -fx-padding: inherit inherit inherit 25;
+ }
+ .nav HBox{
+     -fx-spacing: 20px;
+     -fx-cursor: hand;
+     -fx-font-size: 14px;
+     -fx-alignment: center-left;
+ }
+ .nav-btn{
+     -fx-background-color: transparent;
+     -fx-text-fill: #888585;
+     /* 1. Ensure absolute zero padding/border space */
+     -fx-padding: 0;
+     -fx-border-width: 0;
+
+     /* Remove default background insets/radii globally */
+     -fx-background-insets: 0;
+     -fx-background-radius: 0;
+
+     -fx-alignment: CENTER_LEFT;
+ }
+/* --- Remove Focus & Press Effects --- */
+
+/* Remove the dotted line focus indicator */
+.nav-btn:focused {
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+}
+
+/* Remove the default depressed/sunken look when clicked */
+.nav-btn:pressed {
+    -fx-background-color: transparent;
+    -fx-padding: 0; /* Ensures padding is static */
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+.icon-container{
+    -fx-pref-width: 20px;
+    -fx-alignment: center;
+}
+.nav SVGPath{
+    -fx-pref-width: 100px;
+    -fx-stroke: #888585;
+}
+/* --- UNIVERSAL ICON STYLING (Size and Default Color) --- */
+
+/* 1. UNIFIED SIZE: Applies the same scale to all three icon types */
+.sidebar-icon,
+.stroked-icon,
+.logout-icon {
+    -fx-scale-x: 0.85; /* Unified Size Control */
+    -fx-scale-y: 0.85; /* Unified Size Control */
+}
+
+/* 2. DEFAULT COLOR: All icons that are part of the navigation must be #888585 by default. */
+/* (Note: The logout icon is intentionally excluded from the default color rule,
+      as it should be white, #ffffff, as per the original design.) */
+.sidebar-icon {
+    -fx-fill: #888585; /* Filled Icons (Dashboard, POS, History) default to Grey */
+}
+
+.stroked-icon {
+    -fx-fill: transparent;      /* Crucial for stroked icons */
+    -fx-stroke: #888585;        /* Stroked Icons (Products, Analytics) default to Grey */
+    -fx-stroke-width: 2;
+    -fx-stroke-line-cap: square; /* Consolidated to 'square' cap for consistency */
+}
+
+/* 3. LOGOUT ICON STYLING (Default is White) */
+.logout-icon {
+    -fx-fill: #888585;  /* White fill for the icon at the bottom */
+}
+
+/* Ensure the Logout row text is also white */
+.logout-row .nav-btn {
+    -fx-text-fill: #888585;
+}
+.active-row{
+    -fx-background-color: #444444;
+    -fx-background-insets: -8 -5 -8 -10;
+    -fx-background-radius: 10;
+}
+.active-row Button{
+    -fx-text-fill: #BEC400;
+
+}
+.active-row .stroked-icon{
+    -fx-stroke:#BEC400 ;
+}
+
+.active-row .stroked-icon-special, .active-row .sidebar-icon{
+    -fx-stroke: transparent;
+    -fx-fill: #BEC400;
+}
+
+/* CENTER STYLINGS */
+.center-container{
+    -fx-padding: 20 0 0 35;
+}
+.tab-title{
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+}
