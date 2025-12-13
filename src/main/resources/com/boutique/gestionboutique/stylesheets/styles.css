@@ -1,479 +1,160 @@
-/* Style global */
-.root {
-    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+/* ============================================
+   MODERN LOGIN STYLE
+   ============================================ */
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins-Regular.ttf');
+    font-weight: 400;
 }
 
-/* Carte principale */
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins-SemiBold.ttf');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins-Bold.ttf');
+    font-weight: 700;
+}
+
+/* ============================================
+   ROOT & MAIN CONTAINER
+   ============================================ */
+
+.root {
+    -fx-font-family: "Poppins";
+    -fx-font-size: 14px;
+}
+
+.main-container {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #2a2a2a 0%, #5a5a5a 50%, #3a3a3a 100%);
+}
+
+/* ============================================
+   LOGIN CARD
+   ============================================ */
+
 .login-card {
-    -fx-background-color: white;
-    -fx-background-radius: 20;
-    -fx-border-radius: 20;
-    -fx-border-color: #e8e8e8;
-    -fx-border-width: 1;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 25, 0, 0, 5);
-    -fx-padding: 40;
-    -fx-min-width: 400;
-    -fx-min-height: 450;
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #3a3a3a 0%, #4a4a4a 50%, #5a5a5a 100%);
+    -fx-background-radius: 25;
+    -fx-border-radius: 25;
+    -fx-padding: 60 100 60 100;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 40, 0.6, 0, 15);
+    -fx-min-width: 700;
+    -fx-pref-width: 900;
 }
 
-/* Décoration de formes */
-.decor-circle-1 {
-    -fx-fill: linear-gradient(to bottom right, #f0f0f0, #ffffff);
-    -fx-opacity: 0.8;
-    -fx-translate-x: -120;
-    -fx-translate-y: -80;
-}
+/* ============================================
+   TITLES & TEXT
+   ============================================ */
 
-.decor-circle-2 {
-    -fx-fill: linear-gradient(to bottom right, #e8e8e8, #f8f8f8);
-    -fx-opacity: 0.6;
-    -fx-translate-x: 150;
-    -fx-translate-y: 100;
-}
-
-.decor-square {
-
-    -fx-rotate: 15;
-    -fx-translate-x: 100;
-    -fx-translate-y: -50;
-    -fx-opacity: 0.7;
-}
-
-/* Icône */
-.login-icon {
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);
-}
-
-/* Titres */
-.main-title {
-    -fx-font-size: 32px;
+.login-title {
+    -fx-font-size: 36px;
     -fx-font-weight: bold;
-    -fx-fill: #222222;
-    -fx-font-family: "Segoe UI", "Arial", sans-serif;
-    -fx-letter-spacing: 2px;
-}
-
-.subtitle {
-    -fx-font-size: 14px;
-    -fx-fill: #666666;
-    -fx-font-weight: normal;
-}
-
-/* Conteneur formulaire */
-.form-container {
-    -fx-alignment: center;
-    -fx-padding: 10;
-}
-
-.form-fields {
-    -fx-alignment: center;
-    -fx-padding: 20 0 20 0;
-}
-
-/* Labels des champs */
-.field-label {
-    -fx-font-size: 12px;
-    -fx-text-fill: #333333;
-    -fx-font-weight: bold;
-    -fx-letter-spacing: 1px;
-}
-
-/* Champs de saisie */
-.input-field {
-    -fx-background-color: #f8f8f8;
-    -fx-background-radius: 8;
-    -fx-border-radius: 8;
-    -fx-border-color: #e0e0e0;
-    -fx-border-width: 1.5;
-    -fx-padding: 12 15;
-    -fx-font-size: 14px;
-    -fx-text-fill: #222222;
-    -fx-prompt-text-fill: #999999;
-}
-
-.input-field:focused {
-    -fx-background-color: white;
-    -fx-border-color: #222222;
-    -fx-border-width: 2;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 10, 0, 0, 0);
-}
-
-/* Indicateur point */
-.dot-indicator {
-    -fx-fill: #666666;
-    -fx-arc-width: 8;
-    -fx-arc-height: 8;
-}
-
-.hint-text {
-    -fx-font-size: 11px;
-    -fx-text-fill: #888888;
-    -fx-font-style: italic;
-}
-
-/* Bouton Login */
-.login-button {
-    -fx-background-color: linear-gradient(to right, #222222, #444444);
-    -fx-background-radius: 8;
-    -fx-border-radius: 8;
-    -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-letter-spacing: 1px;
-    -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);
-    -fx-padding: 0;
-}
-
-.login-button:hover {
-    -fx-background-color: linear-gradient(to right, #333333, #555555);
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 12, 0, 0, 3);
-}
-
-.login-button:pressed {
-    -fx-background-color: linear-gradient(to right, #111111, #333333);
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
-    -fx-translate-y: 1;
-}
-
-/* Message d'erreur */
-.error-message {
-    -fx-text-fill: #e74c3c;
-    -fx-font-size: 12px;
-    -fx-font-weight: bold;
-    -fx-text-alignment: center;
-    -fx-padding: 8;
-    -fx-background-color: #ffebee;
-    -fx-background-radius: 4;
-    -fx-border-radius: 4;
-    -fx-border-color: #ffcdd2;
-    -fx-border-width: 1;
-}
-
-/* Ligne de séparation */
-.divider-line {
-    -fx-stroke: #e0e0e0;
-    -fx-stroke-width: 1;
-}
-
-.footer-text {
-    -fx-font-size: 11px;
-    -fx-text-fill: #999999;
-    -fx-font-style: italic;
-}
-
-/* Cercles flottants */
-.floating-circle-1 {
-    -fx-fill: radial-gradient(center 50% 50%, radius 80%, #ffffff 0%, #f0f0f0 100%);
-    -fx-opacity: 0.4;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 15, 0, 0, 0);
-}
-
-.floating-circle-2 {
-    -fx-fill: radial-gradient(center 50% 50%, radius 80%, #f8f8f8 0%, #e8e8e8 100%);
-    -fx-opacity: 0.3;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 15, 0, 0, 0);
-}
-
-.floating-circle-3 {
-    -fx-fill: radial-gradient(center 50% 50%, radius 80%, #f0f0f0 0%, #e0e0e0 100%);
-    -fx-opacity: 0.2;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 15, 0, 0, 0);
-}
-/* Variables de couleur */
-.root {
-    -fx-primary: #2c3e50;
-    -fx-secondary: #34495e;
-    -fx-accent: #3498db;
-    -fx-success: #2ecc71;
-    -fx-danger: #e74c3c;
-    -fx-warning: #f39c12;
-    -fx-light: #ecf0f1;
-    -fx-dark: #2c3e50;
-    -fx-gray: #95a5a6;
-}
-
-/* Header */
-.header {
-    -fx-background-color: linear-gradient(to right, -fx-primary, -fx-secondary);
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);
-}
-
-.top-bar {
-    -fx-padding: 15 30;
-    -fx-background-color: transparent;
-}
-
-.logo-container {
-    -fx-spacing: 10;
-    -fx-alignment: CENTER_LEFT;
-}
-
-.logo-text {
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-text-fill: white;
-    -fx-letter-spacing: 2px;
-}
-
-.user-info {
-    -fx-padding: 5 15;
-    -fx-background-color: rgba(255,255,255,0.1);
-    -fx-background-radius: 20;
-}
-
-.user-avatar {
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
-}
-
-.user-name {
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-text-fill: white;
-}
-
-.user-role {
-    -fx-font-size: 11px;
-    -fx-text-fill: rgba(255,255,255,0.8);
-}
-
-.logout-btn {
-    -fx-background-color: transparent;
-    -fx-border: none;
-    -fx-cursor: hand;
-    -fx-padding: 5;
-}
-
-.logout-btn:hover {
-    -fx-background-color: rgba(255,255,255,0.1);
-    -fx-background-radius: 5;
-}
-
-/* Navigation */
-.nav-bar {
-    -fx-padding: 10 30;
-    -fx-background-color: rgba(0,0,0,0.1);
-}
-
-.nav-btn {
-    -fx-background-color: transparent;
-    -fx-text-fill: rgba(255,255,255,0.8);
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-padding: 8 20;
-    -fx-cursor: hand;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
-}
-
-.nav-btn:hover {
-    -fx-background-color: rgba(255,255,255,0.1);
-    -fx-text-fill: white;
-}
-
-.nav-btn.active {
-    -fx-background-color: -fx-accent;
-    -fx-text-fill: white;
-}
-
-/* Contenu principal */
-.content-pane {
-    -fx-background-color: #f5f7fa;
-    -fx-padding: 20;
-}
-
-.page-content {
-    -fx-spacing: 20;
-}
-
-.page-header {
-    -fx-spacing: 10;
-    -fx-alignment: CENTER_LEFT;
-}
-
-.page-title {
-    -fx-font-size: 28px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-dark;
-}
-
-.page-subtitle {
-    -fx-font-size: 14px;
-    -fx-text-fill: -fx-gray;
-}
-
-/* Cartes statistiques */
-.stats-grid {
-    -fx-padding: 0 0 20 0;
-}
-
-.stat-card {
-    -fx-background-color: white;
-    -fx-background-radius: 10;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
-    -fx-padding: 20;
-    -fx-pref-width: 250;
-    -fx-pref-height: 120;
-}
-
-.stat-icon {
     -fx-fill: white;
 }
 
-.stat-icon.users {
-    -fx-fill: linear-gradient(to bottom right, #3498db, #2980b9);
-}
-
-.stat-icon.products {
-    -fx-fill: linear-gradient(to bottom right, #2ecc71, #27ae60);
-}
-
-.stat-icon.orders {
-    -fx-fill: linear-gradient(to bottom right, #9b59b6, #8e44ad);
-}
-
-.stat-icon.revenue {
-    -fx-fill: linear-gradient(to bottom right, #e74c3c, #c0392b);
-}
-
-.stat-label {
-    -fx-font-size: 12px;
-    -fx-text-fill: -fx-gray;
+.welcome-title {
+    -fx-font-size: 56px;
     -fx-font-weight: bold;
-}
-
-.stat-value {
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-dark;
-}
-
-.stat-trend {
-    -fx-font-size: 11px;
-    -fx-font-weight: bold;
-}
-
-.stat-trend.positive {
-    -fx-text-fill: #2ecc71;
-}
-
-.stat-trend.negative {
-    -fx-text-fill: #e74c3c;
-}
-
-/* Graphiques et tableaux */
-.charts-section {
-    -fx-padding: 10 0;
-}
-
-.chart-container, .table-container {
-    -fx-background-color: white;
-    -fx-background-radius: 10;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
-    -fx-padding: 20;
-}
-
-.chart-header, .table-header {
-    -fx-spacing: 10;
-    -fx-alignment: CENTER_LEFT;
-    -fx-padding: 0 0 15 0;
-}
-
-.chart-title, .table-title {
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-dark;
-}
-
-.period-selector {
-    -fx-background-color: -fx-light;
-    -fx-background-radius: 5;
-    -fx-border-color: #ddd;
-    -fx-border-radius: 5;
-    -fx-padding: 5 10;
-}
-
-.chart-placeholder {
-    -fx-background-color: #f8f9fa;
-    -fx-background-radius: 5;
-    -fx-pref-height: 300;
-    -fx-alignment: CENTER;
-}
-
-.placeholder-text {
-    -fx-text-fill: #aaa;
+    -fx-fill: rgba(255, 255, 255, 0.4);
     -fx-font-style: italic;
 }
 
-/* Tableau */
-.recent-table {
-    -fx-background-color: transparent;
-    -fx-border-color: #eee;
-    -fx-border-radius: 5;
+.welcome-section {
+    -fx-padding: 20;
 }
 
-.recent-table .column-header {
-    -fx-background-color: -fx-light;
-    -fx-font-weight: bold;
-    -fx-text-fill: -fx-dark;
+/* ============================================
+   FORM SECTION
+   ============================================ */
+
+.form-section {
+    -fx-padding: 20 0 20 0;
 }
 
-.recent-table .table-row-cell {
-    -fx-border-color: #eee;
+/* ============================================
+   INPUT FIELDS
+   ============================================ */
+
+.input-field {
+    -fx-font-family: "Poppins";
+    -fx-font-size: 13px;
+    -fx-text-fill: #222222;
+    -fx-control-inner-background: #ffffff;
+    -fx-border-radius: 22;
+    -fx-background-radius: 22;
+    -fx-padding: 12 20 12 20;
+    -fx-border-width: 0;
+    -fx-font-weight: 400;
 }
 
-.recent-table .table-row-cell:odd {
-    -fx-background-color: #f9f9f9;
+.input-field:focused {
+    -fx-control-inner-background: #f5f5f5;
+    -fx-text-fill: #222222;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.2), 10, 0.5, 0, 0);
 }
 
-.recent-table .table-row-cell:even {
-    -fx-background-color: white;
-}
 
-.recent-table .table-row-cell:hover {
-    -fx-background-color: #f0f7ff;
-}
 
-/* Boutons */
-.add-btn {
-    -fx-background-color: -fx-success;
+/* ============================================
+   LOGIN BUTTON
+   ============================================ */
+
+.login-button {
+    -fx-font-family: "Poppins";
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
     -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-padding: 8 20;
-    -fx-background-radius: 5;
+    -fx-background-color: #555555;
+    -fx-border-radius: 22;
+    -fx-background-radius: 22;
+    -fx-padding: 0;
     -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 12, 0.5, 0, 3);
 }
 
-.add-btn:hover {
-    -fx-background-color: #27ae60;
+.login-button:hover {
+    -fx-background-color: #666666;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 15, 0.5, 0, 5);
 }
 
-.view-all-btn {
-    -fx-background-color: transparent;
-    -fx-text-fill: -fx-accent;
-    -fx-font-weight: bold;
-    -fx-border-color: -fx-accent;
-    -fx-border-width: 1;
-    -fx-border-radius: 3;
-    -fx-background-radius: 3;
-    -fx-padding: 5 15;
-    -fx-cursor: hand;
+.login-button:pressed {
+    -fx-background-color: #444444;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0.5, 0, 1);
 }
 
-.view-all-btn:hover {
-    -fx-background-color: -fx-accent;
-    -fx-text-fill: white;
-}
+/* ============================================
+   REGISTER LINK
+   ============================================ */
 
-/* Footer */
-.footer {
-    -fx-background-color: -fx-light;
-    -fx-padding: 10;
-    -fx-border-color: #ddd;
-    -fx-border-width: 1 0 0 0;
-}
-
-.footer Label {
-    -fx-text-fill: -fx-gray;
+.register-text {
+    -fx-text-fill: rgba(255, 255, 255, 0.7);
     -fx-font-size: 12px;
+}
+
+.register-link {
+    -fx-text-fill: rgba(255, 255, 255, 0.9);
+    -fx-font-weight: 600;
+    -fx-font-size: 12px;
+    -fx-padding: 0;
+    -fx-underline: false;
+}
+
+.register-link:hover {
+    -fx-text-fill: #ffffff;
+    -fx-underline: true;
+}
+
+/* ============================================
+   ERROR MESSAGE
+   ============================================ */
+
+.error-message {
+    -fx-text-fill: #ff6b6b;
+    -fx-font-size: 12px;
+    -fx-font-weight: 500;
 }
