@@ -140,9 +140,29 @@
 
 /* CENTER STYLINGS */
 .center-container{
-    -fx-padding: 20 0 0 35;
+    -fx-padding: 15 0 0 35;
+    -fx-spacing: 20;
 }
 .tab-title{
     -fx-font-size: 30;
     -fx-font-weight: bold;
+}
+.card{
+    -fx-background-color: white;
+    -fx-padding: 18 0 0 30;
+    -fx-background-radius: 15;
+    -fx-spacing: 10px;
+}
+.tab-subtitle{
+    -fx-font-size: 20;
+}
+FlowPane{
+    -fx-hgap: 20;
+    -fx-vgap: 20;
+}
+.card-title{
+    -fx-font-size: 17px;
+}
+.card-stat{
+    -fx-font-size: 40px;
 }

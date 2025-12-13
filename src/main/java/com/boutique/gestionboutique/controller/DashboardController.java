@@ -4,17 +4,52 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.event.ActionEvent;
-
-import java.io.IOException;
 import java.net.URL;
+import java.io.IOException;
+import java.util.ResourceBundle;
 
-public class DashboardController {
+import com.boutique.gestionboutique.service.StatService;
+
+public class DashboardController implements Initializable{
 
     @FXML
     private BorderPane borderPane;
+    @FXML
+    private Label makeupCount;
+    @FXML
+    private Label serumCount;
 
+    @FXML
+    private Label vitamineCount;
+
+    @FXML
+    private Label bioCount;
+    @FXML
+    private Label todaySaleCount;
+    @FXML
+    private Label allTimeRevenue;
+    @FXML
+    private Label revenueForToday;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        StatService ss = new StatService();
+        int mC =  ss.getProductCount("Maquillage");
+        int bC =  ss.getProductCount("Produits Bio (Soins & Divers)");
+        int sC =  ss.getProductCount("Sérums");
+        int vC =  ss.getProductCount("Vitamines & Suppléments");
+        makeupCount.setText(String.valueOf(mC));
+        serumCount.setText(String.valueOf(sC));
+        vitamineCount.setText(String.valueOf(vC));
+        bioCount.setText(String.valueOf(bC));
+        todaySaleCount.setText(String.valueOf(ss.getTodaySaleCount()));
+        allTimeRevenue.setText(String.valueOf(ss.getAllTimeRevnue()) + "DH");
+        revenueForToday.setText(String.valueOf(ss.getTodayRevenue()) + "DH");
+
+    }
     /**
      * Charge le fichier product.fxml au clic sur le bouton Products
      */
@@ -28,6 +63,7 @@ public class DashboardController {
      */
     @FXML
     private void handleDashboardClick(ActionEvent event) {
+
         loadPage("com/boutique/gestionboutique/views/dashboard.fxml");
     }
 
