@@ -87,14 +87,14 @@ public class LoginController {
         errorLabel.setVisible(true);
     }
 
-        public static void main(String[] args) {
-            Connection conn = Database.getConnection();
+    public static void main(String[] args) {
+        Connection conn = Database.getConnection();
 
-            if (conn != null) {
-                System.out.println("✅ Base de données bien liée !");
-            } else {
-                System.out.println("❌ Connexion échouée !");
-            }
+        if (conn != null) {
+            System.out.println("✅ Base de données bien liée !");
+        } else {
+            System.out.println("❌ Connexion échouée !");
         }
+    }
 
 }

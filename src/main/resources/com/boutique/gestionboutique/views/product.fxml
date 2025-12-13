@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.boutique.gestionboutique.controller.ProductsController"
+            stylesheets="@../stylesheets/products.css">
+
+    <!-- Top Bar avec Recherche et Bouton Ajouter -->
+    <top>
+        <VBox styleClass="top-bar">
+            <HBox spacing="10" style="-fx-padding: 15;">
+                <TextField fx:id="searchField"
+                           promptText="Rechercher un produit..."
+                           HBox.hgrow="ALWAYS"
+                           styleClass="search-field"
+                           onAction="#searchProducts"/>
+                <Button text="🔍 Rechercher"
+                        onAction="#searchProducts"
+                        styleClass="btn-search"/>
+                <Button text="➕ Ajouter Produit"
+                        onAction="#addProduct"
+                        styleClass="btn-add"/>
+            </HBox>
+
+            <!-- ✅ Filtres par Catégorie - NOMS EXACTS DE LA BASE DE DONNÉES -->
+            <HBox spacing="10" style="-fx-padding: 0 15 15 15;">
+                <Label text="Catégorie:" styleClass="label-category"
+                       style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+                <!-- ⚠️ IMPORTANT: userData doit correspondre EXACTEMENT au nom dans la table 'categories' -->
+                <Button text="Tous"
+                        onAction="#filterByCategory"
+                        userData="all"
+                        styleClass="filter-btn"
+                        style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-padding: 8 15; -fx-font-weight: bold;"/>
+
+                <Button text="Sérums"
+                        onAction="#filterByCategory"
+                        userData="Sérums"
+                        styleClass="filter-btn"
+                        style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-padding: 8 15; -fx-font-weight: bold;"/>
+
+                <Button text="Maquillage"
+                        onAction="#filterByCategory"
+                        userData="Maquillage"
+                        styleClass="filter-btn"
+                        style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-padding: 8 15; -fx-font-weight: bold;"/>
+
+                <Button text="Produits Bio (Soins &amp; Divers)"
+                        onAction="#filterByCategory"
+                        userData="Produits Bio (Soins &amp; Divers)"
+                        styleClass="filter-btn"
+                        style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-padding: 8 15; -fx-font-weight: bold;"/>
+
+                <Button text="Vitamines &amp; Suppléments"
+                        onAction="#filterByCategory"
+                        userData="Vitamines &amp; Suppléments"
+                        styleClass="filter-btn"
+                        style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-padding: 8 15; -fx-font-weight: bold;"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- Grille de Produits -->
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+            <GridPane fx:id="productsGrid"
+                      hgap="20"
+                      vgap="20"
+                      styleClass="products-grid"
+                      style="-fx-padding: 20;">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="33.33"/>
+                    <ColumnConstraints percentWidth="33.33"/>
+                    <ColumnConstraints percentWidth="33.33"/>
+                </columnConstraints>
+            </GridPane>
+        </ScrollPane>
+    </center>
+
+    <!-- Barre de Statut -->
+    <bottom>
+        <HBox styleClass="status-bar" style="-fx-padding: 10; -fx-background-color: #ecf0f1;">
+            <Label fx:id="statusLabel"
+                   text="Chargement des produits..."
+                   HBox.hgrow="ALWAYS"
+                   style="-fx-font-size: 12; -fx-text-fill: #34495e;"/>
+        </HBox>
+    </bottom>
+</BorderPane>

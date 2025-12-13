@@ -2,110 +2,61 @@ package com.boutique.gestionboutique.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.Node;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import javafx.event.ActionEvent;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class DashboardController {
 
-    @FXML private VBox overviewPane;
-    @FXML private VBox usersPane;
-    @FXML private VBox productsPane;
-    @FXML private VBox ordersPane;
-    @FXML private VBox analyticsPane;
-    @FXML private VBox settingsPane;
-
-    @FXML private Button overviewBtn;
-    @FXML private Button usersBtn;
-    @FXML private Button productsBtn;
-    @FXML private Button ordersBtn;
-    @FXML private Button analyticsBtn;
-    @FXML private Button settingsBtn;
-
     @FXML
-    private void initialize() {
-        // Initialiser avec la page Overview par défaut
-        showOverview();
+    private BorderPane borderPane;
+
+    /**
+     * Charge le fichier product.fxml au clic sur le bouton Products
+     */
+    @FXML
+    private void handleProductsClick(ActionEvent event) {
+        loadPage("com/boutique/gestionboutique/views/product.fxml");
     }
 
-    // Navigation methods
+    /**
+     * Charge le Dashboard
+     */
     @FXML
-    private void showOverview() {
-        setActivePage(overviewPane, overviewBtn);
+    private void handleDashboardClick(ActionEvent event) {
+        loadPage("com/boutique/gestionboutique/views/dashboard.fxml");
     }
 
-    @FXML
-    private void showUsers() {
-        setActivePage(usersPane, usersBtn);
-    }
+    /**
+     * Charge une page FXML dans le centre du BorderPane
+     */
+    private void loadPage(String fxmlFile) {
+        try {
+            // Chemin absolu depuis resources
+            URL resource = getClass().getResource("/" + fxmlFile);
 
-    @FXML
-    private void showProducts() {
-        setActivePage(productsPane, productsBtn);
-    }
+            if (resource == null) {
+                System.err.println("❌ Fichier non trouvé: /" + fxmlFile);
+                System.err.println("Essai avec chemin alternatif...");
+                resource = getClass().getClassLoader().getResource(fxmlFile);
+            }
 
-    @FXML
-    private void showOrders() {
-        setActivePage(ordersPane, ordersBtn);
-    }
+            if (resource == null) {
+                System.err.println("❌ Fichier introuvable: " + fxmlFile);
+                return;
+            }
 
-    @FXML
-    private void showAnalytics() {
-        setActivePage(analyticsPane, analyticsBtn);
-    }
-
-    @FXML
-    private void showSettings() {
-        setActivePage(settingsPane, settingsBtn);
-    }
-
-    // Version SIMPLE de logout
-    @FXML
-    private void handleLogout() throws IOException {
-        Parent loginRoot = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
-        Stage stage = (Stage) overviewPane.getScene().getWindow();
-        stage.setScene(new Scene(loginRoot));
-        stage.setTitle("Login");
-    }
-
-    // Méthodes utilitaires
-    private void setActivePage(VBox page, Button button) {
-        // Masquer toutes les pages
-        overviewPane.setVisible(false);
-        usersPane.setVisible(false);
-        productsPane.setVisible(false);
-        ordersPane.setVisible(false);
-        analyticsPane.setVisible(false);
-        settingsPane.setVisible(false);
-
-        // Désactiver tous les boutons
-        removeActiveClass(overviewBtn);
-        removeActiveClass(usersBtn);
-        removeActiveClass(productsBtn);
-        removeActiveClass(ordersBtn);
-        removeActiveClass(analyticsBtn);
-        removeActiveClass(settingsBtn);
-
-        // Afficher la page sélectionnée et activer le bouton
-        page.setVisible(true);
-        if (button != null) {
-            button.getStyleClass().add("active");
+            FXMLLoader loader = new FXMLLoader(resource);
+            Node page = loader.load();
+            borderPane.setCenter(page);
+            System.out.println("✅ Page chargée: " + fxmlFile);
+        } catch (IOException e) {
+            System.err.println("❌ Erreur chargement page: " + e.getMessage());
+            e.printStackTrace();
         }
-    }
-
-    private void removeActiveClass(Button button) {
-        button.getStyleClass().remove("active");
-    }
-
-    private void showAlert(String type, String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }
