@@ -1,16 +1,11 @@
 package com.boutique.gestionboutique.controller;
 
-import com.boutique.gestionboutique.database.Database;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.sql.Connection;
 
 public class LoginController {
 
@@ -26,75 +21,60 @@ public class LoginController {
     @FXML
     private Label errorLabel;
 
-    // Méthode appelée quand on clique sur le bouton Login
+    // Quand on clique sur "Login"
     @FXML
     private void handleLogin() {
+        // Récupérer ce que l'utilisateur a écrit
         String email = emailField.getText().trim();
         String password = passwordField.getText().trim();
 
-        // Validation simple
+        // Vérifier si les champs sont vides
         if (email.isEmpty() || password.isEmpty()) {
-            showError("Please fill in all fields");
+            showError("Veuillez remplir tous les champs");
             return;
         }
 
-        // Validation de l'email
-        if (!email.contains("@") || !email.contains(".")) {
-            showError("Please enter a valid email address");
+        // Vérifier si c'est un email valide
+        if (!email.contains("@")) {
+            showError("Email invalide");
             return;
         }
 
-        // Vérification des identifiants (admin/admin123 par défaut)
+        // Vérifier si les identifiants sont corrects
         if (email.equals("admin@gmail.com") && password.equals("admin123")) {
-            // Login réussi, rediriger vers le dashboard
-            redirectToDashboard();
+            // ✅ Login réussi
+            goToDashboard();
         } else {
-            showError("Invalid email or password");
+            // ❌ Login échoué
+            showError("Email ou mot de passe incorrect");
         }
     }
 
-    // Rediriger vers le dashboard
-    private void redirectToDashboard() {
+    // Aller au dashboard après un login réussi
+    private void goToDashboard() {
         try {
-            // Charger le fichier FXML du dashboard
+            // Charger la page dashboard.fxml
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/boutique/gestionboutique/views/dashboard.fxml"));
-            Parent dashboardRoot = loader.load();
+            Parent dashboard = loader.load();
 
-            // Obtenir la scène actuelle et la fenêtre
-            Stage currentStage = (Stage) loginButton.getScene().getWindow();
+            // Récupérer la fenêtre actuelle
+            Stage stage = (Stage) loginButton.getScene().getWindow();
 
-            // Créer une nouvelle scène avec le dashboard
-            Scene dashboardScene = new Scene(dashboardRoot);
+            // Changer la scène pour afficher le dashboard
+            Scene scene = new Scene(dashboard);
+            stage.setScene(scene);
+            stage.setTitle("Dashboard");
+            stage.setMaximized(true);
 
-            // Appliquer la scène à la fenêtre
-            currentStage.setScene(dashboardScene);
-            currentStage.setTitle("Dashboard");
-            currentStage.setMaximized(true); // Optionnel: plein écran
-
-            // Centrer la fenêtre
-            currentStage.centerOnScreen();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            showError("Error loading dashboard: " + e.getMessage());
+        } catch (Exception e) {
+            showError("Erreur de chargement");
         }
     }
 
-    // Afficher un message d'erreur
+    // Afficher un message d'erreur en rouge
     private void showError(String message) {
         errorLabel.setText(message);
-        errorLabel.setTextFill(Color.RED);
+        errorLabel.setStyle("-fx-text-fill: red;");
         errorLabel.setVisible(true);
     }
-
-    public static void main(String[] args) {
-        Connection conn = Database.getConnection();
-
-        if (conn != null) {
-            System.out.println("✅ Base de données bien liée !");
-        } else {
-            System.out.println("❌ Connexion échouée !");
-        }
-    }
-
 }
