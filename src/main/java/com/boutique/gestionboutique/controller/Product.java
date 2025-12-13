@@ -1,6 +1,7 @@
 package com.boutique.gestionboutique.controller;
 
 public class Product {
+    // Attributs du produit
     private int id;
     private String name;
     private double price;
@@ -9,10 +10,11 @@ public class Product {
     private String imagePath;
     private String categoryName;
 
-    // Constructeurs
+    // Constructeur vide (obligatoire pour JavaFX)
     public Product() {
     }
 
+    // Constructeur avec paramètres
     public Product(String name, double price, int quantity, int categoryId, String imagePath) {
         this.name = name;
         this.price = price;

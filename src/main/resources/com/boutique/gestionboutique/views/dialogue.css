@@ -1,0 +1,171 @@
+/* ============================================
+   DIALOG.CSS - Styles pour les boîtes de dialogue
+   ============================================ */
+
+/* ==================== DIALOG GÉNÉRAL ==================== */
+.dialog-pane {
+    -fx-background-color: white;
+    -fx-padding: 0;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 15px 20px;
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.dialog-pane .header-panel .label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.dialog-pane .content {
+    -fx-padding: 20px;
+    -fx-background-color: white;
+}
+
+/* ==================== GRIDPANE FORMULAIRE ==================== */
+.dialog-pane .grid-pane {
+    -fx-hgap: 15px;
+    -fx-vgap: 15px;
+    -fx-padding: 20px;
+}
+
+/* ==================== LABELS FORMULAIRE ==================== */
+.dialog-pane .label {
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #495057;
+    -fx-padding: 5px 0;
+}
+
+/* ==================== TEXT FIELDS FORMULAIRE ==================== */
+.dialog-pane .text-field {
+    -fx-pref-width: 250px;
+    -fx-pref-height: 38px;
+    -fx-font-size: 14px;
+    -fx-background-color: white;
+    -fx-border-color: #ced4da;
+    -fx-border-width: 1px;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 8px 12px;
+}
+
+.dialog-pane .text-field:focused {
+    -fx-border-color: #6c757d;
+    -fx-border-width: 2px;
+    -fx-background-color: #f8f9fa;
+    -fx-effect: dropshadow(three-pass-box, rgba(108, 117, 125, 0.15), 4, 0, 0, 0);
+}
+
+.dialog-pane .text-field:hover {
+    -fx-border-color: #adb5bd;
+}
+
+/* Placeholder text */
+.dialog-pane .text-field .text {
+    -fx-fill: #212529;
+}
+
+.dialog-pane .text-field:focused .text {
+    -fx-fill: #212529;
+}
+
+/* ==================== BOUTONS DIALOG ==================== */
+.dialog-pane .button-bar {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 15px 20px;
+    -fx-spacing: 10px;
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 1px 0 0 0;
+}
+
+/* Bouton Principal (Ajouter/Enregistrer) */
+.dialog-pane .button:default {
+    -fx-background-color: #6c757d;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-pref-width: 120px;
+    -fx-pref-height: 38px;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+}
+
+.dialog-pane .button:default:hover {
+    -fx-background-color: #5a6268;
+    -fx-effect: dropshadow(three-pass-box, rgba(108, 117, 125, 0.3), 6, 0, 0, 2);
+}
+
+.dialog-pane .button:default:pressed {
+    -fx-background-color: #545b62;
+    -fx-translate-y: 1px;
+}
+
+/* Bouton Annuler */
+
+
+.
+
+.
+/* ==================== ALERT DIALOGS ==================== */
+
+/* Alert Confirmation */
+.alert.confirmation .dialog-pane {
+    -fx-background-color: white;
+}
+
+.alert.confirmation .dialog-pane .header-panel {
+    -fx-background-color: #fff3cd;
+    -fx-padding: 15px 20px;
+}
+
+.alert.confirmation .dialog-pane .header-panel .label {
+    -fx-text-fill: #856404;
+    -fx-font-weight: bold;
+}
+
+.alert.confirmation .dialog-pane .content .label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #495057;
+    -fx-padding: 20px;
+}
+
+/* Alert Error */
+.alert.error .dialog-pane .header-panel {
+    -fx-background-color: #f8d7da;
+}
+
+.alert.error .dialog-pane .header-panel .label {
+    -fx-text-fill: #721c24;
+}
+
+/* Alert Information */
+.alert.information .dialog-pane .header-panel {
+    -fx-background-color: #d1ecf1;
+}
+
+.alert.information .dialog-pane .header-panel .label {
+    -fx-text-fill: #0c5460;
+}
+
+/* Alert Warning */
+.alert.warning .dialog-pane .header-panel {
+    -fx-background-color: #fff3cd;
+}
+
+.alert.warning .dialog-pane .header-panel .label {
+    -fx-text-fill: #856404;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 600px) {
+    .dialog-pane .text-field {
+        -fx-pref-width: 200px;
+    }
+
+

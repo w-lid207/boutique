@@ -11,55 +11,58 @@
     <!-- Top Bar avec Recherche et Bouton Ajouter -->
     <top>
         <VBox styleClass="top-bar">
-            <HBox spacing="10" style="-fx-padding: 15;">
+            <HBox spacing="10">
+                <padding>
+                    <Insets top="15" right="15" bottom="15" left="15"/>
+                </padding>
+
                 <TextField fx:id="searchField"
                            promptText="Rechercher un produit..."
                            HBox.hgrow="ALWAYS"
                            styleClass="search-field"
                            onAction="#searchProducts"/>
+
                 <Button text="🔍 Rechercher"
                         onAction="#searchProducts"
                         styleClass="btn-search"/>
+
                 <Button text="➕ Ajouter Produit"
                         onAction="#addProduct"
                         styleClass="btn-add"/>
             </HBox>
 
-            <!-- ✅ Filtres par Catégorie - NOMS EXACTS DE LA BASE DE DONNÉES -->
-            <HBox spacing="10" style="-fx-padding: 0 15 15 15;">
-                <Label text="Catégorie:" styleClass="label-category"
-                       style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+            <!-- Filtres par Catégorie -->
+            <HBox spacing="10">
+                <padding>
+                    <Insets top="0" right="15" bottom="15" left="15"/>
+                </padding>
 
-                <!-- ⚠️ IMPORTANT: userData doit correspondre EXACTEMENT au nom dans la table 'categories' -->
+                <Label text="Catégorie:" styleClass="label-category"/>
+
                 <Button text="Tous"
                         onAction="#filterByCategory"
                         userData="all"
-                        styleClass="filter-btn"
-                        style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-padding: 8 15; -fx-font-weight: bold;"/>
+                        styleClass="filter-btn, filter-btn-active"/>
 
                 <Button text="Sérums"
                         onAction="#filterByCategory"
                         userData="Sérums"
-                        styleClass="filter-btn"
-                        style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-padding: 8 15; -fx-font-weight: bold;"/>
+                        styleClass="filter-btn"/>
 
                 <Button text="Maquillage"
                         onAction="#filterByCategory"
                         userData="Maquillage"
-                        styleClass="filter-btn"
-                        style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-padding: 8 15; -fx-font-weight: bold;"/>
+                        styleClass="filter-btn"/>
 
                 <Button text="Produits Bio (Soins &amp; Divers)"
                         onAction="#filterByCategory"
                         userData="Produits Bio (Soins &amp; Divers)"
-                        styleClass="filter-btn"
-                        style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-padding: 8 15; -fx-font-weight: bold;"/>
+                        styleClass="filter-btn"/>
 
                 <Button text="Vitamines &amp; Suppléments"
                         onAction="#filterByCategory"
                         userData="Vitamines &amp; Suppléments"
-                        styleClass="filter-btn"
-                        style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-padding: 8 15; -fx-font-weight: bold;"/>
+                        styleClass="filter-btn"/>
             </HBox>
         </VBox>
     </top>
@@ -70,8 +73,11 @@
             <GridPane fx:id="productsGrid"
                       hgap="20"
                       vgap="20"
-                      styleClass="products-grid"
-                      style="-fx-padding: 20;">
+                      styleClass="products-grid">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+
                 <columnConstraints>
                     <ColumnConstraints percentWidth="33.33"/>
                     <ColumnConstraints percentWidth="33.33"/>
@@ -83,11 +89,14 @@
 
     <!-- Barre de Statut -->
     <bottom>
-        <HBox styleClass="status-bar" style="-fx-padding: 10; -fx-background-color: #ecf0f1;">
+        <HBox styleClass="status-bar">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
             <Label fx:id="statusLabel"
                    text="Chargement des produits..."
-                   HBox.hgrow="ALWAYS"
-                   style="-fx-font-size: 12; -fx-text-fill: #34495e;"/>
+                   HBox.hgrow="ALWAYS"/>
         </HBox>
     </bottom>
 </BorderPane>

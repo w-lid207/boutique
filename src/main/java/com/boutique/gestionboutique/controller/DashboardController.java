@@ -2,61 +2,77 @@ package com.boutique.gestionboutique.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import javafx.event.ActionEvent;
-
 import java.io.IOException;
-import java.net.URL;
 
 public class DashboardController {
 
     @FXML
     private BorderPane borderPane;
 
-    /**
-     * Charge le fichier product.fxml au clic sur le bouton Products
-     */
     @FXML
-    private void handleProductsClick(ActionEvent event) {
-        loadPage("com/boutique/gestionboutique/views/product.fxml");
+    private void handleDashboardClick() {
+        // Charge la page home (contenu du dashboard)
+        loadPage("home.fxml");
     }
 
-    /**
-     * Charge le Dashboard
-     */
     @FXML
-    private void handleDashboardClick(ActionEvent event) {
-        loadPage("com/boutique/gestionboutique/views/dashboard.fxml");
+    private void handleProductsClick() {
+        loadPage("product.fxml");
     }
 
-    /**
-     * Charge une page FXML dans le centre du BorderPane
-     */
-    private void loadPage(String fxmlFile) {
+    @FXML
+    private void handlePOSClick() {
+        loadPage("pos.fxml");
+    }
+
+    @FXML
+    private void handleSalesHistoryClick() {
+        loadPage("sales-history.fxml");
+    }
+
+    @FXML
+    private void handleAnalyticsClick() {
+        loadPage("analytics.fxml");
+    }
+
+    private void loadPage(String fileName) {
         try {
-            // Chemin absolu depuis resources
-            URL resource = getClass().getResource("/" + fxmlFile);
+            // Construire le chemin complet
+            String fullPath = "/com/boutique/gestionboutique/views/" + fileName;
 
-            if (resource == null) {
-                System.err.println("❌ Fichier non trouvé: /" + fxmlFile);
-                System.err.println("Essai avec chemin alternatif...");
-                resource = getClass().getClassLoader().getResource(fxmlFile);
-            }
+            // Charger le fichier FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fullPath));
 
-            if (resource == null) {
-                System.err.println("❌ Fichier introuvable: " + fxmlFile);
+            // Vérifier si le fichier existe
+            if (loader.getLocation() == null) {
+                System.err.println("❌ Fichier introuvable: " + fullPath);
+                // Afficher un message dans le borderPane
+                showPlaceholder(fileName);
                 return;
             }
 
-            FXMLLoader loader = new FXMLLoader(resource);
-            Node page = loader.load();
-            borderPane.setCenter(page);
-            System.out.println("✅ Page chargée: " + fxmlFile);
+            // Charger et afficher la page
+            borderPane.setCenter(loader.load());
+            System.out.println("✅ Page chargée: " + fileName);
+
         } catch (IOException e) {
-            System.err.println("❌ Erreur chargement page: " + e.getMessage());
+            System.err.println("❌ Erreur de chargement: " + fileName);
             e.printStackTrace();
+            showPlaceholder(fileName);
+        } catch (Exception e) {
+            System.err.println("❌ Erreur inattendue: " + e.getMessage());
+            e.printStackTrace();
+            showPlaceholder(fileName);
         }
+    }
+
+    private void showPlaceholder(String fileName) {
+        // Afficher un message temporaire si le fichier n'existe pas
+        javafx.scene.control.Label label = new javafx.scene.control.Label(
+                "Page en développement\n" + fileName
+        );
+        label.setStyle("-fx-font-size: 24px; -fx-text-fill: #666; -fx-padding: 50px;");
+        borderPane.setCenter(label);
     }
 }
