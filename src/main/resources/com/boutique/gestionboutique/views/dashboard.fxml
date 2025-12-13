@@ -132,7 +132,7 @@
                   </VBox>
                   <VBox layoutX="10.0" layoutY="10.0" prefHeight="173.0" prefWidth="282.0" styleClass="card">
                      <children>
-                        <Label styleClass="card-title" text="Total Revenue" />
+                        <Label styleClass="card-title" text="All Time Revenue" />
                         <Label fx:id="allTimeRevenue" layoutX="10.0" layoutY="10.0" styleClass="card-stat" text="0" wrapText="true" />
                      </children>
                   </VBox>

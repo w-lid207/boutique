@@ -22,7 +22,7 @@ public class StatService {
             e.printStackTrace();
         }
     }
-    public int getProductCount(String category){
+    public String  getProductCount(String category){
         String query = "SELECT count(*) FROM products WHERE category_id = (SELECT id FROM categories WHERE name = ?)";
         int countResult = 20;
         try {
@@ -39,9 +39,9 @@ public class StatService {
 
             e.printStackTrace();
         }
-        return countResult;
+        return String.valueOf(countResult);
     }
-    public int getTodaySaleCount(){
+    public String getTodaySaleCount(){
         String query = "SELECT count(*) FROM sales WHERE DATE(date) = CURRENT_DATE()";
         int r = 0;
         try {
@@ -57,10 +57,10 @@ public class StatService {
 
             e.printStackTrace();
         }
-        return r;
+        return String.valueOf(r);
 
     }
-    public double getAllTimeRevnue(){
+    public String getAllTimeRevnue(){
         String query = "SELECT sum(total) FROM sales";
         double r = 0;
         try {
@@ -76,9 +76,9 @@ public class StatService {
 
             e.printStackTrace();
         }
-        return r;
+        return String.valueOf(r);
 
-    }  public double getTodayRevenue(){
+    }  public String getTodayRevenue(){
         String query = "SELECT sum(total) FROM sales WHERE DATE(date) = ?";
         double r = 0;
         try {
@@ -95,7 +95,7 @@ public class StatService {
 
             e.printStackTrace();
         }
-        return r;
+        return String.valueOf(r);
 
     }
 }
