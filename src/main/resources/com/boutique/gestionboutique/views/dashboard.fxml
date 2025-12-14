@@ -9,137 +9,61 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
 
-<BorderPane fx:id="borderPane" prefHeight="799.0" prefWidth="1285.0" stylesheets="@../stylesheets/dashboard.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.boutique.gestionboutique.controller.DashboardController">
-    <left>
-        <VBox prefHeight="799.0" prefWidth="236.0" styleClass="sidebar" BorderPane.alignment="CENTER">
-            <children>
-                <SVGPath content="M15.5779 14.908V33.448C15.5779 35.512 14.9419 37.168 13.6699 38.416C12.3979 39.64 10.7179 40.252 8.62992 40.252C6.51792 40.252 4.82592 39.628 3.55392 38.38C2.28192 37.108 1.64592 35.38 1.64592 33.196H4.92192C4.94592 34.42 5.25792 35.416 5.85792 36.184C6.48192 36.952 7.40592 37.336 8.62992 37.336C9.85392 37.336 10.7659 36.976 11.3659 36.256C11.9659 35.512 12.2659 34.576 12.2659 33.448V14.908H15.5779ZM37.4758 14.908V17.572H30.6358V40H27.3598V17.572H20.4838V14.908H37.4758ZM54.7203 40L48.7443 29.74H44.7843V40H41.5083V14.908H49.6083C51.5043 14.908 53.1003 15.232 54.3963 15.88C55.7163 16.528 56.7003 17.404 57.3483 18.508C57.9963 19.612 58.3203 20.872 58.3203 22.288C58.3203 24.016 57.8163 25.54 56.8083 26.86C55.8243 28.18 54.3363 29.056 52.3443 29.488L58.6443 40H54.7203ZM44.7843 27.112H49.6083C51.3843 27.112 52.7163 26.68 53.6043 25.816C54.4923 24.928 54.9363 23.752 54.9363 22.288C54.9363 20.8 54.4923 19.648 53.6043 18.832C52.7403 18.016 51.4083 17.608 49.6083 17.608H44.7843V27.112ZM119.355 40.252C117.699 40.252 116.211 39.964 114.891 39.388C113.595 38.788 112.575 37.972 111.831 36.94C111.087 35.884 110.703 34.672 110.679 33.304H114.171C114.291 34.48 114.771 35.476 115.611 36.292C116.475 37.084 117.723 37.48 119.355 37.48C120.915 37.48 122.139 37.096 123.027 36.328C123.939 35.536 124.395 34.528 124.395 33.304C124.395 32.344 124.131 31.564 123.603 30.964C123.075 30.364 122.415 29.908 121.623 29.596C120.831 29.284 119.763 28.948 118.419 28.588C116.763 28.156 115.431 27.724 114.423 27.292C113.439 26.86 112.587 26.188 111.867 25.276C111.171 24.34 110.823 23.092 110.823 21.532C110.823 20.164 111.171 18.952 111.867 17.896C112.563 16.84 113.535 16.024 114.783 15.448C116.055 14.872 117.507 14.584 119.139 14.584C121.491 14.584 123.411 15.172 124.899 16.348C126.411 17.524 127.263 19.084 127.455 21.028H123.855C123.735 20.068 123.231 19.228 122.343 18.508C121.455 17.764 120.279 17.392 118.815 17.392C117.447 17.392 116.331 17.752 115.467 18.472C114.603 19.168 114.171 20.152 114.171 21.424C114.171 22.336 114.423 23.08 114.927 23.656C115.455 24.232 116.091 24.676 116.835 24.988C117.603 25.276 118.671 25.612 120.039 25.996C121.695 26.452 123.027 26.908 124.035 27.364C125.043 27.796 125.907 28.48 126.627 29.416C127.347 30.328 127.707 31.576 127.707 33.16C127.707 34.384 127.383 35.536 126.735 36.616C126.087 37.696 125.127 38.572 123.855 39.244C122.583 39.916 121.083 40.252 119.355 40.252ZM151.86 14.908V40H148.584V28.624H135.804V40H132.528V14.908H135.804V25.924H148.584V14.908H151.86ZM168.83 40.252C166.502 40.252 164.378 39.712 162.458 38.632C160.538 37.528 159.014 36.004 157.886 34.06C156.782 32.092 156.23 29.884 156.23 27.436C156.23 24.988 156.782 22.792 157.886 20.848C159.014 18.88 160.538 17.356 162.458 16.276C164.378 15.172 166.502 14.62 168.83 14.62C171.182 14.62 173.318 15.172 175.238 16.276C177.158 17.356 178.67 18.868 179.774 20.812C180.878 22.756 181.43 24.964 181.43 27.436C181.43 29.908 180.878 32.116 179.774 34.06C178.67 36.004 177.158 37.528 175.238 38.632C173.318 39.712 171.182 40.252 168.83 40.252ZM168.83 37.408C170.582 37.408 172.154 37 173.546 36.184C174.962 35.368 176.066 34.204 176.858 32.692C177.674 31.18 178.082 29.428 178.082 27.436C178.082 25.42 177.674 23.668 176.858 22.18C176.066 20.668 174.974 19.504 173.582 18.688C172.19 17.872 170.606 17.464 168.83 17.464C167.054 17.464 165.47 17.872 164.078 18.688C162.686 19.504 161.582 20.668 160.766 22.18C159.974 23.668 159.578 25.42 159.578 27.436C159.578 29.428 159.974 31.18 160.766 32.692C161.582 34.204 162.686 35.368 164.078 36.184C165.494 37 167.078 37.408 168.83 37.408ZM202.53 22.252C202.53 24.34 201.81 26.08 200.37 27.472C198.954 28.84 196.782 29.524 193.854 29.524H189.03V40H185.754V14.908H193.854C196.686 14.908 198.834 15.592 200.298 16.96C201.786 18.328 202.53 20.092 202.53 22.252ZM193.854 26.824C195.678 26.824 197.022 26.428 197.886 25.636C198.75 24.844 199.182 23.716 199.182 22.252C199.182 19.156 197.406 17.608 193.854 17.608H189.03V26.824H193.854Z &#10;M97.5833 18.3333C80.3333 22.1667 76.3083 33.9925 72.3217 43.9017L75.9442 45.1667L77.765 40.7583C78.685 41.0842 79.6433 41.3333 80.3333 41.3333C101.417 41.3333 107.167 8.75 107.167 8.75C105.25 12.5833 91.8333 13.0625 82.25 14.9792C72.6667 16.8958 68.8333 25.0417 68.8333 28.875C68.8333 32.7083 72.1875 36.0625 72.1875 36.0625C78.4167 18.3333 97.5833 18.3333 97.5833 18.3333Z" fill="WHITE" scaleX="0.8" scaleY="0.8" />
-                <VBox prefHeight="200.0" prefWidth="100.0" styleClass="nav" VBox.vgrow="ALWAYS">
-                    <children>
-                        <HBox styleClass="active-row">
-                            <children>
-                                <HBox styleClass="icon-container">
-                                    <children>
-                                        <SVGPath content="M16.25 11.25V3.75H26.25V11.25H16.25ZM3.75 16.25V3.75H13.75V16.25H3.75ZM16.25 26.25V13.75H26.25V26.25H16.25ZM3.75 26.25V18.75H13.75V26.25H3.75ZM6.25 13.75H11.25V6.25H6.25V13.75ZM18.75 23.75H23.75V16.25H18.75V23.75ZM18.75 8.75H23.75V6.25H18.75V8.75ZM6.25 23.75H11.25V21.25H6.25V23.75Z" styleClass="stroked-icon-special" />
-                                    </children>
-                                </HBox>
-                                <Button mnemonicParsing="false" onAction="#handleDashboardClick" styleClass="nav-btn" text="Dashboard" />
-                            </children>
-                        </HBox>
-                        <HBox layoutX="10.0" layoutY="10.0">
-                            <children>
-                                <HBox styleClass="icon-container">
-                                    <children>
-                                        <SVGPath content="M26.0002 7.25L13.5002 1L1.00022 7.25V19.75L13.5002 26L26.0002 19.75V7.25Z M1.00022 7.25L13.5002 13.5 M13.5002 26V13.5 M26.0002 7.25L13.5002 13.5 M19.7502 4.125L7.25022 10.375" styleClass="stroked-icon" />
-                                    </children>
-                                </HBox>
-                                <Button mnemonicParsing="false" onAction="#handleProductsClick" styleClass="nav-btn" text="Products" />
-                            </children>
-                        </HBox>
-                        <HBox layoutX="10.0" layoutY="47.0">
-                            <children>
-                                <HBox styleClass="icon-container">
-                                    <children>
-                                        <SVGPath content="M18.75 9.25L15 16.75L11.25 9.25H3.75V-2H26.25V9.25M7.5 1.75V5.5H22.5V1.75M0 28L3.75 13H26.25L30 28M3.75 22.375V24.25H26.25V22.375" styleClass="sidebar-icon" />
-                                    </children>
-                                </HBox>
-                                <Button mnemonicParsing="false" onAction="#handlePOSClick" styleClass="nav-btn" text="POS" />
-                            </children>
-                        </HBox>
-                        <HBox layoutX="10.0" layoutY="84.0">
-                            <children>
-                                <HBox styleClass="icon-container">
-                                    <children>
-                                        <SVGPath content="M15 26.25C12.375 26.25 10.0521 25.4533 8.03125 23.86C6.01042 22.2667 4.69792 20.23 4.09375 17.75C4.01042 17.4375 4.07292 17.1512 4.28125 16.8912C4.48958 16.6312 4.77083 16.48 5.125 16.4375C5.45833 16.3958 5.76042 16.4583 6.03125 16.625C6.30208 16.7917 6.48958 17.0417 6.59375 17.375C7.09375 19.25 8.125 20.7813 9.6875 21.9688C11.25 23.1562 13.0208 23.75 15 23.75C17.4375 23.75 19.5054 22.9012 21.2037 21.2037C22.9021 19.5062 23.7508 17.4383 23.75 15C23.7492 12.5617 22.9004 10.4942 21.2037 8.7975C19.5071 7.10083 17.4392 6.25167 15 6.25C13.5625 6.25 12.2188 6.58333 10.9687 7.25C9.71875 7.91667 8.66667 8.83333 7.8125 10H10C10.3542 10 10.6513 10.12 10.8913 10.36C11.1313 10.6 11.2508 10.8967 11.25 11.25C11.2492 11.6033 11.1292 11.9004 10.89 12.1413C10.6508 12.3821 10.3542 12.5017 10 12.5H5C4.64583 12.5 4.34917 12.38 4.11 12.14C3.87083 11.9 3.75083 11.6033 3.75 11.25V6.25C3.75 5.89583 3.87 5.59917 4.11 5.36C4.35 5.12083 4.64667 5.00083 5 5C5.35333 4.99917 5.65042 5.11917 5.89125 5.36C6.13208 5.60083 6.25167 5.8975 6.25 6.25V7.9375C7.3125 6.60417 8.60958 5.57292 10.1412 4.84375C11.6729 4.11458 13.2925 3.75 15 3.75C16.5625 3.75 18.0262 4.04708 19.3912 4.64125C20.7562 5.23542 21.9438 6.03708 22.9538 7.04625C23.9638 8.05542 24.7658 9.24292 25.36 10.6088C25.9542 11.9746 26.2508 13.4383 26.25 15C26.2492 16.5617 25.9525 18.0254 25.36 19.3912C24.7675 20.7571 23.9654 21.9446 22.9538 22.9538C21.9421 23.9629 20.7546 24.765 19.3912 25.36C18.0279 25.955 16.5642 26.2517 15 26.25ZM16.25 14.5L19.375 17.625C19.6042 17.8542 19.7188 18.1458 19.7188 18.5C19.7188 18.8542 19.6042 19.1458 19.375 19.375C19.1458 19.6042 18.8542 19.7188 18.5 19.7188C18.1458 19.7188 17.8542 19.6042 17.625 19.375L14.125 15.875C14 15.75 13.9062 15.6096 13.8438 15.4537C13.7812 15.2979 13.75 15.1363 13.75 14.9688V10C13.75 9.64583 13.87 9.34917 14.11 9.11C14.35 8.87083 14.6467 8.75083 15 8.75C15.3533 8.74917 15.6504 8.86917 15.8913 9.11C16.1321 9.35083 16.2517 9.6475 16.25 10V14.5Z" styleClass="sidebar-icon" />
-                                    </children>
-                                </HBox>
-                                <Button mnemonicParsing="false" onAction="#handleSalesHistoryClick" styleClass="nav-btn" text="Sales History" />
-                            </children>
-                        </HBox>
-                        <HBox layoutX="10.0" layoutY="121.0">
-                            <children>
-                                <HBox styleClass="icon-container">
-                                    <children>
-                                        <SVGPath content="M26.25 26.25H3.75V3.75 M7.5 17.5L13.75 11.25L18.75 16.25C19.275 15.7237 20.6863 14.3162 22.1438 12.8625L24.1287 10.8825L24.1337 10.8775L26.255 8.7625 M21.25 8.75H26.25V13.75" styleClass="stroked-icon" />
-                                    </children>
-                                </HBox>
-                                <Button mnemonicParsing="false" onAction="#handleAnalyticsClick" styleClass="nav-btn" text="Analytics" />
-                            </children>
-                        </HBox>
-                        <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-                        <HBox styleClass="nav-row">
-                            <children>
-                                <HBox styleClass="icon-container">
-                                    <children>
-                                        <SVGPath content="M19.1667 3.33331H5.83333C5.39131 3.33331 4.96738 3.50891 4.65482 3.82147C4.34226 4.13403 4.16667 4.55795 4.16667 4.99998V25C4.16667 25.442 4.34226 25.8659 4.65482 26.1785C4.96738 26.4911 5.39131 26.6666 5.83333 26.6666H19.1667C19.6087 26.6666 20.0326 26.4911 20.3452 26.1785C20.6577 25.8659 20.8333 25.442 20.8333 25V20H13.025C12.804 20 12.592 19.9122 12.4357 19.7559C12.2795 19.5996 12.1917 19.3877 12.1917 19.1666C12.1917 18.9456 12.2795 18.7337 12.4357 18.5774C12.592 18.4211 12.804 18.3333 13.025 18.3333H20.8333V4.99998C20.8333 4.55795 20.6577 4.13403 20.3452 3.82147C20.0326 3.50891 19.6087 3.33331 19.1667 3.33331ZM23.4667 14.4C23.3072 14.2635 23.1022 14.1922 22.8925 14.2003C22.6827 14.2084 22.4838 14.2953 22.3354 14.4437C22.1869 14.5921 22.1 14.7911 22.0919 15.0008C22.0838 15.2105 22.1551 15.4156 22.2917 15.575L25.1083 18.3334H20.8333V20H25.1083L22.2917 22.8834C22.2044 22.9581 22.1336 23.05 22.0836 23.1534C22.0335 23.2568 22.0054 23.3694 22.001 23.4841C21.9966 23.5989 22.0159 23.7134 22.0578 23.8203C22.0997 23.9272 22.1632 24.0244 22.2445 24.1056C22.3257 24.1868 22.4228 24.2503 22.5297 24.2922C22.6367 24.3341 22.7511 24.3535 22.8659 24.349C22.9806 24.3446 23.0932 24.3165 23.1966 24.2665C23.3 24.2164 23.392 24.1456 23.4667 24.0584L28.3333 19.225L23.4667 14.4Z" fill="#c62727" styleClass="logout-icon" />
-                                    </children>
-                                </HBox>
-                                <Button mnemonicParsing="false" styleClass="nav-btn" text="Logout" />
-                            </children>
-                        </HBox>
-                    </children>
-                </VBox>
-            </children>
-        </VBox>
-    </left>
-    <center>
-        <VBox prefHeight="200.0" prefWidth="100.0" styleClass="center-container" BorderPane.alignment="CENTER">
-            <children>
-                <Label styleClass="tab-title" text="Dashboard" />
-                <Label layoutX="45.0" layoutY="25.0" styleClass="tab-subtitle" text="Products count" />
-                <FlowPane>
-                    <children>
-                        <VBox prefHeight="173.0" prefWidth="235.0" styleClass="card">
-                            <children>
-                                <Label styleClass="card-title" text="Serums" />
-                                <Label fx:id="serumCount" layoutX="10.0" layoutY="10.0" styleClass="card-stat" text="0" />
-                            </children>
-                        </VBox>
-                        <VBox layoutX="10.0" layoutY="10.0" prefHeight="173.0" prefWidth="235.0" styleClass="card">
-                            <children>
-                                <Label styleClass="card-title" text="Vitamines" />
-                                <Label fx:id="vitamineCount" layoutX="10.0" layoutY="10.0" styleClass="card-stat" text="0" />
-                            </children>
-                        </VBox>
-                        <VBox layoutX="245.0" layoutY="10.0" prefHeight="173.0" prefWidth="235.0" styleClass="card">
-                            <children>
-                                <Label styleClass="card-title" text="Bio" />
-                                <Label fx:id="bioCount" layoutX="10.0" layoutY="10.0" styleClass="card-stat" text="0" />
-                            </children>
-                        </VBox>
-                        <VBox layoutX="480.0" layoutY="10.0" prefHeight="173.0" prefWidth="235.0" styleClass="card">
-                            <children>
-                                <Label styleClass="card-title" text="Make up" />
-                                <Label fx:id="makeupCount" layoutX="10.0" layoutY="10.0" styleClass="card-stat" text="0" />
-                            </children>
-                        </VBox>
-                    </children>
-                </FlowPane>
-                <Label layoutX="45.0" layoutY="88.0" styleClass="tab-subtitle" text="Stats" />
-                <FlowPane layoutX="45.0" layoutY="136.0">
-                    <children>
-                        <VBox fx:id="productCount1" prefHeight="173.0" prefWidth="282.0" styleClass="card">
-                            <children>
-                                <Label styleClass="card-title" text="Today's sale count" />
-                                <Label fx:id="todaySaleCount" layoutX="10.0" layoutY="10.0" styleClass="card-stat" text="0" />
-                            </children>
-                        </VBox>
-                        <VBox fx:id="productCount11" layoutX="10.0" layoutY="10.0" prefHeight="173.0" prefWidth="282.0" styleClass="card">
-                            <children>
-                                <Label styleClass="card-title" text="Revenu for today" />
-                                <Label fx:id="revenueForToday" layoutX="10.0" layoutY="10.0" styleClass="card-stat" text="0" />
-                            </children>
-                        </VBox>
-                        <VBox layoutX="10.0" layoutY="10.0" prefHeight="173.0" prefWidth="282.0" styleClass="card">
-                            <children>
-                                <Label styleClass="card-title" text="All Time Revenue" />
-                                <Label fx:id="allTimeRevenue" layoutX="10.0" layoutY="10.0" styleClass="card-stat" text="0" wrapText="true" />
-                            </children>
-                        </VBox>
-                    </children>
 
-                </FlowPane>
-            </children>
-        </VBox>
-    </center>
-</BorderPane>
+      <VBox stylesheets="@../stylesheets/dashboard.css" prefHeight="200.0" prefWidth="100.0" styleClass="center-container" BorderPane.alignment="CENTER"  xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.boutique.gestionboutique.controller.DashBoardController">
+         <children>
+            <Label styleClass="tab-title" text="Dashboard" />
+            <Label layoutX="45.0" layoutY="25.0" styleClass="tab-subtitle" text="Products count" />
+            <FlowPane>
+               <children>
+                  <VBox prefHeight="173.0" prefWidth="235.0" styleClass="card">
+                     <children>
+                        <Label styleClass="card-title" text="Serums" />
+                        <Label fx:id="serumCount" layoutX="10.0" layoutY="10.0" styleClass="card-stat" text="0" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="10.0" layoutY="10.0" prefHeight="173.0" prefWidth="235.0" styleClass="card">
+                     <children>
+                        <Label styleClass="card-title" text="Vitamines" />
+                        <Label fx:id="vitamineCount" layoutX="10.0" layoutY="10.0" styleClass="card-stat" text="0" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="245.0" layoutY="10.0" prefHeight="173.0" prefWidth="235.0" styleClass="card">
+                     <children>
+                        <Label styleClass="card-title" text="Bio" />
+                        <Label fx:id="bioCount" layoutX="10.0" layoutY="10.0" styleClass="card-stat" text="0" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="480.0" layoutY="10.0" prefHeight="173.0" prefWidth="235.0" styleClass="card">
+                     <children>
+                        <Label styleClass="card-title" text="Make up" />
+                        <Label fx:id="makeupCount" layoutX="10.0" layoutY="10.0" styleClass="card-stat" text="0" />
+                     </children>
+                  </VBox>
+               </children>
+            </FlowPane>
+            <Label layoutX="45.0" layoutY="88.0" styleClass="tab-subtitle" text="Stats" />
+            <FlowPane layoutX="45.0" layoutY="136.0">
+               <children>
+                  <VBox fx:id="productCount1" prefHeight="173.0" prefWidth="282.0" styleClass="card">
+                     <children>
+                        <Label styleClass="card-title" text="Today's sale count" />
+                        <Label fx:id="todaySaleCount" layoutX="10.0" layoutY="10.0" styleClass="card-stat" text="0" />
+                     </children>
+                  </VBox>
+                  <VBox fx:id="productCount11" layoutX="10.0" layoutY="10.0" prefHeight="173.0" prefWidth="282.0" styleClass="card">
+                     <children>
+                        <Label styleClass="card-title" text="Revenu for today" />
+                        <Label fx:id="revenueForToday" layoutX="10.0" layoutY="10.0" styleClass="card-stat" text="0" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="10.0" layoutY="10.0" prefHeight="173.0" prefWidth="282.0" styleClass="card">
+                     <children>
+                        <Label styleClass="card-title" text="All Time Revenue" />
+                        <Label fx:id="allTimeRevenue" layoutX="10.0" layoutY="10.0" styleClass="card-stat" text="0" wrapText="true" />
+                     </children>
+                  </VBox>
+               </children>
+            </FlowPane>
+         </children>
+      </VBox>
