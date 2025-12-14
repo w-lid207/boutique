@@ -54,7 +54,7 @@ public class LoginController {
     private void goToDashboard() {
         try {
             // Charger la page dashboard.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/boutique/gestionboutique/views/dashboard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/boutique/gestionboutique/views/MainLayout.fxml"));
             Parent dashboard = loader.load();
 
             // Récupérer la fenêtre actuelle
