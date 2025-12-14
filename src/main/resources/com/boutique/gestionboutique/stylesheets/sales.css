@@ -1,0 +1,201 @@
+/* ============================================
+   SALES HISTORY - CSS STYLES
+   ============================================ */
+
+/* Search Bar avec FlowPane Responsive */
+.search-bar {
+    -fx-padding: 20 0 20 0;
+    -fx-alignment: center-left;
+}
+
+.search-field {
+    -fx-min-width: 250px;
+    -fx-pref-width: 300px;
+    -fx-max-width: 400px;
+    -fx-background-color: white;
+    -fx-border-color: #ced4da;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px 15px;
+    -fx-font-size: 14px;
+    -fx-prompt-text-fill: #6c757d;
+}
+
+.search-field:focused {
+    -fx-border-color: #007bff;
+    -fx-border-width: 2px;
+    -fx-background-color: #f8f9fa;
+}
+
+.refresh-btn {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-min-width: 100px;
+}
+
+.refresh-btn:hover {
+    -fx-background-color: #0056b3;
+}
+
+.refresh-btn:pressed {
+    -fx-background-color: #004085;
+}
+
+/* ============================================
+   TABLE VIEW STYLES
+   ============================================ */
+
+.sales-table {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+
+/* Table Header */
+.sales-table .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, #f8f9fa 0%, #e9ecef 100%);
+    -fx-border-radius: 8px 8px 0 0;
+}
+
+.sales-table .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: #dee2e6;
+    -fx-border-width: 0 0 2px 0;
+    -fx-padding: 15px 10px;
+}
+
+.sales-table .column-header .label {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #212529;
+    -fx-alignment: center;
+}
+
+/* Table Cells */
+.sales-table .table-cell {
+    -fx-padding: 12px 10px;
+    -fx-border-color: #f1f3f5;
+    -fx-border-width: 0 0 1px 0;
+    -fx-font-size: 14px;
+}
+
+/* Table Rows */
+.sales-table .table-row-cell {
+    -fx-background-color: white;
+}
+
+.sales-table .table-row-cell:odd {
+    -fx-background-color: #f8f9fa;
+}
+
+.sales-table .table-row-cell:selected {
+    -fx-background-color: #e3f2fd;
+    -fx-text-fill: #1976d2;
+}
+
+.sales-table .table-row-cell:hover {
+    -fx-background-color: #e9ecef;
+    -fx-cursor: hand;
+}
+
+/* Column Specific Styles */
+.id-column {
+    -fx-alignment: CENTER;
+}
+
+.date-column {
+    -fx-alignment: CENTER;
+}
+
+.total-column {
+    -fx-alignment: CENTER-RIGHT;
+}
+
+/* ============================================
+   SCROLLBAR CUSTOMIZATION
+   ============================================ */
+
+.sales-table .scroll-bar:vertical {
+    -fx-background-color: #f8f9fa;
+    -fx-pref-width: 10px;
+}
+
+.sales-table .scroll-bar:vertical .thumb {
+    -fx-background-color: #adb5bd;
+    -fx-background-radius: 5px;
+}
+
+.sales-table .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #6c757d;
+}
+
+.sales-table .scroll-bar:horizontal {
+    -fx-background-color: #f8f9fa;
+    -fx-pref-height: 10px;
+}
+
+.sales-table .scroll-bar:horizontal .thumb {
+    -fx-background-color: #adb5bd;
+    -fx-background-radius: 5px;
+}
+
+.sales-table .scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: #6c757d;
+}
+
+/* Hide scroll bar arrows */
+.sales-table .scroll-bar .increment-button,
+.sales-table .scroll-bar .decrement-button {
+    -fx-opacity: 0;
+    -fx-pref-height: 0;
+    -fx-pref-width: 0;
+}
+
+/* ============================================
+   EMPTY TABLE PLACEHOLDER
+   ============================================ */
+
+.sales-table .placeholder .label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #6c757d;
+    -fx-padding: 30px;
+    -fx-font-style: italic;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+/* Pour les petits écrans */
+@media screen and (max-width: 768px) {
+    .search-field {
+        -fx-min-width: 200px;
+        -fx-pref-width: 100%;
+    }
+
+    .refresh-btn {
+        -fx-min-width: 80px;
+        -fx-padding: 8px 15px;
+    }
+}
+
+/* ============================================
+   ANIMATIONS & TRANSITIONS
+   ============================================ */
+
+.sales-table .table-row-cell {
+    -fx-background-transition: background-color 0.2s ease;
+}
+
+.refresh-btn {
+    -fx-background-transition: background-color 0.2s ease;
+}
