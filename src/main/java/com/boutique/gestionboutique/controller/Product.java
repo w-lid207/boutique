@@ -5,7 +5,9 @@ public class Product {
     private int id;
     private String name;
     private double price;
+    private double qPrice;
     private int quantity;
+    private int qCartItem = 0;
     private int categoryId;
     private String imagePath;
     private String categoryName;
@@ -47,9 +49,29 @@ public class Product {
     public void setPrice(double price) {
         this.price = price;
     }
+    public void setqPrice(double qPrice) {
+        if(qCartItem == 1){
+            this.qPrice = this.price;
+            return;
+        }
+        this.qPrice = qPrice;
+    }
 
+    public double getqPrice() {
+        return qPrice;
+    }
     public int getQuantity() {
         return quantity;
+    }
+    public int getqCartItem() {
+        return qCartItem;
+    }
+
+    public void setqCartItem(int qCartItem) {
+        if(qCartItem < 1){
+            return;
+        }
+        this.qCartItem = qCartItem;
     }
 
     public void setQuantity(int quantity) {

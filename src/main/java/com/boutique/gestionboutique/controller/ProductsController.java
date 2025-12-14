@@ -147,6 +147,7 @@ public class ProductsController implements Initializable {
         if ("all".equals(categoryName)) {
             displayProducts(allProducts);
             statusLabel.setText("Tous les produits: " + allProducts.size());
+            statusLabel.setText("Tous les produits: " + allProducts.size());
         } else {
             List<Product> filtered = new ArrayList<>();
             for (Product p : allProducts) {
