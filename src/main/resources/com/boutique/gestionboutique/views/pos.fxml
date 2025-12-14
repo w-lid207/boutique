@@ -1,14 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.boutique.gestionboutique.views.Pos"
-            prefHeight="400.0" prefWidth="600.0">
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.boutique.gestionboutique.controller.ProductsController"
+            stylesheets="@../stylesheets/products.css">
 
-</AnchorPane>
+    <!-- Top Bar avec Recherche et Bouton Ajouter -->
+    <top>
+        <VBox styleClass="top-bar">
+            <HBox spacing="10">
+                <padding>
+                    <Insets top="15" right="15" bottom="15" left="15"/>
+                </padding>
+
+                <TextField fx:id="searchField"
+                           promptText="Rechercher un produit..."
+                           HBox.hgrow="ALWAYS"
+                           styleClass="search-field"
+                           onAction="#searchProducts"/>
+
+                <Button text="🔍 Rechercher"
+                        onAction="#searchProducts"
+                        styleClass="btn-search"/>
+
+                <Button text="➕ Ajouter Produit"
+                        onAction="#addProduct"
+                        styleClass="btn-add"/>
+            </HBox>
+
+            <!-- Filtres par Catégorie -->
+            <HBox spacing="10">
+                <padding>
+                    <Insets top="0" right="15" bottom="15" left="15"/>
+                </padding>
+
+                <Label text="Catégorie:" styleClass="label-category"/>
+
+                <Button text="Tous"
+                        onAction="#filterByCategory"
+                        userData="all"
+                        styleClass="filter-btn, filter-btn-active"/>
+
+                <Button text="Sérums"
+                        onAction="#filterByCategory"
+                        userData="Sérums"
+                        styleClass="filter-btn"/>
+
+                <Button text="Maquillage"
+                        onAction="#filterByCategory"
+                        userData="Maquillage"
+                        styleClass="filter-btn"/>
+
+                <Button text="Produits Bio (Soins &amp; Divers)"
+                        onAction="#filterByCategory"
+                        userData="Produits Bio (Soins &amp; Divers)"
+                        styleClass="filter-btn"/>
+
+                <Button text="Vitamines &amp; Suppléments"
+                        onAction="#filterByCategory"
+                        userData="Vitamines &amp; Suppléments"
+                        styleClass="filter-btn"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- Grille de Produits -->
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+            <GridPane fx:id="productsGrid"
+                      hgap="20"
+                      vgap="20"
+                      styleClass="products-grid">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="33.33"/>
+                    <ColumnConstraints percentWidth="33.33"/>
+                    <ColumnConstraints percentWidth="33.33"/>
+                </columnConstraints>
+            </GridPane>
+        </ScrollPane>
+    </center>
+
+    <!-- Barre de Statut -->
+    <bottom>
+        <HBox styleClass="status-bar">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <Label fx:id="statusLabel"
+                   text="Chargement des produits..."
+                   HBox.hgrow="ALWAYS"/>
+        </HBox>
+    </bottom>
+</BorderPane>

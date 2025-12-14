@@ -120,6 +120,7 @@ public class ProductsController implements Initializable {
         return card;
     }
 
+
     @FXML
     private void searchProducts() {
         String query = searchField.getText().toLowerCase().trim();
