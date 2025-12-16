@@ -23,13 +23,13 @@
 }
 
 .search-field:focused {
-    -fx-border-color: #007bff;
+    -fx-border-color: #4444;
     -fx-border-width: 2px;
     -fx-background-color: #f8f9fa;
 }
 
 .refresh-btn {
-    -fx-background-color: #007bff;
+    -fx-background-color: gray;
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
@@ -41,11 +41,11 @@
 }
 
 .refresh-btn:hover {
-    -fx-background-color: #0056b3;
+    -fx-background-color: gray;
 }
 
 .refresh-btn:pressed {
-    -fx-background-color: #004085;
+    -fx-background-color: gary;
 }
 
 /* ============================================
@@ -99,7 +99,7 @@
 
 .sales-table .table-row-cell:selected {
     -fx-background-color: #e3f2fd;
-    -fx-text-fill: #1976d2;
+    -fx-text-fill: #4444;
 }
 
 .sales-table .table-row-cell:hover {
