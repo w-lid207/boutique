@@ -98,7 +98,7 @@ public class ProductsController implements Initializable {
 
         try {
             if (product.getImagePath() != null && !product.getImagePath().isEmpty()) {
-                String imagePath = "file:src/main/resources/" + product.getImagePath();
+                String imagePath = product.getImagePath();
                 imageView.setImage(new Image(imagePath));
             }
         } catch (Exception e) {
@@ -168,6 +168,7 @@ public class ProductsController implements Initializable {
 
         if ("all".equals(categoryName)) {
             displayProducts(allProducts);
+            statusLabel.setText("Tous les produits: " + allProducts.size());
             statusLabel.setText("Tous les produits: " + allProducts.size());
         } else {
             List<Product> filtered = new ArrayList<>();

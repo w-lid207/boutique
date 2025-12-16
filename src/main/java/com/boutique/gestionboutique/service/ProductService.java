@@ -75,7 +75,7 @@ public class ProductService {
 
     /**
      * Récupérer les produits par catégorie
-     */
+//     */
     public List<Product> getProductsByCategory(int categoryId) throws SQLException {
         List<Product> products = new ArrayList<>();
         String query = "SELECT p.id, p.name, p.price, p.quantity, p.category_id, p.image_path, c.name as category_name " +
