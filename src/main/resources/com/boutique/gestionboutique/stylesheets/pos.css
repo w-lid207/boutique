@@ -251,19 +251,37 @@
     -fx-font-weight: 500;
 }
 
-/* ==================== SCROLLPANE ==================== */
+/* ===== ScrollPane: FULLY TRANSPARENT ===== */
 .scroll-pane {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
 }
 
-.scroll-pane .viewport {
-    -fx-background-color: #f5f5f5;
+/* This is the IMPORTANT part */
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
 }
 
+/* Content wrapper */
+.scroll-pane > .content {
+    -fx-background-color: transparent;
+}
+
+/* Corner when both scrollbars appear */
+.scroll-pane > .corner {
+    -fx-background-color: transparent;
+}
+
+/* ===== Scrollbar styling (kept) ===== */
 .scroll-pane .scroll-bar:vertical {
     -fx-background-color: transparent;
     -fx-pref-width: 10px;
+}
+
+.scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
 }
 
 .scroll-pane .scroll-bar:vertical .thumb {
@@ -273,10 +291,6 @@
 
 .scroll-pane .scroll-bar:vertical .thumb:hover {
     -fx-background-color: #95a5a6;
-}
-
-.scroll-pane .scroll-bar:vertical .track {
-    -fx-background-color: transparent;
 }
 
 /* ==================== ANIMATIONS & TRANSITIONS ==================== */
@@ -306,4 +320,143 @@
 .product-card-large {
     -fx-pref-width: 360px;
     -fx-pref-height: 380px;
+}
+
+/* CART */
+.totalPayment-container{
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-border-width: 2 0 2 0;
+    -fx-border-color: rgba(128, 128, 128, 0.39);
+    -fx-padding: 15 0 15 0;
+}
+.cart{
+    -fx-pref-width: 400 !important;
+    -fx-padding: 15;
+    -fx-spacing: 15;
+    -fx-alignment: center;
+}
+.orderDone-btn{
+    -fx-padding: 10 20;
+    -fx-background-color: #BEC400;
+    -fx-font-weight: bold;
+    -fx-pref-width: 350;
+    -fx-cursor: hand;
+    -fx-font-size: 16;
+}
+.orderDone-btn:hover{
+    -fx-background-color: #a5ab01;
+}
+/* ===============================
+   Cart Item Card
+================================ */
+.cartItemContainer {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-padding: 12;
+    -fx-spacing: 12;
+    -fx-alignment: CENTER_LEFT;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);
+}
+#cart{
+    -fx-spacing: 12;
+}
+.cartItemContainer:hover {
+    -fx-background-color: #fafafa;
+}
+
+/* ===============================
+   Product Image
+================================ */
+.cart-image {
+    -fx-background-radius: 8;
+}
+
+/* ===============================
+   Right Content Column
+================================ */
+.cart-info {
+    -fx-spacing: 6;
+}
+
+/* ===============================
+   Top Row (Title + Delete)
+================================ */
+.cart-top {
+    -fx-alignment: CENTER_LEFT;
+}
+
+.product-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c2c2c;
+}
+
+/* ===============================
+   Bottom Row (Price + Quantity)
+================================ */
+.cart-bottom {
+    -fx-alignment: CENTER_LEFT;
+}
+
+/* Price */
+.product-price {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+}
+
+/* ===============================
+   Quantity Controls
+================================ */
+.qty-btn {
+    -fx-background-color: #f4f4f4;
+    -fx-background-radius: 6;
+    -fx-min-width: 28;
+    -fx-min-height: 28;
+    -fx-cursor: hand;
+}
+
+.qty-btn:hover {
+    -fx-background-color: #e6e6e6;
+}
+
+.qty-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 8 0 8;
+}
+
+/* ===============================
+   Delete Button (Trash)
+================================ */
+.delete-btn {
+    -fx-background-color: #ff6b6b;
+    -fx-background-radius: 10;
+    -fx-padding: 6 8 6 8;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+
+    -fx-min-width: 32;
+    -fx-min-height: 32;
+    -fx-max-width: 32;
+    -fx-max-height: 32;
+}
+
+.delete-btn:hover {
+    -fx-background-color: #ff4c4c;
+}
+
+.delete-btn:pressed {
+    -fx-background-color: #e63e3e;
+}
+
+.delete-btn:focused {
+    -fx-background-insets: 0;
+}
+
+/* Trash icon */
+.trash-icon {
+    -fx-fill: white;
 }
