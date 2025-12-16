@@ -80,6 +80,7 @@
                   <Label fx:id="totalPrice" layoutX="10.0" layoutY="10.0" text="0" />
                </children>
             </HBox>
+            <Button fx:id="orderDone" mnemonicParsing="false" onAction="#processSaleUpdates" text="Order done" />
          </children></VBox>
    </right>
 </BorderPane>

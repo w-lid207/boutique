@@ -15,6 +15,7 @@ import javafx.scene.layout.*;
 
 import java.net.URL;
 import java.sql.SQLClientInfoException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -34,6 +35,8 @@ public class POSController implements Initializable {
     @FXML
     private Label totalPrice;
     private final CartService cartManager = CartService.getInstance();
+    @FXML
+    private Button orderDone;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         productService = new ProductService();
@@ -253,5 +256,17 @@ public class POSController implements Initializable {
             }
         }
         return totalprice;
+    }
+    @FXML
+    private void processSaleUpdates()  {
+        try {
+            // Run the logic
+            cartManager.processSale(cartManager.getCartItems(), calculateTotalPrice());
+
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
