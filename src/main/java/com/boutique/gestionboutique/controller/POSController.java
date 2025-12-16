@@ -6,12 +6,14 @@ import com.boutique.gestionboutique.service.CartService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.shape.SVGPath;
 
 import java.net.URL;
 import java.sql.SQLClientInfoException;
@@ -178,7 +180,7 @@ public class POSController implements Initializable {
 
         cartManager.addItem(product);
         cart.getChildren().add(cartItem);
-        totalPrice.setText(String.valueOf(calculateTotalPrice()));
+        totalPrice.setText(String.valueOf(String.format("%.2f", calculateTotalPrice()))+" DH");
 
     }
     @FXML
@@ -186,21 +188,45 @@ public class POSController implements Initializable {
         HBox itemContainer = new HBox();
         ImageView imageView = new ImageView();
         VBox info = new VBox();
+        HBox.setHgrow(info, ALWAYS);
             HBox top = new HBox();
             Label productTitle = new Label(product.getName());
             Region spacer = new Region();
             top.setHgrow(spacer, ALWAYS);
-            Button deleteBtn = new Button("delete");
+            Button deleteBtn = new Button();
+            SVGPath trashIcon = new SVGPath();
+            trashIcon.setContent("M33.9602 5.71429H24.0833V1.42857C24.0833 1.04969 23.9341 0.686328 23.6684 0.418419C23.4027 0.15051 23.0424 0 22.6667 0H11.3333C10.9576 0 10.5973 0.15051 10.3316 0.418419C10.0659 0.686328 9.91667 1.04969 9.91667 1.42857V5.71429H0.0398435L0 9.28571H2.92187L4.70068 37.3214C4.7457 38.0464 5.06289 38.7269 5.58773 39.2245C6.11258 39.7221 6.80567 39.9994 7.52604 40H26.474C27.1939 39.9999 27.8868 39.7234 28.412 39.2267C28.9371 38.7301 29.255 38.0504 29.3011 37.3259L31.0781 9.28571H34L33.9602 5.71429ZM9.91667 34.2857L9.11979 11.4286H12.0417L12.8385 34.2857H9.91667ZM18.4167 34.2857H15.5833V11.4286H18.4167V34.2857ZM20.5417 5.71429H13.4583V3.21429C13.4583 3.11957 13.4956 3.02872 13.5621 2.96175C13.6285 2.89477 13.7186 2.85714 13.8125 2.85714H20.1875C20.2814 2.85714 20.3715 2.89477 20.4379 2.96175C20.5044 3.02872 20.5417 3.11957 20.5417 3.21429V5.71429ZM24.0833 34.2857H21.1615L21.9583 11.4286H24.8802L24.0833 34.2857Z");
+            trashIcon.setScaleX(0.4);
+            trashIcon.setScaleY(0.4);
+            deleteBtn.setGraphic(trashIcon);
+            trashIcon.getStyleClass().add("trash-icon");
+            deleteBtn.getStyleClass().add("delete-btn");
             deleteBtn.setOnAction(e-> deleteItem(product));
             HBox bottom = new HBox();
+            bottom.setAlignment(Pos.CENTER_LEFT);
             Button minus = new Button("-");
             Label quantity = new Label(String.valueOf(product.getqCartItem()));
             Region spacer2 = new Region();
             bottom.setHgrow(spacer2, ALWAYS);
             Button plus = new Button("+");
             Label price = new Label(String.valueOf(product.getqPrice()));
+            imageView.getStyleClass().add("cart-image");
+            info.getStyleClass().add("cart-info");
 
-            top.getChildren().addAll(productTitle,spacer,deleteBtn);
+            top.getStyleClass().add("cart-top");
+            bottom.getStyleClass().add("cart-bottom");
+
+            productTitle.getStyleClass().add("product-title");
+            price.getStyleClass().add("product-price");
+            imageView.setFitWidth(50);
+            imageView.setFitHeight(50);
+            imageView.setPreserveRatio(true);
+
+            minus.getStyleClass().add("qty-btn");
+            plus.getStyleClass().add("qty-btn");
+            quantity.getStyleClass().add("qty-label");
+
+        top.getChildren().addAll(productTitle,spacer,deleteBtn);
             bottom.getChildren().addAll(price, spacer2, minus, quantity, plus);
             info.getChildren().addAll(top, bottom);
             plus.setOnAction(e->handleQuantity(product.getId(), '+'));
@@ -227,14 +253,14 @@ public class POSController implements Initializable {
                     if(action == '+') {
                         p.setqCartItem(p.getqCartItem() + 1);
                         p.setqPrice(p.getPrice()*p.getqCartItem());
-                        totalPrice.setText(String.valueOf(calculateTotalPrice()));
+                        totalPrice.setText(String.valueOf(String.format("%.2f", calculateTotalPrice()))+" DH");
 
                     }
                     if(action == '-'){
 
                         p.setqCartItem(p.getqCartItem() - 1);
                         p.setqPrice(p.getqPrice()-p.getPrice());
-                        totalPrice.setText(String.valueOf(calculateTotalPrice()));
+                        totalPrice.setText(String.valueOf(String.format("%.2f", calculateTotalPrice()))+" DH");
 
 
                     }
@@ -244,7 +270,7 @@ public class POSController implements Initializable {
     }
     private void  deleteItem(Product product){
         cartManager.getCartItems().remove(product);
-        totalPrice.setText(String.valueOf(calculateTotalPrice()));
+        totalPrice.setText(String.valueOf(String.format("%.2f", calculateTotalPrice()))+" DH");
 
         refreshCartDisplay();
     }

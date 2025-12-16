@@ -69,18 +69,22 @@
       </ScrollPane>
     </center>
    <right>
-      <VBox prefHeight="181.0" prefWidth="220.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="181.0" prefWidth="400.0" styleClass="cart" BorderPane.alignment="CENTER">
          <children>
-            <VBox fx:id="cart" prefHeight="200.0" prefWidth="100.0" />
-            <Region />
-            <HBox layoutX="10.0" layoutY="176.0">
+            <ScrollPane VBox.vgrow="ALWAYS" fitToWidth="true">
+               <content>
+                  <VBox fx:id="cart" />
+               </content>
+            </ScrollPane>
+            <Region VBox.vgrow="ALWAYS" />
+            <HBox styleClass="totalPayment-container">
                <children>
-                  <Label text="Total Payment" />
+                  <Label styleClass="totalPayement" text="Total Payment" />
                   <Region HBox.hgrow="ALWAYS" />
-                  <Label fx:id="totalPrice" layoutX="10.0" layoutY="10.0" text="0" />
+                  <Label fx:id="totalPrice" layoutX="10.0" layoutY="10.0" styleClass="paymentValue" text="0 DH" />
                </children>
             </HBox>
-            <Button fx:id="orderDone" mnemonicParsing="false" onAction="#processSaleUpdates" text="Order done" />
+            <Button fx:id="orderDone" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#processSaleUpdates" styleClass="orderDone-btn" text="Order done" />
          </children></VBox>
    </right>
 </BorderPane>
