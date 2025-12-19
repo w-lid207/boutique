@@ -95,9 +95,10 @@ public class StatService {
 
             e.printStackTrace();
         }
-        return String.valueOf(r);
+        return String.valueOf(String.format("%.2f",r));
 
-    }  public String getTodayRevenue(){
+    }
+    public String getTodayRevenue(){
         String query = "SELECT sum(total) FROM sales WHERE DATE(date) = CURRENT_DATE()";
         double r = 0;
         try {
@@ -113,7 +114,45 @@ public class StatService {
 
             e.printStackTrace();
         }
-        return String.valueOf(r);
+        return String.valueOf(String.format("%.2f",r));
 
     }
+    public String getMonthRevenue(){
+        String query = "SELECT sum(total) FROM sales WHERE MONTH(date) = MONTH(CURRENT_DATE())";
+        double r = 0;
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()){
+                System.out.println("It aaaaaaaaworked");
+                r = rs.getDouble(1);
+            }
+
+        }catch (SQLException e){
+            System.out.println("It DID NOT WORK getTodayRevenue");
+
+            e.printStackTrace();
+        }
+        return String.valueOf(String.format("%.2f",r));
+
+    }
+    public String  getTotalProductCount(){
+        String query = "SELECT count(*) FROM products";
+        int countResult = 20;
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()){
+                System.out.println("It worked");
+                countResult = rs.getInt(1);
+            }
+
+        }catch (SQLException e){
+            System.out.println("It DID NOT WORK");
+
+            e.printStackTrace();
+        }
+        return String.valueOf(countResult);
+    }
+
 }

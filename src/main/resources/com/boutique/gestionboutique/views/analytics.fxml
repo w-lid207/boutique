@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="670.0" prefWidth="1210.0" styleClass="container" stylesheets="@../stylesheets/analytics.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.boutique.gestionboutique.controller.AnalyticsController">
+   <children>
+      <HBox prefHeight="118.0" prefWidth="1185.0" styleClass="stat-container">
+         <children>
+            <HBox fillHeight="false" prefHeight="169.0" prefWidth="264.0" styleClass="stat-card">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-YBT01Fx3wgHg4CEQzaIp4N9nFYMb5jA70g&amp;s" />
+                     </image>
+                  </ImageView>
+                  <VBox styleClass="stat-info">
+                     <children>
+                        <Label styleClass="f-title" text="Total sales Today" />
+                        <Label fx:id="todaySales" styleClass="s-title" text="0 DH" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox fillHeight="false" layoutX="418.0" layoutY="10.0" prefHeight="169.0" prefWidth="264.0" styleClass="stat-card">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdASK4X58oXh8yRuU9vxCvW7YZZoQ1Y7PcFQ&amp;s" />
+                     </image>
+                  </ImageView>
+                  <VBox styleClass="stat-info">
+                     <children>
+                        <Label styleClass="f-title" text="Revenu This Month" />
+                        <Label fx:id="monthRevenue" styleClass="s-title" text="0 DH" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox fillHeight="false" layoutX="610.0" layoutY="10.0" prefHeight="169.0" prefWidth="264.0" styleClass="stat-card">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6NQ8PrCgOoYKc15vjM7oUbeKQvhhR62CryA&amp;s" />
+                     </image>
+                  </ImageView>
+                  <VBox styleClass="stat-info">
+                     <children>
+                        <Label styleClass="f-title" text="Total Products" />
+                        <Label fx:id="totalProducts" styleClass="s-title" text="0 DH" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <FlowPane fx:id="chartContainer" />
+   </children>
+</VBox>

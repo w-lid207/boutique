@@ -86,7 +86,6 @@ public class POSController implements Initializable {
         // Image Container
         BorderPane imageContainer = new BorderPane();
         imageContainer.getStyleClass().add("product-image-container");
-
         ImageView imageView = new ImageView();
         imageView.setFitWidth(180);
         imageView.setFitHeight(180);
@@ -186,7 +185,9 @@ public class POSController implements Initializable {
     @FXML
     private HBox createCartItem(Product product){
         HBox itemContainer = new HBox();
+        Image path = new Image(product.getImagePath());
         ImageView imageView = new ImageView();
+        imageView.setImage(path);
         VBox info = new VBox();
         HBox.setHgrow(info, ALWAYS);
             HBox top = new HBox();

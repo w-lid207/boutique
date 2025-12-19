@@ -1,0 +1,30 @@
+.container{
+    -fx-padding: 15 0 0 0;
+}
+.stat-container{
+    -fx-spacing: 15;
+    -fx-alignment: center;
+}
+.stat-card{
+    -fx-alignment: center-left;
+    -fx-background-color: white;
+
+    -fx-spacing: 25;
+    -fx-pref-width: 370;
+    -fx-padding: 0 0 0 40;
+}
+.stat-card VBox{
+    -fx-alignment: center-left;
+    -fx-font-weight: bold;
+}
+.f-title{
+    -fx-font-size: 20;
+}
+.s-title{
+    -fx-font-size: 35;
+}
+.default-color0.chart-pie { -fx-pie-color: #caf537; }
+.default-color1.chart-pie { -fx-pie-color: #638f00; }
+.default-color2.chart-pie { -fx-pie-color: #313a31; }
+.default-color3.chart-pie { -fx-pie-color: #eaffcf; }
+.default-color4.chart-pie { -fx-pie-color: #2c2f00; }
