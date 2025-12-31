@@ -2,6 +2,7 @@ package com.boutique.gestionboutique.controller;
 
 import com.boutique.gestionboutique.controller.Product;
 import com.boutique.gestionboutique.service.ProductService;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -55,15 +56,6 @@ public class ProductsController implements Initializable {
         }
     }
 
-    private void loadProducts() {
-        try {
-            allProducts = productService.getAllProducts();
-            displayProducts(allProducts);
-            statusLabel.setText("Produits chargés: " + allProducts.size());
-        } catch (Exception e) {
-            statusLabel.setText("Erreur: " + e.getMessage());
-        }
-    }
 
     private void displayProducts(List<Product> products) {
         productsGrid.getChildren().clear();
@@ -83,11 +75,38 @@ public class ProductsController implements Initializable {
         }
     }
 
+    private void loadProducts() {
+        statusLabel.setText("Chargement des produits...");
+
+        // 1. Run database call in a background thread
+        Task<List<Product>> loadTask = new Task<>() {
+            @Override
+            protected List<Product> call() throws Exception {
+                return productService.getAllProducts();
+            }
+        };
+
+        // 2. When data is ready, update the UI
+        loadTask.setOnSucceeded(e -> {
+            allProducts = loadTask.getValue();
+            displayProducts(allProducts);
+            statusLabel.setText("Produits chargés: " + allProducts.size());
+        });
+
+        loadTask.setOnFailed(e -> {
+            statusLabel.setText("Erreur de chargement");
+            loadTask.getException().printStackTrace();
+        });
+
+        new Thread(loadTask).start();
+    }
+
     private VBox createProductCard(Product product) {
         VBox card = new VBox(10);
         card.getStyleClass().add("product-card");
+        card.setPadding(new Insets(10));
 
-        // Image Container
+        // 1. Image Container (Fast Loading)
         BorderPane imageContainer = new BorderPane();
         imageContainer.getStyleClass().add("product-image-container");
 
@@ -96,35 +115,28 @@ public class ProductsController implements Initializable {
         imageView.setFitHeight(180);
         imageView.setPreserveRatio(true);
 
-        try {
-            if (product.getImagePath() != null && !product.getImagePath().isEmpty()) {
-                String imagePath = product.getImagePath();
-                imageView.setImage(new Image(imagePath));
-            }
-        } catch (Exception e) {
-            // Image non trouvée
+        if (product.getImagePath() != null && !product.getImagePath().isEmpty()) {
+            // 'true' makes the image load in a background thread
+            Image img = new Image(product.getImagePath(), true);
+            imageView.setImage(img);
         }
-
         imageContainer.setCenter(imageView);
 
-        // Nom du produit
+        // 2. Product Information (Restored)
         Label nameLabel = new Label(product.getName());
         nameLabel.getStyleClass().add("product-title");
         nameLabel.setWrapText(true);
 
-        // Catégorie
         Label categoryLabel = new Label("Catégorie: " + product.getCategoryName());
         categoryLabel.getStyleClass().add("product-category");
 
-        // Stock
         Label stockLabel = new Label("Stock: " + product.getQuantity());
         stockLabel.getStyleClass().add("product-stock");
 
-        // Prix
         Label priceLabel = new Label("MAD " + String.format("%.2f", product.getPrice()));
         priceLabel.getStyleClass().add("product-price");
 
-        // Boutons d'action
+        // 3. Action Buttons (Restored)
         HBox buttons = new HBox(8);
         buttons.getStyleClass().add("product-buttons");
 
@@ -138,11 +150,11 @@ public class ProductsController implements Initializable {
 
         buttons.getChildren().addAll(editBtn, deleteBtn);
 
+        // 4. Add everything back to the card
         card.getChildren().addAll(imageContainer, nameLabel, categoryLabel, stockLabel, priceLabel, buttons);
+
         return card;
     }
-
-
     @FXML
     private void searchProducts() {
         String query = searchField.getText().toLowerCase().trim();
