@@ -45,13 +45,22 @@ public class NavigationController {
     private void loadPage(String fileName) {
         try {
             Parent view;
+            FXMLLoader loader;
 
             if (cache.containsKey(fileName)) {
                 view = cache.get(fileName);
+
+                // Get the controller we saved earlier
+                Object controller = view.getUserData();
+
+
             } else {
                 String fullPath = "/com/boutique/gestionboutique/views/" + fileName;
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(fullPath));
+                loader = new FXMLLoader(getClass().getResource(fullPath));
                 view = loader.load();
+
+                // Store the controller so we can refresh it later
+                view.setUserData(loader.getController());
                 cache.put(fileName, view);
             }
 

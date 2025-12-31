@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -75,7 +76,7 @@ public class ProductsController implements Initializable {
         }
     }
 
-    private void loadProducts() {
+    public void loadProducts() {
         statusLabel.setText("Chargement des produits...");
 
         // 1. Run database call in a background thread
@@ -106,7 +107,6 @@ public class ProductsController implements Initializable {
         card.getStyleClass().add("product-card");
         card.setPadding(new Insets(10));
 
-        // 1. Image Container (Fast Loading)
         BorderPane imageContainer = new BorderPane();
         imageContainer.getStyleClass().add("product-image-container");
 
@@ -115,14 +115,30 @@ public class ProductsController implements Initializable {
         imageView.setFitHeight(180);
         imageView.setPreserveRatio(true);
 
-        if (product.getImagePath() != null && !product.getImagePath().isEmpty()) {
-            // 'true' makes the image load in a background thread
-            Image img = new Image(product.getImagePath(), true);
-            imageView.setImage(img);
+        // --- SILENT IMAGE LOADING START ---
+        if (product.getImagePath() != null && !product.getImagePath().trim().isEmpty()) {
+            try {
+                // We use background loading (true) and wrap it so it can't crash the status label
+                Image img = new Image(product.getImagePath(), true);
+
+                // If the image fails to load, this listener ensures it doesn't break the UI
+                img.errorProperty().addListener((obs, oldVal, isError) -> {
+                    if (isError) {
+                        System.out.println("Image skipped: " + product.getName());
+                    }
+                });
+
+                imageView.setImage(img);
+            } catch (Exception e) {
+                // If the URL is totally malformed, we just skip it
+                System.err.println("Skipped invalid URL for: " + product.getName());
+            }
         }
+        // --- SILENT IMAGE LOADING END ---
+
         imageContainer.setCenter(imageView);
 
-        // 2. Product Information (Restored)
+        // The rest of your code remains exactly the same...
         Label nameLabel = new Label(product.getName());
         nameLabel.getStyleClass().add("product-title");
         nameLabel.setWrapText(true);
@@ -136,7 +152,6 @@ public class ProductsController implements Initializable {
         Label priceLabel = new Label("MAD " + String.format("%.2f", product.getPrice()));
         priceLabel.getStyleClass().add("product-price");
 
-        // 3. Action Buttons (Restored)
         HBox buttons = new HBox(8);
         buttons.getStyleClass().add("product-buttons");
 
@@ -149,13 +164,10 @@ public class ProductsController implements Initializable {
         deleteBtn.setOnAction(e -> deleteProduct(product));
 
         buttons.getChildren().addAll(editBtn, deleteBtn);
-
-        // 4. Add everything back to the card
         card.getChildren().addAll(imageContainer, nameLabel, categoryLabel, stockLabel, priceLabel, buttons);
 
         return card;
-    }
-    @FXML
+    }    @FXML
     private void searchProducts() {
         String query = searchField.getText().toLowerCase().trim();
 
@@ -179,8 +191,8 @@ public class ProductsController implements Initializable {
         String categoryName = (String) btn.getUserData();
 
         if ("all".equals(categoryName)) {
+            loadProducts();
             displayProducts(allProducts);
-            statusLabel.setText("Tous les produits: " + allProducts.size());
             statusLabel.setText("Tous les produits: " + allProducts.size());
         } else {
             List<Product> filtered = new ArrayList<>();
@@ -207,7 +219,6 @@ public class ProductsController implements Initializable {
         ButtonType addBtn = new ButtonType("Ajouter", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(addBtn, ButtonType.CANCEL);
 
-        // Appliquer les styles et icônes au dialogue
         applyAddDialogStyles(dialog);
 
         dialog.setResultConverter(btn -> {
@@ -219,9 +230,19 @@ public class ProductsController implements Initializable {
 
         Optional<Product> result = dialog.showAndWait();
         if (result.isPresent()) {
+            Product newProduct = result.get();
             try {
-                productService.addProduct(result.get());
-                loadProducts();
+                // 1. Save to Database
+                productService.addProduct(newProduct);
+
+                // --- MODIFICATION: Manual Update for Instant UI Refresh ---
+                if (allProducts == null) {
+                    allProducts = new ArrayList<>();
+                }
+                allProducts.add(newProduct); // Add to the local list
+                displayProducts(allProducts); // Redraw grid with the new product
+                // -----------------------------------------------------------
+
                 statusLabel.setText("✓ Produit ajouté!");
             } catch (Exception e) {
                 statusLabel.setText("✗ Erreur: " + e.getMessage());
@@ -240,7 +261,6 @@ public class ProductsController implements Initializable {
         ButtonType saveBtn = new ButtonType("Enregistrer", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(saveBtn, ButtonType.CANCEL);
 
-        // Appliquer les styles et icônes au dialogue
         applyEditDialogStyles(dialog);
 
         dialog.setResultConverter(btn -> {
@@ -262,20 +282,26 @@ public class ProductsController implements Initializable {
         }
     }
 
-    private void deleteProduct(Product product) {
+    private void deleteProduct(@NotNull Product product) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation de suppression");
         alert.setHeaderText("🗑️ Êtes-vous sûr?");
         alert.setContentText("Voulez-vous vraiment supprimer \"" + product.getName() + "\"?");
 
-        // Appliquer les styles et icônes à l'alerte
         applyDeleteAlertStyles(alert);
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
                 productService.deleteProduct(product.getId());
-                loadProducts();
+
+                // --- MODIFICATION: Manual Remove for Instant UI Refresh ---
+                if (allProducts != null) {
+                    allProducts.remove(product); // Remove from the local list
+                    displayProducts(allProducts); // Redraw grid
+                }
+                // -----------------------------------------------------------
+
                 statusLabel.setText("✓ Produit supprimé!");
             } catch (Exception e) {
                 statusLabel.setText("✗ Erreur: " + e.getMessage());
@@ -283,6 +309,7 @@ public class ProductsController implements Initializable {
         }
     }
 
+    @NotNull
     private GridPane createProductForm(Product product) {
         GridPane grid = new GridPane();
         grid.setHgap(15);
@@ -318,7 +345,6 @@ public class ProductsController implements Initializable {
             imagePathField.setText(product.getImagePath());
         }
 
-        // Labels avec icônes
         Label nameLabel = createLabelWithIcon("📝 Nom:", "form-label");
         Label priceLabel = createLabelWithIcon("💰 Prix:", "form-label");
         Label quantityLabel = createLabelWithIcon("📦 Quantité:", "form-label");
@@ -340,18 +366,12 @@ public class ProductsController implements Initializable {
         return grid;
     }
 
-    /**
-     * Crée une étiquette avec icône
-     */
     private Label createLabelWithIcon(String text, String styleClass) {
         Label label = new Label(text);
         label.getStyleClass().add(styleClass);
         return label;
     }
 
-    /**
-     * Crée une icône pour un bouton
-     */
     private Label createIcon(String emoji) {
         Label icon = new Label(emoji);
         icon.setStyle("-fx-font-size: 14;");
@@ -367,19 +387,21 @@ public class ProductsController implements Initializable {
         product.setPrice(Double.parseDouble(((TextField) fields[1]).getText()));
         product.setQuantity(Integer.parseInt(((TextField) fields[2]).getText()));
         product.setCategoryId(Integer.parseInt(((TextField) fields[3]).getText()));
-        product.setImagePath(((TextField) fields[4]).getText());
-
+// Check if the image path is empty
+        String imagePath = ((TextField) fields[4]).getText().trim();
+        if (imagePath.isEmpty()) {
+            // Use your default URL if the user left it blank
+            product.setImagePath("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxPkvTAZPy50xomMxjBYcYO8VMpyIg2fTCRA&s");
+        } else {
+            product.setImagePath(imagePath);
+        }
         return product;
     }
 
-    /**
-     * Applique les styles au dialogue AJOUTER (Vert)
-     */
     private void applyAddDialogStyles(Dialog<Product> dialog) {
         try {
             String css = this.getClass().getResource("/styles.css").toExternalForm();
             dialog.getDialogPane().getStylesheets().add(css);
-
             dialog.getDialogPane().setStyle("-fx-background-color: #f0f0f0;");
 
             for (ButtonType buttonType : dialog.getDialogPane().getButtonTypes()) {
@@ -399,14 +421,10 @@ public class ProductsController implements Initializable {
         }
     }
 
-    /**
-     * Applique les styles au dialogue ÉDITER (Orange)
-     */
     private void applyEditDialogStyles(Dialog<Product> dialog) {
         try {
             String css = this.getClass().getResource("/styles.css").toExternalForm();
             dialog.getDialogPane().getStylesheets().add(css);
-
             dialog.getDialogPane().setStyle("-fx-background-color: #f0f0f0;");
 
             for (ButtonType buttonType : dialog.getDialogPane().getButtonTypes()) {
@@ -426,14 +444,10 @@ public class ProductsController implements Initializable {
         }
     }
 
-    /**
-     * Applique les styles à l'alerte SUPPRIMER (Rouge)
-     */
     private void applyDeleteAlertStyles(Alert alert) {
         try {
             String css = this.getClass().getResource("/styles.css").toExternalForm();
             alert.getDialogPane().getStylesheets().add(css);
-
             alert.getDialogPane().setStyle("-fx-background-color: #f0f0f0;");
 
             for (ButtonType buttonType : alert.getDialogPane().getButtonTypes()) {

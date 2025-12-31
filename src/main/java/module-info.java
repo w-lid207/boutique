@@ -10,6 +10,7 @@ module com.boutique.gestionboutique {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires annotations;
 
     opens com.boutique.gestionboutique to javafx.fxml;
     exports com.boutique.gestionboutique;
