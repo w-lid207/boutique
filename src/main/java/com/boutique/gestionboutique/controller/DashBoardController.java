@@ -1,6 +1,8 @@
 package com.boutique.gestionboutique.controller;
 
 import com.boutique.gestionboutique.service.StatService;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -34,22 +36,31 @@ public class DashBoardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resource){
-        StatService statService = new StatService();
-        serumCount.setText(statService.getProductCount("Sérums"));
-        vitamineCount.setText(statService.getProductCount("Vitamines & Suppléments"));
-        bioCount.setText(statService.getProductCount("Produits Bio (Soins & Divers)"));
-        makeupCount.setText(statService.getProductCount("Maquillage"));
-        serumCount.setText(statService.getProductCount("Sérums"));
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() {
+                StatService statService = new StatService();
 
-        serumCount1.setText(statService.getTotalStock("Sérums"));
-        vitamineCount1.setText(statService.getTotalStock("Vitamines & Suppléments"));
-        bioCount1.setText(statService.getTotalStock("Produits Bio (Soins & Divers)"));
-        makeupCount1.setText(statService.getTotalStock("Maquillage"));
-        serumCount1.setText(statService.getTotalStock("Sérums"));
+                Platform.runLater(() -> {
+                    serumCount.setText(statService.getProductCount("Sérums"));
+                    vitamineCount.setText(statService.getProductCount("Vitamines & Suppléments"));
+                    bioCount.setText(statService.getProductCount("Produits Bio (Soins & Divers)"));
+                    makeupCount.setText(statService.getProductCount("Maquillage"));
 
-        todaySaleCount.setText(statService.getProductCount("Sérums"));
-        revenueForToday.setText(statService.getTodayRevenue()+" DH");
-        allTimeRevenue.setText(statService.getAllTimeRevnue()+" DH");
-        todaySaleCount.setText(statService.getTodaySaleCount());
+                    serumCount1.setText(statService.getTotalStock("Sérums"));
+                    vitamineCount1.setText(statService.getTotalStock("Vitamines & Suppléments"));
+                    bioCount1.setText(statService.getTotalStock("Produits Bio (Soins & Divers)"));
+                    makeupCount1.setText(statService.getTotalStock("Maquillage"));
+
+                    todaySaleCount.setText(statService.getTodaySaleCount());
+                    revenueForToday.setText(statService.getTodayRevenue() + " DH");
+                    allTimeRevenue.setText(statService.getAllTimeRevnue() + " DH");
+                });
+
+                return null;
+            }
+        };
+
+        new Thread(task).start();
     }
 }
