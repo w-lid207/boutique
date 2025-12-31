@@ -43,16 +43,11 @@ public class POSController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         productService = new ProductService();
-
-        // Initial cart load
         refreshCartDisplay();
-
-        // Start background loading of products
         loadProducts();
     }
 
     private void loadProducts() {
-        // Create a background task
         Task<List<Product>> loadTask = new Task<>() {
             @Override
             protected List<Product> call() throws Exception {
@@ -66,13 +61,11 @@ public class POSController implements Initializable {
         });
 
         loadTask.setOnFailed(e -> loadTask.getException().printStackTrace());
-
         new Thread(loadTask).start();
     }
 
     private void displayProducts(List<Product> products) {
         productsGrid.getChildren().clear();
-
         int row = 0;
         int col = 0;
 
@@ -88,6 +81,7 @@ public class POSController implements Initializable {
         }
     }
 
+    // FIXED: Added defensive image loading to prevent "Invalid URL" crash
     private VBox createProductCard(Product product) {
         VBox card = new VBox(10);
         card.getStyleClass().add("product-card");
@@ -100,10 +94,15 @@ public class POSController implements Initializable {
         imageView.setFitHeight(180);
         imageView.setPreserveRatio(true);
 
-        if (product.getImagePath() != null && !product.getImagePath().isEmpty()) {
-            // true = load in background to prevent stuttering
-            Image image = new Image(product.getImagePath(), true);
-            imageView.setImage(image);
+        // SAFE IMAGE LOADING
+        if (product.getImagePath() != null && !product.getImagePath().trim().isEmpty()) {
+            try {
+                // Use background loading (true) to keep UI fast
+                Image image = new Image(product.getImagePath(), true);
+                imageView.setImage(image);
+            } catch (Exception e) {
+                System.err.println("Skipping invalid image path: " + product.getImagePath());
+            }
         }
 
         imageContainer.setCenter(imageView);
@@ -133,6 +132,25 @@ public class POSController implements Initializable {
         return card;
     }
 
+    // FIXED: Re-added this method which was missing and causing FXML LoadException
+    @FXML
+    private void filterByCategory(javafx.event.ActionEvent event) {
+        Button btn = (Button) event.getSource();
+        String categoryName = (String) btn.getUserData();
+
+        if (allProducts == null) return;
+
+        if ("all".equals(categoryName)) {
+            displayProducts(allProducts);
+        } else {
+            List<Product> filtered = allProducts.stream()
+                    .filter(p -> p.getCategoryName() != null &&
+                            p.getCategoryName().equalsIgnoreCase(categoryName))
+                    .toList();
+            displayProducts(filtered);
+        }
+    }
+
     @FXML
     private void searchProducts() {
         String query = searchField.getText().toLowerCase().trim();
@@ -140,44 +158,35 @@ public class POSController implements Initializable {
             displayProducts(allProducts);
             return;
         }
-
-        try {
-            // For search, we use a simple filter on the existing list to keep it instant
-            List<Product> results = allProducts.stream()
-                    .filter(p -> p.getName().toLowerCase().contains(query))
-                    .toList();
-            displayProducts(results);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        List<Product> results = allProducts.stream()
+                .filter(p -> p.getName().toLowerCase().contains(query))
+                .toList();
+        displayProducts(results);
     }
 
     @FXML
     private void addToCart(Product product){
-        // Check if item already exists to avoid redundant UI work
         for(Product p : cartManager.getCartItems()){
             if(p.getId() == product.getId()){
                 handleQuantity(p.getId(), '+');
                 return;
             }
         }
-
         product.setqCartItem(1);
         product.setqPrice(product.getPrice());
         cartManager.addItem(product);
-
         refreshCartDisplay();
-        updateTotalPriceDisplay();
     }
 
     private HBox createCartItem(Product product){
         HBox itemContainer = new HBox();
         itemContainer.getStyleClass().add("cartItemContainer");
 
-        // Background loading for cart thumbnail too
         ImageView imageView = new ImageView();
-        if (product.getImagePath() != null) {
-            imageView.setImage(new Image(product.getImagePath(), true));
+        if (product.getImagePath() != null && !product.getImagePath().trim().isEmpty()) {
+            try {
+                imageView.setImage(new Image(product.getImagePath(), true));
+            } catch (Exception e) {}
         }
         imageView.setFitWidth(50);
         imageView.setFitHeight(50);
@@ -188,7 +197,6 @@ public class POSController implements Initializable {
         info.getStyleClass().add("cart-info");
         HBox.setHgrow(info, ALWAYS);
 
-        // TOP SECTION
         HBox top = new HBox();
         top.getStyleClass().add("cart-top");
         Label productTitle = new Label(product.getName());
@@ -209,7 +217,6 @@ public class POSController implements Initializable {
 
         top.getChildren().addAll(productTitle, spacer, deleteBtn);
 
-        // BOTTOM SECTION
         HBox bottom = new HBox(5);
         bottom.setAlignment(Pos.CENTER_LEFT);
         bottom.getStyleClass().add("cart-bottom");
@@ -282,26 +289,13 @@ public class POSController implements Initializable {
 
     @FXML
     private void processSaleUpdates() {
-        // 1. Check if cart is empty
-        if(cartManager.getCartItems() == null || cartManager.getCartItems().isEmpty()) {
-            return;
-        }
+        if(cartManager.getCartItems() == null || cartManager.getCartItems().isEmpty()) return;
 
         try {
-            // 2. CONVERSION: This fixes the "Incompatible types" error
-            // We wrap your ArrayList into an ObservableList
             ObservableList<Product> observableCart = FXCollections.observableArrayList(cartManager.getCartItems());
-
-            // 3. Process the sale using the compatible type
             cartManager.processSale(observableCart, calculateTotalPrice());
-
-            // 4. Clear and refresh UI
             cartManager.getCartItems().clear();
             refreshCartDisplay();
-
-            // Optional: Add a success message to your status label if you have one
-            System.out.println("Vente réussie !");
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
