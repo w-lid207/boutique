@@ -5,8 +5,6 @@ import com.boutique.gestionboutique.service.SaleService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,6 +20,7 @@ import java.util.List;
 
 public class SalesHistoryController {
 
+    @FXML private BorderPane borderPane;
     @FXML private TableView<Sale> salesTable;
     @FXML private TableColumn<Sale, Integer> idColumn;
     @FXML private TableColumn<Sale, String> dateColumn;
@@ -31,8 +30,6 @@ public class SalesHistoryController {
     private SaleService saleService;
     private ObservableList<Sale> salesList;
     private ObservableList<Sale> filteredSalesList;
-    private FilteredList<Sale> filteredSales;
-
 
     @FXML
     public void initialize() {
@@ -73,29 +70,20 @@ public class SalesHistoryController {
     }
 
     private void setupSearch() {
-        searchField.textProperty().addListener((obs, oldVal, newVal) -> {
-            filteredSales.setPredicate(sale ->
-                    newVal == null || newVal.isEmpty() ||
-                            String.valueOf(sale.getId()).contains(newVal)
-            );
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterSalesByID(newValue);
         });
     }
 
     private void loadSalesData() {
-        Task<List<Sale>> task = new Task<>() {
-            @Override
-            protected List<Sale> call() throws Exception {
-                return saleService.getAllSales();
-            }
-        };
-
-        task.setOnSucceeded(e -> {
-            salesList = FXCollections.observableArrayList(task.getValue());
-            filteredSales = new FilteredList<>(salesList, p -> true);
-            salesTable.setItems(filteredSales);
-        });
-
-        new Thread(task).start();
+        try {
+            List<Sale> sales = saleService.getAllSales();
+            salesList = FXCollections.observableArrayList(sales);
+            filteredSalesList = FXCollections.observableArrayList(sales);
+            salesTable.setItems(filteredSalesList);
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load sales data: " + e.getMessage());
+        }
     }
 
     private void filterSalesByID(String searchText) {
@@ -118,8 +106,38 @@ public class SalesHistoryController {
         loadSalesData();
     }
 
+    // Navigation methods
+    @FXML
+    private void handleDashboardClick() {
+        navigateTo("/fxml/Dashboard.fxml");
+    }
 
+    @FXML
+    private void handleProductsClick() {
+        navigateTo("/fxml/Products.fxml");
+    }
 
+    @FXML
+    private void handlePOSClick() {
+        navigateTo("/fxml/POS.fxml");
+    }
+
+    @FXML
+    private void handleAnalyticsClick() {
+        navigateTo("/fxml/Analytics.fxml");
+    }
+
+    private void navigateTo(String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+            Stage stage = (Stage) borderPane.getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Navigation Error", "Failed to navigate: " + e.getMessage());
+        }
+    }
 
     private void showAlert(Alert.AlertType type, String title, String content) {
         Alert alert = new Alert(type);
