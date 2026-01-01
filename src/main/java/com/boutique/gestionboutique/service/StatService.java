@@ -22,12 +22,11 @@ public class StatService {
             e.printStackTrace();
         }
     }
-    public String  getProductCount(String category){
-        String query = "SELECT count(*) FROM products WHERE category_id = (SELECT id FROM categories WHERE name = ?)";
-        int countResult = 20;
+    public String  getProductCount(){
+        String query = "SELECT count(*) FROM products ";
+        int countResult = 0;
         try {
             PreparedStatement pstmt = connection.prepareStatement(query);
-            pstmt.setString(1, category);
             ResultSet rs = pstmt.executeQuery();
             if(rs.next()){
                 System.out.println("It worked");
@@ -41,12 +40,11 @@ public class StatService {
         }
         return String.valueOf(countResult);
     }
-    public String  getTotalStock(String category){
-        String query = "SELECT sum(quantity) FROM products WHERE category_id = (SELECT id FROM categories WHERE name = ?)";
-        int countResult = 20;
+    public String  getLowStockItems(){
+        String query = "SELECT count(*) FROM products WHERE quantity <= 50 ";
+        int countResult = 0;
         try {
             PreparedStatement pstmt = connection.prepareStatement(query);
-            pstmt.setString(1, category);
             ResultSet rs = pstmt.executeQuery();
             if(rs.next()){
                 System.out.println("It worked");

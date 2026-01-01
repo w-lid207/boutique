@@ -39,7 +39,30 @@ public class AnalyticService {
     public Map<String, Double> monthlyData(){
             Map<String, Double> data = new HashMap<String, Double>();
 
-            String query = "SELECT  DATE_FORMAT(date, '%b'), sum(total) FROM sales GROUP BY month(date)";
+            String query = "SELECT  DATE_FORMAT(date, '%b'), sum(total) FROM sales WHERE  year(date) = year(CURRENT_DATE()) GROUP BY month(date)";
+            try {
+                PreparedStatement pstmt = connection.prepareStatement(query);
+                ResultSet reseultSet = pstmt.executeQuery();
+                while(reseultSet.next()){
+                    data.put(reseultSet.getString(1), reseultSet.getDouble(2));
+                }
+            }catch ( SQLException e){
+                e.printStackTrace();
+            }
+
+
+
+
+
+
+
+
+            return data;
+    }
+    public Map<String, Double> monthlyData6(){
+            Map<String, Double> data = new HashMap<String, Double>();
+
+            String query = "SELECT DATE_FORMAT(date, '%b') AS month, SUM(total) FROM sales WHERE date >= DATE_SUB(LAST_DAY(CURRENT_DATE()), INTERVAL 6 MONTH) GROUP BY YEAR(date), MONTH(date) ORDER BY date ASC;";
             try {
                 PreparedStatement pstmt = connection.prepareStatement(query);
                 ResultSet reseultSet = pstmt.executeQuery();

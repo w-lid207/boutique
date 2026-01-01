@@ -22,32 +22,32 @@
                <children>
                   <VBox styleClass="top-bar">
                      <children>
-               
+
                            <!-- Filtres par Catégorie -->
                            <HBox spacing="10">
                                <padding>
                                    <Insets bottom="15" left="15" right="15" top="0" />
                                </padding>
-               
+
                                <Label styleClass="label-category" text="Catégorie:" />
-               
+
                                <Button onAction="#filterByCategory" styleClass="filter-btn, filter-btn-active" text="Tous" userData="all" />
-               
+
                                <Button onAction="#filterByCategory" styleClass="filter-btn" text="Sérums" userData="Sérums" />
-               
+
                                <Button onAction="#filterByCategory" styleClass="filter-btn" text="Maquillage" userData="Maquillage" />
-               
+
                                <Button onAction="#filterByCategory" styleClass="filter-btn" text="Produits Bio (Soins &amp; Divers)" userData="Produits Bio (Soins &amp; Divers)" />
-               
+
                                <Button onAction="#filterByCategory" styleClass="filter-btn" text="Vitamines &amp; Suppléments" userData="Vitamines &amp; Suppléments" />
                            </HBox>
                            <HBox spacing="10">
                                <padding>
                                    <Insets bottom="15" left="15" right="15" top="15" />
                                </padding>
-               
+
                                <TextField fx:id="searchField" onAction="#searchProducts" promptText="Rechercher un produit..." styleClass="search-field" HBox.hgrow="ALWAYS" />
-               
+
                                <Button onAction="#searchProducts" styleClass="btn-search" text="🔍 Rechercher" />
                            </HBox>
                      </children>
@@ -56,7 +56,7 @@
                          <padding>
                              <Insets bottom="20" left="20" right="20" top="20" />
                          </padding>
-            
+
                          <columnConstraints>
                              <ColumnConstraints percentWidth="33.33" />
                              <ColumnConstraints percentWidth="33.33" />

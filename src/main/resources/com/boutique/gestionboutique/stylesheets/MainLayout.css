@@ -1,0 +1,61 @@
+/* --- Sidebar Container --- */
+.sidebar {
+    -fx-background-color: #3D4A4E; /* Dark Slate */
+}
+
+/* --- Branding --- */
+.brand-text {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+/* --- Sidebar Buttons --- */
+.sidebar-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9CA5AB; /* Muted Grey Text */
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 14px;
+    -fx-padding: 12 15;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+}
+
+/* Default Icon Color */
+.sidebar-btn .sidebar-icon {
+    -fx-fill: #9CA5AB;
+    -fx-scale-x: 0.8; /* Keep your SVGs at a good size */
+    -fx-scale-y: 0.8;
+}
+
+/* Hover State */
+.sidebar-btn:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-text-fill: white;
+}
+
+.sidebar-btn:hover .sidebar-icon {
+    -fx-fill: white;
+}
+
+/* --- Active State (Green) --- */
+.sidebar-btn.active {
+    -fx-background-color: #6C8174; /* Sage Green */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.sidebar-btn.active .sidebar-icon {
+    -fx-fill: white;
+}
+
+/* --- Logout Icon Specifics --- */
+/* Your old logout icon was red, but in this theme,
+   it looks better as standard grey/white.
+   If you really want red, change fill below. */
+.logout-icon {
+    -fx-fill: #ffffff;
+    -fx-scale-x: 0.8;
+    -fx-scale-y: 0.8;
+}
