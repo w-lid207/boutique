@@ -1,68 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.shape.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.boutique.gestionboutique.controller.LoginController"
-            stylesheets="@../stylesheets/styles.css"
-            prefWidth="1000" prefHeight="700">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane prefHeight="700" prefWidth="1000" stylesheets="@../stylesheets/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.boutique.gestionboutique.controller.LoginController">
 
     <center>
-        <StackPane styleClass="main-container">
+        <StackPane style="-fx-background-color: #A4C3A2;"> <HBox alignment="CENTER" maxHeight="550.0" maxWidth="900.0" styleClass="main-card-background">
 
-            <!-- Card Container -->
-            <VBox styleClass="login-card" spacing="40" alignment="CENTER">
+            <VBox alignment="CENTER_LEFT" spacing="20.0" HBox.hgrow="ALWAYS">
+                <padding>
+                    <Insets bottom="40" left="60" right="40" top="40" />
+                </padding>
 
-                <!-- Header Section -->
-                <HBox spacing="150" alignment="CENTER">
-                    <!-- Left: Login Title -->
-                    <VBox spacing="20" alignment="CENTER_LEFT">
-                        <Text text="Login" styleClass="login-title"/>
+                <HBox alignment="CENTER_LEFT" spacing="15.0">
+                    <StackPane style="-fx-background-color: rgba(255,255,255,0.3); -fx-background-radius: 10;">
+                        <padding><Insets bottom="8" left="8" right="8" top="8" /></padding>
+                        <SVGPath content="M12 18H6V14H12M21 6H3L2 12V20H22V12L21 6M12 2C14 2 15 3 15 5H9C9 3 10 2 12 2Z" scaleX="1.2" scaleY="1.2" />
+                    </StackPane>
+                    <Text styleClass="brand-text" text="Gestion de Boutique" />
+                </HBox>
 
-                        <!-- Form Fields -->
-                        <VBox spacing="15" styleClass="form-section">
-                            <!-- Email Field -->
-                            <TextField fx:id="emailField"
-                                       prefWidth="280"
-                                       prefHeight="45"
-                                       promptText="your@email.com"
-                                       styleClass="input-field"/>
+                <Text styleClass="brand-subtitle" text="Une plateforme moderne pour piloter vos ventes en toute sérénité." wrappingWidth="300" />
 
-                            <!-- Password Field -->
-                            <PasswordField fx:id="passwordField"
-                                           prefWidth="280"
-                                           prefHeight="45"
-                                           promptText="••••••••"
-                                           styleClass="input-field"/>
+                <VBox VBox.vgrow="ALWAYS" />
 
-                            <!-- Login Button -->
-                            <Button text="Login"
-                                    fx:id="loginButton"
-                                    prefWidth="280"
-                                    prefHeight="45"
-                                    styleClass="login-button"
-                                    onAction="#handleLogin"/>
+                <Text styleClass="welcome-big-text" text="Welcome Back" />
+                <Text styleClass="welcome-desc-text" text="Sign in to your account to access the dashboard and manage your boutique." wrappingWidth="350" />
+
+                <VBox VBox.vgrow="ALWAYS" />
+            </VBox>
+
+            <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
+                <padding>
+                    <Insets bottom="40" left="40" right="60" top="40" />
+                </padding>
+
+                <VBox maxWidth="380.0" spacing="25.0" styleClass="login-white-card">
+                    <padding>
+                        <Insets bottom="40" left="35" right="35" top="40" />
+                    </padding>
+
+                    <VBox spacing="5.0">
+                        <Text styleClass="login-header" text="Sign in to your account" />
+                        <Text styleClass="login-subheader" text="Enter your credentials to continue." />
+                    </VBox>
+
+                    <VBox spacing="15.0">
+                        <VBox spacing="8.0">
+                            <Label styleClass="field-label" text="Email / Username" />
+                            <TextField fx:id="emailField" promptText="you@example.com" styleClass="modern-input" />
                         </VBox>
 
+                        <VBox spacing="8.0">
+                            <Label styleClass="field-label" text="Password" />
+                            <PasswordField fx:id="passwordField" promptText="••••••••" styleClass="modern-input" />
+                        </VBox>
 
-
-
-                        <Label fx:id="errorLabel"
-                               styleClass="error-message"
-                               visible="false"/>
+                        <HBox alignment="CENTER_RIGHT">
+                            <Label styleClass="forgot-password" text="Forgot password?" />
+                        </HBox>
                     </VBox>
 
-                    <!-- Right: Welcome Text (Decorative) -->
-                    <VBox spacing="10" alignment="CENTER" styleClass="welcome-section">
-                        <Text text="Welcome" styleClass="welcome-title"/>
-                        <Text text="Back" styleClass="welcome-title"/>
+                    <Label fx:id="errorLabel" styleClass="error-message" visible="false" />
+
+                    <VBox spacing="15.0" alignment="CENTER">
+                        <Button fx:id="loginButton" maxWidth="1.7976931348623157E308" onAction="#handleLogin" prefHeight="45.0" styleClass="login-btn-primary" text="→  Sign in" />
+                        <Label styleClass="create-account-label" text="Don't have an account? Contact admin" />
                     </VBox>
-                </HBox>
+
+                </VBox>
             </VBox>
+        </HBox>
         </StackPane>
     </center>
 </BorderPane>
