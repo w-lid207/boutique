@@ -1,20 +1,24 @@
 package com.boutique.gestionboutique.controller;
 
 import com.boutique.gestionboutique.service.SaleService;
+import com.boutique.gestionboutique.controller.Sale;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.geometry.Pos;
-import javafx.scene.text.Font;
-import java.time.LocalDateTime;
+import javafx.stage.StageStyle;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
+import javafx.stage.FileChooser;
+import java.io.File;
+import java.io.PrintWriter;
 
 public class SalesHistoryController {
 
@@ -24,82 +28,153 @@ public class SalesHistoryController {
     @FXML private TableColumn<Sale, Double> totalColumn;
     @FXML private TableColumn<Sale, Void> actionColumn;
     @FXML private TextField searchField;
-    @FXML private Label totalSalesLabel;
-    @FXML private Label totalSalesCount;
-    @FXML private Label todaySalesLabel;
-    @FXML private Label todaySalesAmount;
-    @FXML private Label averageSaleLabel;
-    @FXML private Label countLabel;
+    @FXML private Label totalSalesLabel, totalSalesCount, todaySalesLabel, todaySalesAmount, averageSaleLabel, countLabel;
     @FXML private Button refreshButton;
+    @FXML private Pagination pagination;
 
     private SaleService saleService;
-    private ObservableList<Sale> salesList;
+    private ObservableList<Sale> salesList = FXCollections.observableArrayList();
+    private final int ROWS_PER_PAGE = 10;
 
     @FXML
     public void initialize() {
         saleService = new SaleService();
-        loadFonts();
-        initializeComponents();
+        setupColumns();
+        setupActionColumn();
+        pagination.setPageFactory(this::createPage);
         loadSales();
+        searchField.textProperty().addListener((obs, old, newVal) -> applyFilter(newVal));
+    }
+
+
+    @FXML
+    private void handleExportCSV() {
+        // 1. Ouvrir une boîte de dialogue pour choisir l'emplacement du fichier
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Enregistrer l'export CSV");
+        fileChooser.setInitialFileName("export_ventes_" + LocalDate.now() + ".csv");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers CSV", "*.csv"));
+
+        File file = fileChooser.showSaveDialog(pagination.getScene().getWindow());
+
+        if (file != null) {
+            try (PrintWriter writer = new PrintWriter(file)) {
+                // 2. Écrire l'en-tête du CSV
+                writer.println("ID;Date;Heure;Montant (MAD)");
+
+                // 3. Parcourir la liste complète des ventes (pas seulement la page actuelle)
+                for (Sale sale : salesList) {
+                    String date = sale.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                    String heure = sale.getDate().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+
+                    writer.println(String.format("%d;%s;%s;%.2f",
+                            sale.getId(),
+                            date,
+                            heure,
+                            sale.getTotal()
+                    ));
+                }
+
+                // Message de succès
+                System.out.println("Exportation réussie dans : " + file.getAbsolutePath());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                // Optionnel : Afficher une alerte d'erreur à l'utilisateur
+            }
+        }
+    }
+    private Node createPage(int pageIndex) {
+        if (salesList.isEmpty()) return new VBox(new Label("Aucune donnée"));
+        int fromIndex = pageIndex * ROWS_PER_PAGE;
+        int toIndex = Math.min(fromIndex + ROWS_PER_PAGE, salesList.size());
+        salesTable.setItems(FXCollections.observableArrayList(salesList.subList(fromIndex, toIndex)));
+        salesTable.setFixedCellSize(50);
+        salesTable.prefHeightProperty().bind(salesTable.fixedCellSizeProperty().multiply(ROWS_PER_PAGE + 1.1));
+        return new VBox(salesTable);
+    }
+
+    private void loadSales() {
+        List<Sale> list = saleService.getAllSales();
+        salesList.setAll(list);
+        updatePaginationUI();
         updateStatistics();
     }
 
-    private void loadFonts() {
-        try {
-            String[] fonts = {"Regular", "Bold", "Medium", "SemiBold"};
-            for (String font : fonts) {
-                Font.loadFont(getClass().getResourceAsStream("/com/boutique/gestionboutique/Fonts/Poppins-" + font + ".ttf"), 12);
-            }
-        } catch (Exception e) {
-            System.err.println("Erreur chargement polices: " + e.getMessage());
-        }
+    private void applyFilter(String query) {
+        List<Sale> filtered = saleService.getAllSales().stream()
+                .filter(s -> String.valueOf(s.getId()).contains(query))
+                .collect(Collectors.toList());
+        salesList.setAll(filtered);
+        updatePaginationUI();
     }
 
-    private void initializeComponents() {
-        salesTable.setPlaceholder(new Label("Aucune vente trouvée"));
-        setupColumns();
-        setupActionColumn();
-        setupSearch();
-        setupRefreshButton();
+    private void updatePaginationUI() {
+        int pageCount = (int) Math.ceil((double) salesList.size() / ROWS_PER_PAGE);
+        pagination.setPageCount(pageCount > 0 ? pageCount : 1);
+        countLabel.setText(salesList.size() + " ventes");
+    }
+
+    private void updateStatistics() {
+        // Si la liste est vide, on remet tout à zéro
+        if (salesList == null || salesList.isEmpty()) {
+            totalSalesLabel.setText("0.00 MAD");
+            totalSalesCount.setText("0 ventes"); // Correction ici
+            todaySalesLabel.setText("0");
+            todaySalesAmount.setText("0.00 MAD");
+            averageSaleLabel.setText("0.00 MAD");
+            return;
+        }
+
+        // 1. Calcul du Total Global
+        double totalAmount = salesList.stream().mapToDouble(Sale::getTotal).sum();
+        totalSalesLabel.setText(String.format("%.2f MAD", totalAmount));
+
+        // CORRECTION DU BUG "0 ventes" :
+        // On utilise salesList.size() pour afficher le nombre réel de transactions
+        int totalCount = salesList.size();
+        totalSalesCount.setText(totalCount + (totalCount <= 1 ? " vente" : " ventes"));
+
+        // 2. Calcul pour Aujourd'hui
+        LocalDate today = LocalDate.now();
+        List<Sale> todaySales = salesList.stream()
+                .filter(sale -> sale.getDate().toLocalDate().equals(today))
+                .collect(Collectors.toList());
+
+        double todayAmount = todaySales.stream().mapToDouble(Sale::getTotal).sum();
+        todaySalesLabel.setText(String.valueOf(todaySales.size()));
+        todaySalesAmount.setText(String.format("%.2f MAD", todayAmount));
+
+        // 3. Calcul de la Moyenne
+        averageSaleLabel.setText(String.format("%.2f MAD", totalAmount / totalCount));
     }
 
     private void setupColumns() {
-        // ID Column
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         idColumn.setCellFactory(col -> new TableCell<>() {
             @Override
             protected void updateItem(Integer value, boolean empty) {
                 super.updateItem(value, empty);
-                if (empty || value == null) {
-                    setGraphic(null);
-                } else {
-                    Label idLabel = new Label("#" + value);
-                    idLabel.setStyle("-fx-background-color: #e0e7ff; -fx-background-radius: 12; -fx-padding: 6 12; " +
-                            "-fx-font-family: 'Poppins SemiBold'; -fx-font-size: 13px; -fx-text-fill: #4f46e5;");
-                    setGraphic(idLabel);
-                    setAlignment(Pos.CENTER);
+                if (empty) setGraphic(null);
+                else {
+                    Label lbl = new Label("#" + value);
+                    lbl.setStyle("-fx-background-color: #f1f5f9; -fx-background-radius: 8; -fx-padding: 4 12; -fx-text-fill: #3d4a4d; -fx-font-weight: bold;");
+                    setGraphic(lbl); setAlignment(Pos.CENTER);
                 }
             }
         });
 
-        // Date Column
-        dateColumn.setCellValueFactory(data -> {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy • HH:mm:ss");
-            return new SimpleStringProperty(data.getValue().getDate().format(formatter));
-        });
+        dateColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy • HH:mm:ss"))));
 
-        // Total Column
         totalColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
         totalColumn.setCellFactory(col -> new TableCell<>() {
             @Override
             protected void updateItem(Double value, boolean empty) {
                 super.updateItem(value, empty);
-                if (empty || value == null) {
-                    setText(null);
-                } else {
+                if (empty) setText(null);
+                else {
                     setText(String.format("%.2f MAD", value));
-                    setStyle("-fx-font-family: 'Poppins Bold'; -fx-font-size: 14px; -fx-text-fill: #059669;");
-                    setAlignment(Pos.CENTER_RIGHT);
+                    setStyle("-fx-text-fill: #6d8c6d; -fx-font-weight: bold;"); setAlignment(Pos.CENTER_RIGHT);
                 }
             }
         });
@@ -107,159 +182,86 @@ public class SalesHistoryController {
 
     private void setupActionColumn() {
         actionColumn.setCellFactory(col -> new TableCell<>() {
-            private final HBox actionBox = new HBox();
-            private final Button btnView = createViewButton();
-
-            {
-                actionBox.setAlignment(Pos.CENTER);
-            }
-
+            private final Button btn = new Button("👁 Voir Détails");
+            { btn.setStyle("-fx-background-color: #6d8c6d; -fx-text-fill: white; -fx-background-radius: 20; -fx-cursor: hand;"); }
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    Sale sale = getTableView().getItems().get(getIndex());
-                    btnView.setOnAction(e -> showSaleDetails(sale));
-                    if (actionBox.getChildren().isEmpty()) actionBox.getChildren().add(btnView);
-                    setGraphic(actionBox);
+                if (empty || getTableRow() == null || getTableRow().getItem() == null) setGraphic(null);
+                else {
+                    btn.setOnAction(e -> showSaleDetails((Sale) getTableRow().getItem()));
+                    setGraphic(btn); setAlignment(Pos.CENTER);
                 }
             }
         });
     }
 
-    private Button createViewButton() {
-        Button btn = new Button("👁 Voir Détails");
-        String baseStyle = "-fx-background-color: #6366f1; -fx-text-fill: white; -fx-font-family: 'Poppins Medium'; " +
-                "-fx-font-size: 12px; -fx-background-radius: 20; -fx-padding: 8 18; -fx-cursor: hand;";
-        String hoverStyle = "-fx-background-color: #4f46e5; -fx-text-fill: white; -fx-font-family: 'Poppins Medium'; " +
-                "-fx-font-size: 12px; -fx-background-radius: 20; -fx-padding: 8 18; -fx-cursor: hand; " +
-                "-fx-effect: dropshadow(gaussian, rgba(79, 70, 229, 0.4), 8, 0, 0, 3);";
-
-        btn.setStyle(baseStyle);
-        btn.setOnMouseEntered(e -> btn.setStyle(hoverStyle));
-        btn.setOnMouseExited(e -> btn.setStyle(baseStyle));
-        return btn;
-    }
-
-    private void loadSales() {
-        List<Sale> list = saleService.getAllSales();
-        salesList = FXCollections.observableArrayList(list);
-        salesTable.setItems(salesList);
-        updateCountLabel();
-    }
-
-    private void updateStatistics() {
-        if (salesList == null || salesList.isEmpty()) {
-            totalSalesLabel.setText("0 MAD");
-            todaySalesLabel.setText("0");
-            return;
-        }
-
-        double totalAmount = salesList.stream().mapToDouble(Sale::getTotal).sum();
-        totalSalesLabel.setText(String.format("%.2f MAD", totalAmount));
-        totalSalesCount.setText(salesList.size() + " vente" + (salesList.size() > 1 ? "s" : ""));
-
-        LocalDateTime today = LocalDateTime.now();
-        List<Sale> todaySales = salesList.stream()
-                .filter(sale -> sale.getDate().toLocalDate().equals(today.toLocalDate()))
-                .collect(Collectors.toList());
-
-        todaySalesLabel.setText(String.valueOf(todaySales.size()));
-        todaySalesAmount.setText(String.format("%.2f MAD", todaySales.stream().mapToDouble(Sale::getTotal).sum()));
-        averageSaleLabel.setText(String.format("%.2f MAD", totalAmount / salesList.size()));
-    }
-
-    private void updateCountLabel() {
-        if (salesList == null || salesList.isEmpty()) {
-            countLabel.setText("Aucune vente");
-        } else {
-            countLabel.setText(salesList.size() + (salesList.size() == 1 ? " vente" : " ventes"));
-        }
-    }
-
-    private void setupSearch() {
-        searchField.textProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal == null || newVal.trim().isEmpty()) {
-                salesTable.setItems(salesList);
-            } else {
-                String term = newVal.trim();
-                salesTable.setItems(salesList.stream()
-                        .filter(s -> String.valueOf(s.getId()).contains(term))
-                        .collect(Collectors.toCollection(FXCollections::observableArrayList)));
-            }
-        });
-    }
-
-    private void setupRefreshButton() {
-        String style = "-fx-background-color: #6366f1; -fx-text-fill: white; -fx-font-family: 'Poppins SemiBold'; " +
-                "-fx-font-size: 14px; -fx-background-radius: 25; -fx-padding: 12 30; -fx-cursor: hand;";
-        refreshButton.setStyle(style);
-    }
-
-    @FXML
-    private void handleRefresh() {
-        javafx.animation.RotateTransition rt = new javafx.animation.RotateTransition(javafx.util.Duration.millis(500), refreshButton);
-        rt.setByAngle(360);
-        rt.play();
-        searchField.clear();
-        loadSales();
-        updateStatistics();
-    }
-
     private void showSaleDetails(Sale sale) {
         Dialog<Void> dialog = new Dialog<>();
-        dialog.setTitle("Détails de la Vente #" + sale.getId());
-        DialogPane dialogPane = dialog.getDialogPane();
+        dialog.initStyle(StageStyle.UTILITY);
+        DialogPane pane = dialog.getDialogPane();
+        pane.setGraphic(null); // Supprime l'icône système bleue
 
         VBox root = new VBox(20);
         root.setPadding(new Insets(25));
         root.setStyle("-fx-background-color: white; -fx-min-width: 450;");
 
+        // Titre de la fenêtre
         Label title = new Label("Détails de la Vente #" + sale.getId());
-        title.setStyle("-fx-font-family: 'Poppins Bold'; -fx-font-size: 22px; -fx-text-fill: #6366f1;");
+        title.setStyle("-fx-font-family: 'Poppins Bold'; -fx-font-size: 22px; -fx-text-fill: #6d8c6d;");
 
+        // Bloc d'information principale (Date et Montant)
         VBox infoBox = new VBox(10);
         infoBox.setPadding(new Insets(15));
-        infoBox.setStyle("-fx-background-color: #f8fafc; -fx-background-radius: 12;");
+        infoBox.setStyle("-fx-background-color: #f1f8e9; -fx-background-radius: 12;");
 
         Label dateLbl = new Label("📅 Date: " + sale.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
         Label totalLbl = new Label("💰 Montant: " + String.format("%.2f MAD", sale.getTotal()));
-        dateLbl.setStyle("-fx-font-family: 'Poppins Medium'; -fx-text-fill: #475569;");
-        totalLbl.setStyle("-fx-font-family: 'Poppins Medium'; -fx-text-fill: #475569;");
+
+        dateLbl.setStyle("-fx-font-family: 'Poppins Medium'; -fx-text-fill: #3d4a4d;");
+        totalLbl.setStyle("-fx-font-family: 'Poppins Bold'; -fx-text-fill: #6d8c6d;");
         infoBox.getChildren().addAll(dateLbl, totalLbl);
 
-        VBox productsBox = new VBox(12);
-        productsBox.setPadding(new Insets(15));
-        productsBox.setStyle("-fx-border-color: #e2e8f0; -fx-border-radius: 12; -fx-background-radius: 12;");
+        // --- SECTION PRODUITS VENDUS ---
+        VBox productsList = new VBox(12);
+        productsList.setPadding(new Insets(10));
+        productsList.setStyle("-fx-border-color: #e2e8f0; -fx-border-radius: 12; -fx-border-width: 1;");
 
         Label prodHeader = new Label("Produits vendus :");
-        prodHeader.setStyle("-fx-font-family: 'Poppins SemiBold'; -fx-font-size: 15px; -fx-text-fill: #1e293b;");
-        productsBox.getChildren().add(prodHeader);
+        prodHeader.setStyle("-fx-font-family: 'Poppins SemiBold'; -fx-font-size: 15px; -fx-text-fill: #3d4a4d;");
+        productsList.getChildren().add(prodHeader);
 
-        if (sale.getItems().isEmpty()) {
-            Label empty = new Label("Aucun détail disponible.");
-            empty.setStyle("-fx-font-family: 'Poppins Regular'; -fx-font-style: italic; -fx-text-fill: #94a3b8;");
-            productsBox.getChildren().add(empty);
-        } else {
+        // Boucle pour afficher chaque produit de la vente
+        if (sale.getItems() != null && !sale.getItems().isEmpty()) {
             for (Sale.SaleItem item : sale.getItems()) {
-                Label row = new Label(String.format("• %s — %.2f MAD x %d = %.2f MAD",
-                        item.getName(), item.getPrice(), item.getQuantity(), item.getSubtotal()));
-                row.setStyle("-fx-text-fill: #64748b; -fx-font-family: 'Poppins Regular'; -fx-font-size: 13px;");
-                productsBox.getChildren().add(row);
+                // Format : Nom du produit — Prix x Quantité = Sous-total
+                String text = String.format("• %s — %.2f MAD x %d = %.2f MAD",
+                        item.getName(), item.getPrice(), item.getQuantity(), item.getSubtotal());
+
+                Label productRow = new Label(text);
+                productRow.setStyle("-fx-text-fill: #475569; -fx-font-family: 'Poppins Regular'; -fx-font-size: 13px;");
+                productRow.setWrapText(true);
+                productsList.getChildren().add(productRow);
             }
+        } else {
+            Label emptyLabel = new Label("Aucun produit enregistré.");
+            emptyLabel.setStyle("-fx-text-fill: #94a3b8; -fx-font-style: italic;");
+            productsList.getChildren().add(emptyLabel);
         }
 
-        root.getChildren().addAll(title, infoBox, productsBox);
-        dialogPane.setContent(root);
+        // Assemblage final
+        root.getChildren().addAll(title, infoBox, productsList);
+        pane.setContent(root);
 
+        // Bouton Fermer stylisé en vert #6d8c6d
         ButtonType closeBtnType = new ButtonType("Fermer", ButtonBar.ButtonData.CANCEL_CLOSE);
-        dialogPane.getButtonTypes().add(closeBtnType);
-        Button closeBtn = (Button) dialogPane.lookupButton(closeBtnType);
-        closeBtn.setStyle("-fx-background-color: #6366f1; -fx-text-fill: white; -fx-background-radius: 8; " +
-                "-fx-cursor: hand; -fx-padding: 10 30; -fx-font-family: 'Poppins SemiBold';");
+        pane.getButtonTypes().add(closeBtnType);
+        Button closeBtn = (Button) pane.lookupButton(closeBtnType);
+        closeBtn.setStyle("-fx-background-color: #6d8c6d; -fx-text-fill: white; -fx-background-radius: 10; " +
+                "-fx-padding: 8 25; -fx-cursor: hand; -fx-font-family: 'Poppins Medium';");
 
         dialog.showAndWait();
     }
+
+    @FXML private void handleRefresh() { loadSales(); }
 }

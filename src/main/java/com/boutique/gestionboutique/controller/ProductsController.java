@@ -1,7 +1,7 @@
 package com.boutique.gestionboutique.controller;
 
-import com.boutique.gestionboutique.controller.Product;
 import com.boutique.gestionboutique.service.ProductService;
+import com.boutique.gestionboutique.controller.Product; // Importation nécessaire
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,25 +10,25 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ProductsController implements Initializable {
 
-    @FXML
-    private TextField searchField;
-    @FXML
-    private GridPane productsGrid;
-    @FXML
-    private Label statusLabel;
+    @FXML private TextField searchField;
+    @FXML private GridPane productsGrid;
+    @FXML private Label statusLabel;
 
     private ProductService productService;
     private List<Product> allProducts;
+
+    private static final String CSS_PATH = "/com/boutique/gestionboutique/stylesheets/";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -37,68 +37,57 @@ public class ProductsController implements Initializable {
         loadProducts();
     }
 
-    /**
-     * Charge le fichier CSS séparé
-     */
     private void loadStylesheet() {
         try {
-            String css = this.getClass().getResource("/styles.css").toExternalForm();
-            if (productsGrid.getScene() != null) {
-                productsGrid.getScene().getStylesheets().add(css);
-            } else {
-                productsGrid.sceneProperty().addListener((obs, oldScene, newScene) -> {
-                    if (newScene != null) {
-                        newScene.getStylesheets().add(css);
-                    }
-                });
+            URL cssResource = getClass().getResource(CSS_PATH + "products.css");
+            if (cssResource != null) {
+                String css = cssResource.toExternalForm();
+                if (productsGrid.getScene() != null) {
+                    productsGrid.getScene().getStylesheets().add(css);
+                } else {
+                    productsGrid.sceneProperty().addListener((obs, oldScene, newScene) -> {
+                        if (newScene != null) {
+                            newScene.getStylesheets().add(css);
+                        }
+                    });
+                }
             }
         } catch (Exception e) {
-            System.err.println("Erreur CSS: " + e.getMessage());
+            System.err.println("Erreur chargement products.css: " + e.getMessage());
         }
     }
 
-
     private void displayProducts(List<Product> products) {
         productsGrid.getChildren().clear();
-
         int row = 0;
         int col = 0;
-
-        for (Product product : products) {
-            VBox card = createProductCard(product);
-            productsGrid.add(card, col, row);
-
-            col++;
-            if (col == 3) {
-                col = 0;
-                row++;
+        if (products != null) {
+            for (Product product : products) {
+                VBox card = createProductCard(product);
+                productsGrid.add(card, col, row);
+                col++;
+                if (col == 3) {
+                    col = 0;
+                    row++;
+                }
             }
         }
     }
 
     public void loadProducts() {
         statusLabel.setText("Chargement des produits...");
-
-        // 1. Run database call in a background thread
         Task<List<Product>> loadTask = new Task<>() {
             @Override
             protected List<Product> call() throws Exception {
+                // On récupère les données fraîches de la base de données
                 return productService.getAllProducts();
             }
         };
-
-        // 2. When data is ready, update the UI
         loadTask.setOnSucceeded(e -> {
             allProducts = loadTask.getValue();
             displayProducts(allProducts);
             statusLabel.setText("Produits chargés: " + allProducts.size());
         });
-
-        loadTask.setOnFailed(e -> {
-            statusLabel.setText("Erreur de chargement");
-            loadTask.getException().printStackTrace();
-        });
-
         new Thread(loadTask).start();
     }
 
@@ -115,101 +104,42 @@ public class ProductsController implements Initializable {
         imageView.setFitHeight(180);
         imageView.setPreserveRatio(true);
 
-        // --- SILENT IMAGE LOADING START ---
         if (product.getImagePath() != null && !product.getImagePath().trim().isEmpty()) {
             try {
-                // We use background loading (true) and wrap it so it can't crash the status label
                 Image img = new Image(product.getImagePath(), true);
-
-                // If the image fails to load, this listener ensures it doesn't break the UI
-                img.errorProperty().addListener((obs, oldVal, isError) -> {
-                    if (isError) {
-                        System.out.println("Image skipped: " + product.getName());
-                    }
-                });
-
                 imageView.setImage(img);
             } catch (Exception e) {
-                // If the URL is totally malformed, we just skip it
-                System.err.println("Skipped invalid URL for: " + product.getName());
+                System.err.println("URL d'image invalide pour : " + product.getName());
             }
         }
-        // --- SILENT IMAGE LOADING END ---
 
         imageContainer.setCenter(imageView);
 
-        // The rest of your code remains exactly the same...
         Label nameLabel = new Label(product.getName());
         nameLabel.getStyleClass().add("product-title");
         nameLabel.setWrapText(true);
 
-        Label categoryLabel = new Label("Catégorie: " + product.getCategoryName());
-        categoryLabel.getStyleClass().add("product-category");
-
-        Label stockLabel = new Label("Stock: " + product.getQuantity());
-        stockLabel.getStyleClass().add("product-stock");
-
-        Label priceLabel = new Label("MAD " + String.format("%.2f", product.getPrice()));
+        Label priceLabel = new Label(String.format("%.2f MAD", product.getPrice()));
         priceLabel.getStyleClass().add("product-price");
 
         HBox buttons = new HBox(8);
-        buttons.getStyleClass().add("product-buttons");
-
-        Button editBtn = new Button("Éditer", createIcon("✏️"));
+        Button editBtn = new Button("Éditer", createIcon("✏"));
         editBtn.getStyleClass().add("btn-edit");
         editBtn.setOnAction(e -> editProduct(product));
 
-        Button deleteBtn = new Button("Supprimer", createIcon("🗑️"));
+        Button deleteBtn = new Button("Supprimer", createIcon("🗑"));
         deleteBtn.getStyleClass().add("btn-delete");
         deleteBtn.setOnAction(e -> deleteProduct(product));
 
         buttons.getChildren().addAll(editBtn, deleteBtn);
-        card.getChildren().addAll(imageContainer, nameLabel, categoryLabel, stockLabel, priceLabel, buttons);
-
+        card.getChildren().addAll(imageContainer, nameLabel, priceLabel, buttons);
         return card;
-    }    @FXML
-    private void searchProducts() {
-        String query = searchField.getText().toLowerCase().trim();
-
-        if (query.isEmpty()) {
-            displayProducts(allProducts);
-            return;
-        }
-
-        try {
-            List<Product> results = productService.searchProducts(query);
-            displayProducts(results);
-            statusLabel.setText("Trouvé: " + results.size());
-        } catch (Exception e) {
-            statusLabel.setText("Erreur: " + e.getMessage());
-        }
-    }
-
-    @FXML
-    private void filterByCategory(javafx.event.ActionEvent event) {
-        Button btn = (Button) event.getSource();
-        String categoryName = (String) btn.getUserData();
-
-        if ("all".equals(categoryName)) {
-            loadProducts();
-            displayProducts(allProducts);
-            statusLabel.setText("Tous les produits: " + allProducts.size());
-        } else {
-            List<Product> filtered = new ArrayList<>();
-            for (Product p : allProducts) {
-                if (p.getCategoryName() != null &&
-                        p.getCategoryName().equalsIgnoreCase(categoryName)) {
-                    filtered.add(p);
-                }
-            }
-            displayProducts(filtered);
-            statusLabel.setText("Catégorie " + categoryName + ": " + filtered.size());
-        }
     }
 
     @FXML
     private void addProduct() {
         Dialog<Product> dialog = new Dialog<>();
+        dialog.initStyle(StageStyle.UTILITY);
         dialog.setTitle("Ajouter un Produit");
         dialog.setHeaderText("➕ Ajouter un nouveau produit");
 
@@ -219,41 +149,29 @@ public class ProductsController implements Initializable {
         ButtonType addBtn = new ButtonType("Ajouter", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(addBtn, ButtonType.CANCEL);
 
-        applyAddDialogStyles(dialog);
+        applyDialogStyle(dialog, "add");
 
-        dialog.setResultConverter(btn -> {
-            if (btn == addBtn) {
-                return getProductFromForm(grid, null);
-            }
-            return null;
-        });
+        dialog.setResultConverter(btn -> (btn == addBtn) ? getProductFromForm(grid, null) : null);
 
         Optional<Product> result = dialog.showAndWait();
         if (result.isPresent()) {
-            Product newProduct = result.get();
             try {
-                // 1. Save to Database
-                productService.addProduct(newProduct);
-
-                // --- MODIFICATION: Manual Update for Instant UI Refresh ---
-                if (allProducts == null) {
-                    allProducts = new ArrayList<>();
-                }
-                allProducts.add(newProduct); // Add to the local list
-                displayProducts(allProducts); // Redraw grid with the new product
-                // -----------------------------------------------------------
-
-                statusLabel.setText("✓ Produit ajouté!");
+                productService.addProduct(result.get());
+                // CORRECTION : On recharge tout pour mettre à jour 'allProducts' et la grille
+                loadProducts();
+                statusLabel.setText("✓ Produit ajouté !");
             } catch (Exception e) {
-                statusLabel.setText("✗ Erreur: " + e.getMessage());
+                statusLabel.setText("✗ Erreur lors de l'ajout");
+                e.printStackTrace();
             }
         }
     }
 
     private void editProduct(Product product) {
         Dialog<Product> dialog = new Dialog<>();
+        dialog.initStyle(StageStyle.UTILITY);
         dialog.setTitle("Modifier le Produit");
-        dialog.setHeaderText("✏️ Modifier les informations du produit");
+        dialog.setHeaderText("✏ Modifier les informations");
 
         GridPane grid = createProductForm(product);
         dialog.getDialogPane().setContent(grid);
@@ -261,51 +179,73 @@ public class ProductsController implements Initializable {
         ButtonType saveBtn = new ButtonType("Enregistrer", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(saveBtn, ButtonType.CANCEL);
 
-        applyEditDialogStyles(dialog);
+        applyDialogStyle(dialog, "edit");
 
-        dialog.setResultConverter(btn -> {
-            if (btn == saveBtn) {
-                return getProductFromForm(grid, product.getId());
-            }
-            return null;
-        });
+        dialog.setResultConverter(btn -> (btn == saveBtn) ? getProductFromForm(grid, product.getId()) : null);
 
         Optional<Product> result = dialog.showAndWait();
         if (result.isPresent()) {
             try {
                 productService.updateProduct(result.get());
-                loadProducts();
-                statusLabel.setText("✓ Produit modifié!");
+                loadProducts(); // On recharge tout après modification
+                statusLabel.setText("✓ Produit modifié !");
             } catch (Exception e) {
-                statusLabel.setText("✗ Erreur: " + e.getMessage());
+                statusLabel.setText("✗ Erreur lors de la modification");
             }
         }
     }
 
     private void deleteProduct(@NotNull Product product) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation de suppression");
-        alert.setHeaderText("🗑️ Êtes-vous sûr?");
-        alert.setContentText("Voulez-vous vraiment supprimer \"" + product.getName() + "\"?");
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("🗑 Supprimer \"" + product.getName() + "\"?");
 
-        applyDeleteAlertStyles(alert);
+        applyDialogStyle(alert, "delete");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
                 productService.deleteProduct(product.getId());
-
-                // --- MODIFICATION: Manual Remove for Instant UI Refresh ---
-                if (allProducts != null) {
-                    allProducts.remove(product); // Remove from the local list
-                    displayProducts(allProducts); // Redraw grid
-                }
-                // -----------------------------------------------------------
-
-                statusLabel.setText("✓ Produit supprimé!");
+                loadProducts(); // On recharge tout après suppression
+                statusLabel.setText("✓ Produit supprimé !");
             } catch (Exception e) {
-                statusLabel.setText("✗ Erreur: " + e.getMessage());
+                statusLabel.setText("✗ Erreur lors de la suppression");
             }
+        }
+    }
+
+    private void applyDialogStyle(Dialog<?> dialog, String buttonMode) {
+        try {
+            DialogPane dialogPane = dialog.getDialogPane();
+            dialogPane.setGraphic(null); // Retire le point d'interrogation bleu
+
+            Stage stage = (Stage) dialogPane.getScene().getWindow();
+            stage.getIcons().clear(); // Retire l'icône de titre
+
+            URL cssResource = getClass().getResource(CSS_PATH + "dialogue.css");
+            if (cssResource != null) {
+                String css = cssResource.toExternalForm();
+                dialogPane.getStylesheets().add(css);
+                dialogPane.getStyleClass().add("custom-dialog");
+
+                Button okBtn = (Button) dialogPane.lookupButton(dialogPane.getButtonTypes().get(0));
+                if (okBtn != null) {
+                    okBtn.getStyleClass().add("btn-round");
+                    if (buttonMode.equals("delete")) {
+                        okBtn.getStyleClass().add("btn-delete-style");
+                    } else {
+                        okBtn.getStyleClass().add("btn-ok-style");
+                    }
+                }
+
+                Button cancelBtn = (Button) dialogPane.lookupButton(ButtonType.CANCEL);
+                if (cancelBtn != null) {
+                    cancelBtn.getStyleClass().addAll("btn-round", "btn-cancel-style");
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Erreur style : " + e.getMessage());
         }
     }
 
@@ -315,27 +255,13 @@ public class ProductsController implements Initializable {
         grid.setHgap(15);
         grid.setVgap(15);
         grid.setPadding(new Insets(20));
-        grid.setStyle("-fx-background-color: #f0f0f0;");
+        grid.setStyle("-fx-background-color: white;");
 
         TextField nameField = new TextField();
-        nameField.setPromptText("Entrez le nom du produit");
-        nameField.getStyleClass().add("form-field");
-
         TextField priceField = new TextField();
-        priceField.setPromptText("Entrez le prix (ex: 99.99)");
-        priceField.getStyleClass().add("form-field");
-
         TextField quantityField = new TextField();
-        quantityField.setPromptText("Entrez la quantité en stock");
-        quantityField.getStyleClass().add("form-field");
-
         TextField categoryIdField = new TextField();
-        categoryIdField.setPromptText("Entrez l'ID de la catégorie");
-        categoryIdField.getStyleClass().add("form-field");
-
         TextField imagePathField = new TextField();
-        imagePathField.setPromptText("Chemin de l'image (ex: images/produit.jpg)");
-        imagePathField.getStyleClass().add("form-field");
 
         if (product != null) {
             nameField.setText(product.getName());
@@ -345,31 +271,30 @@ public class ProductsController implements Initializable {
             imagePathField.setText(product.getImagePath());
         }
 
-        Label nameLabel = createLabelWithIcon("📝 Nom:", "form-label");
-        Label priceLabel = createLabelWithIcon("💰 Prix:", "form-label");
-        Label quantityLabel = createLabelWithIcon("📦 Quantité:", "form-label");
-        Label categoryLabel = createLabelWithIcon("🏷️ Catégorie ID:", "form-label");
-        Label imageLabel = createLabelWithIcon("🖼️ Image:", "form-label");
+        grid.add(new Label("Nom :"), 0, 0); grid.add(nameField, 1, 0);
+        grid.add(new Label("Prix :"), 0, 1); grid.add(priceField, 1, 1);
+        grid.add(new Label("Quantité :"), 0, 2); grid.add(quantityField, 1, 2);
+        grid.add(new Label("Catégorie ID :"), 0, 3); grid.add(categoryIdField, 1, 3);
+        grid.add(new Label("Image URL :"), 0, 4); grid.add(imagePathField, 1, 4);
 
-        grid.add(nameLabel, 0, 0);
-        grid.add(nameField, 1, 0);
-        grid.add(priceLabel, 0, 1);
-        grid.add(priceField, 1, 1);
-        grid.add(quantityLabel, 0, 2);
-        grid.add(quantityField, 1, 2);
-        grid.add(categoryLabel, 0, 3);
-        grid.add(categoryIdField, 1, 3);
-        grid.add(imageLabel, 0, 4);
-        grid.add(imagePathField, 1, 4);
-
-        grid.setUserData(new Object[]{nameField, priceField, quantityField, categoryIdField, imagePathField});
+        grid.setUserData(new TextField[]{nameField, priceField, quantityField, categoryIdField, imagePathField});
         return grid;
     }
 
-    private Label createLabelWithIcon(String text, String styleClass) {
-        Label label = new Label(text);
-        label.getStyleClass().add(styleClass);
-        return label;
+    private Product getProductFromForm(GridPane grid, Integer id) {
+        TextField[] fields = (TextField[]) grid.getUserData();
+        Product product = new Product();
+        if (id != null) product.setId(id);
+        try {
+            product.setName(fields[0].getText());
+            product.setPrice(Double.parseDouble(fields[1].getText()));
+            product.setQuantity(Integer.parseInt(fields[2].getText()));
+            product.setCategoryId(Integer.parseInt(fields[3].getText()));
+            product.setImagePath(fields[4].getText());
+        } catch (Exception e) {
+            System.err.println("Erreur de conversion numérique dans le formulaire.");
+        }
+        return product;
     }
 
     private Label createIcon(String emoji) {
@@ -378,92 +303,44 @@ public class ProductsController implements Initializable {
         return icon;
     }
 
-    private Product getProductFromForm(GridPane grid, Integer id) {
-        Object[] fields = (Object[]) grid.getUserData();
-
-        Product product = new Product();
-        if (id != null) product.setId(id);
-        product.setName(((TextField) fields[0]).getText());
-        product.setPrice(Double.parseDouble(((TextField) fields[1]).getText()));
-        product.setQuantity(Integer.parseInt(((TextField) fields[2]).getText()));
-        product.setCategoryId(Integer.parseInt(((TextField) fields[3]).getText()));
-// Check if the image path is empty
-        String imagePath = ((TextField) fields[4]).getText().trim();
-        if (imagePath.isEmpty()) {
-            // Use your default URL if the user left it blank
-            product.setImagePath("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxPkvTAZPy50xomMxjBYcYO8VMpyIg2fTCRA&s");
-        } else {
-            product.setImagePath(imagePath);
+    @FXML
+    private void searchProducts() {
+        String query = searchField.getText().toLowerCase().trim();
+        if (query.isEmpty()) {
+            displayProducts(allProducts);
+            return;
         }
-        return product;
-    }
-
-    private void applyAddDialogStyles(Dialog<Product> dialog) {
-        try {
-            String css = this.getClass().getResource("/styles.css").toExternalForm();
-            dialog.getDialogPane().getStylesheets().add(css);
-            dialog.getDialogPane().setStyle("-fx-background-color: #f0f0f0;");
-
-            for (ButtonType buttonType : dialog.getDialogPane().getButtonTypes()) {
-                Button button = (Button) dialog.getDialogPane().lookupButton(buttonType);
-                if (button != null) {
-                    if (buttonType.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
-                        button.setGraphic(createIcon("✅"));
-                        button.getStyleClass().add("btn-add-dialog");
-                    } else {
-                        button.setGraphic(createIcon("❌"));
-                        button.getStyleClass().add("btn-cancel-dialog");
-                    }
-                }
-            }
-        } catch (Exception e) {
-            System.err.println("Erreur styles dialogue: " + e.getMessage());
+        if (allProducts != null) {
+            List<Product> results = allProducts.stream()
+                    .filter(p -> p.getName() != null && p.getName().toLowerCase().contains(query))
+                    .toList();
+            displayProducts(results);
         }
     }
 
-    private void applyEditDialogStyles(Dialog<Product> dialog) {
-        try {
-            String css = this.getClass().getResource("/styles.css").toExternalForm();
-            dialog.getDialogPane().getStylesheets().add(css);
-            dialog.getDialogPane().setStyle("-fx-background-color: #f0f0f0;");
+    @FXML
+    private void filterByCategory(javafx.event.ActionEvent event) {
+        Button clickedBtn = (Button) event.getSource();
+        String categoryName = (String) clickedBtn.getUserData();
 
-            for (ButtonType buttonType : dialog.getDialogPane().getButtonTypes()) {
-                Button button = (Button) dialog.getDialogPane().lookupButton(buttonType);
-                if (button != null) {
-                    if (buttonType.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
-                        button.setGraphic(createIcon("💾"));
-                        button.getStyleClass().add("btn-edit-dialog");
-                    } else {
-                        button.setGraphic(createIcon("❌"));
-                        button.getStyleClass().add("btn-cancel-dialog");
-                    }
-                }
+        HBox parent = (HBox) clickedBtn.getParent();
+        parent.getChildren().forEach(node -> {
+            if (node instanceof Button) {
+                node.getStyleClass().remove("filter-btn-active");
             }
-        } catch (Exception e) {
-            System.err.println("Erreur styles dialogue: " + e.getMessage());
-        }
-    }
+        });
 
-    private void applyDeleteAlertStyles(Alert alert) {
-        try {
-            String css = this.getClass().getResource("/styles.css").toExternalForm();
-            alert.getDialogPane().getStylesheets().add(css);
-            alert.getDialogPane().setStyle("-fx-background-color: #f0f0f0;");
+        clickedBtn.getStyleClass().add("filter-btn-active");
 
-            for (ButtonType buttonType : alert.getDialogPane().getButtonTypes()) {
-                Button button = (Button) alert.getDialogPane().lookupButton(buttonType);
-                if (button != null) {
-                    if (buttonType == ButtonType.OK) {
-                        button.setGraphic(createIcon("🗑️"));
-                        button.getStyleClass().add("btn-delete-dialog");
-                    } else {
-                        button.setGraphic(createIcon("❌"));
-                        button.getStyleClass().add("btn-cancel-dialog");
-                    }
-                }
+        if (allProducts != null) {
+            if ("all".equals(categoryName)) {
+                displayProducts(allProducts);
+            } else {
+                List<Product> filtered = allProducts.stream()
+                        .filter(p -> p.getCategoryName() != null && p.getCategoryName().equalsIgnoreCase(categoryName))
+                        .toList();
+                displayProducts(filtered);
             }
-        } catch (Exception e) {
-            System.err.println("Erreur styles alerte: " + e.getMessage());
         }
     }
 }

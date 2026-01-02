@@ -1,205 +1,89 @@
-/* ============================================
-   SALES HISTORY - CSS STYLES
-   ============================================ */
-
-/* Search Bar avec FlowPane Responsive */
-.search-bar {
-    -fx-padding: 20 0 20 0;
-    -fx-alignment: center-left;
-}
-
+/* --- BARRE DE RECHERCHE --- */
 .search-field {
-    -fx-min-width: 250px;
-    -fx-pref-width: 300px;
-    -fx-max-width: 400px;
     -fx-background-color: white;
-    -fx-border-color: #ced4da;
-    -fx-border-width: 1px;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-padding: 10px 15px;
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1;
+    -fx-padding: 12 25;
     -fx-font-size: 14px;
-    -fx-prompt-text-fill: #6c757d;
+    -fx-text-fill: #3d4a4d;
 }
 
 .search-field:focused {
-    -fx-border-color: #4444;
-    -fx-border-width: 2px;
-    -fx-background-color: #f8f9fa;
+    -fx-border-color:  #6d8c6d;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(100, 116, 139, 0.2), 10, 0, 0, 0);
 }
 
-.refresh-btn {
-    -fx-background-color: gray;
+/* --- BOUTON ACTUALISER --- */
+.btn-refresh {
+    -fx-background-color: #6d8c6d;
     -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-padding: 10px 20px;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-cursor: hand;
-    -fx-min-width: 100px;
-}
-
-.refresh-btn:hover {
-    -fx-background-color: gray;
-}
-
-.refresh-btn:pressed {
-    -fx-background-color: gary;
-}
-
-/* ============================================
-   TABLE VIEW STYLES
-   ============================================ */
-
-.sales-table {
-    -fx-background-color: white;
-    -fx-border-color: #e0e0e0;
-    -fx-border-width: 1px;
-    -fx-border-radius: 8px;
-    -fx-background-radius: 8px;
-}
-
-/* Table Header */
-.sales-table .column-header-background {
-    -fx-background-color: linear-gradient(to bottom, #f8f9fa 0%, #e9ecef 100%);
-    -fx-border-radius: 8px 8px 0 0;
-}
-
-.sales-table .column-header {
-    -fx-background-color: transparent;
-    -fx-border-color: #dee2e6;
-    -fx-border-width: 0 0 2px 0;
-    -fx-padding: 15px 10px;
-}
-
-.sales-table .column-header .label {
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #212529;
-    -fx-alignment: center;
-}
-
-/* Table Cells */
-.sales-table .table-cell {
-    -fx-padding: 12px 10px;
-    -fx-border-color: #f1f3f5;
-    -fx-border-width: 0 0 1px 0;
-    -fx-font-size: 14px;
-}
-
-/* Table Rows */
-.sales-table .table-row-cell {
-    -fx-background-color: white;
-}
-
-.sales-table .table-row-cell:odd {
-    -fx-background-color: #f8f9fa;
-}
-
-.sales-table .table-row-cell:selected {
-    -fx-background-color: #e3f2fd;
-    -fx-text-fill: #4444;
-}
-
-.sales-table .table-row-cell:hover {
-    -fx-background-color: #e9ecef;
+    -fx-background-radius: 30;
+    -fx-padding: 12 30;
+    -fx-font-family: "Poppins SemiBold";
     -fx-cursor: hand;
 }
 
-/* Column Specific Styles */
-.id-column {
-    -fx-alignment: CENTER;
+/* --- TABLEAU --- */
+.modern-table {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: #e2e8f0;
 }
 
-.date-column {
-    -fx-alignment: CENTER;
-}
-
-.total-column {
-    -fx-alignment: CENTER-RIGHT;
-}
-
-/* ============================================
-   SCROLLBAR CUSTOMIZATION
-   ============================================ */
-
-.sales-table .scroll-bar:vertical {
-    -fx-background-color: #f8f9fa;
-    -fx-pref-width: 10px;
-}
-
-.sales-table .scroll-bar:vertical .thumb {
-    -fx-background-color: #adb5bd;
-    -fx-background-radius: 5px;
-}
-
-.sales-table .scroll-bar:vertical .thumb:hover {
-    -fx-background-color: #6c757d;
-}
-
-.sales-table .scroll-bar:horizontal {
-    -fx-background-color: #f8f9fa;
-    -fx-pref-height: 10px;
-}
-
-.sales-table .scroll-bar:horizontal .thumb {
-    -fx-background-color: #adb5bd;
-    -fx-background-radius: 5px;
-}
-
-.sales-table .scroll-bar:horizontal .thumb:hover {
-    -fx-background-color: #6c757d;
-}
-
-/* Hide scroll bar arrows */
-.sales-table .scroll-bar .increment-button,
-.sales-table .scroll-bar .decrement-button {
+.modern-table .scroll-bar:vertical,
+.modern-table .scroll-bar:horizontal {
     -fx-opacity: 0;
-    -fx-pref-height: 0;
-    -fx-pref-width: 0;
+    -fx-padding: -10;
 }
 
-/* ============================================
-   EMPTY TABLE PLACEHOLDER
-   ============================================ */
-
-.sales-table .placeholder .label {
-    -fx-font-size: 16px;
-    -fx-text-fill: #6c757d;
-    -fx-padding: 30px;
-    -fx-font-style: italic;
+.modern-table .table-row-cell:selected {
+    -fx-background-color: #6d8c6d;
+    -fx-text-fill: white;
 }
 
-/* ============================================
-   RESPONSIVE ADJUSTMENTS
-   ============================================ */
-
-/* Pour les petits écrans */
-@media screen and (max-width: 768px) {
-    .search-field {
-        -fx-min-width: 200px;
-        -fx-pref-width: 100%;
-    }
-
-    .refresh-btn {
-        -fx-min-width: 80px;
-        -fx-padding: 8px 15px;
-    }
+/* --- PAGINATION CIRCULAIRE (1 2 3 4 5) --- */
+.pagination .pagination-control .control-box {
+    -fx-spacing: 10;
+    -fx-alignment: CENTER;
+    -fx-padding: 10 0 0 0;
 }
 
-/* ============================================
-   ANIMATIONS & TRANSITIONS
-   ============================================ */
-
-.sales-table .table-row-cell {
-    -fx-background-transition: background-color 0.2s ease;
+.pagination .pagination-control .control-box .number-button,
+.pagination .pagination-control .control-box .toggle-button,
+.pagination .pagination-control .control-box .bullet-button {
+    -fx-background-color: white;
+    -fx-background-radius: 50;
+    -fx-border-radius: 50;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1;
+    -fx-min-width: 35px;
+    -fx-min-height: 35px;
+    -fx-text-fill: #64748b;
+    -fx-cursor: hand;
 }
 
-.refresh-btn {
-    -fx-background-transition: background-color 0.2s ease;
+.pagination .pagination-control .control-box .number-button:selected,
+.pagination .pagination-control .control-box .toggle-button:selected,
+.pagination .pagination-control .control-box .bullet-button:selected {
+    -fx-background-color: #6d8c6d !important;
+    -fx-text-fill: white !important;
+    -fx-border-color: #64748b !important;
 }
 
+.pagination .left-arrow, .pagination .right-arrow {
+    -fx-background-color: #6d8c6d;
+}
 
+/* --- CARTES STATISTIQUES --- */
+.stat-card {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 3);
+}
 
 

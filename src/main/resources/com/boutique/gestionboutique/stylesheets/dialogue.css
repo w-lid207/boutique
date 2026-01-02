@@ -1,241 +1,55 @@
-/* ========================================
-   FICHIER CSS DIALOGUE - dialogue.css
-   Stylisation UNIQUEMENT des boîtes dialogue
-   ======================================== */
-
-* {
-    -fx-font-family: 'Segoe UI', 'Arial', sans-serif;
+/* Container principal */
+.custom-dialog {
+    -fx-background-color: white;
 }
 
-/* ===== BOÎTES DE DIALOGUE GÉNÉRALES ===== */
-.dialog-pane {
-    -fx-padding: 0;
-    -fx-background-color: #ffffff;
-    -fx-border-color: #e0e0e0;
-    -fx-border-width: 1;
+/* En-tête vert (comme sur votre image) */
+.custom-dialog .header-panel {
+    -fx-background-color: #718c6a;
+    -fx-padding: 20px;
 }
 
-
-
-.dialog-pane .header-panel {
-    -fx-background-color: linear-gradient(to right, #2980b9, #3498db);
-    -fx-padding: 20 25;
-    -fx-border-color: transparent;
-}
-
-.dialog-pane .header-panel .text {
+.custom-dialog .header-panel .label {
     -fx-text-fill: white;
-    -fx-font-size: 16;
+    -fx-font-size: 16px;
     -fx-font-weight: bold;
 }
 
-/* ===== CONTENU DIALOGUE ===== */
-.dialog-pane .content {
-    -fx-padding: 0;
-    -fx-background-color: #f8f9fa;
-}
-
-/* ===== GRILLE DE FORMULAIRE ===== */
-.product-form-grid {
-    -fx-hgap: 20;
-    -fx-vgap: 25;
-    -fx-padding: 35 40;
-    -fx-background-color: #f8f9fa;
-}
-
-/* ===== LABELS DU FORMULAIRE ===== */
-.form-label {
-    -fx-text-fill: #2c3e50;
-    -fx-font-size: 13;
-    -fx-font-weight: bold;
-    -fx-padding: 0 0 5 0;
-    -fx-min-width: 140;
-}
-
-/* ===== CHAMPS DE SAISIE (TextFields) ===== */
-.form-input {
-    -fx-padding: 12 15;
-    -fx-border-color: #d0d7de;
-    -fx-border-width: 1;
-    -fx-border-radius: 5;
-    -fx-font-size: 12;
-    -fx-text-fill: #2c3e50;
-    -fx-background-color: #ffffff;
-    -fx-control-inner-background: #ffffff;
-    -fx-prompt-text-fill: #a8b3c1;
-    -fx-font-family: 'Segoe UI', sans-serif;
-}
-
-.form-input:hover {
-    -fx-border-color: #85929e;
-    -fx-border-width: 1.5;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 3, 0, 0, 1);
-}
-
-.form-input:focused {
-    -fx-border-color: #3498db;
-    -fx-border-width: 2;
-    -fx-box-shadow: 0 0 8 rgba(52, 152, 219, 0.3);
-    -fx-background-color: #f0f8ff;
-}
-
-/* ===== BARRES DE BOUTONS ===== */
-.dialog-pane .button-bar {
-    -fx-padding: 20 40 25 40;
-    -fx-background-color: #ecf0f5;
-    -fx-border-color: #d0d7de;
-    -fx-border-width: 1 0 0 0;
-    -fx-spacing: 12;
-    -fx-alignment: CENTER_RIGHT;
-}
-
-/* ===== BOUTONS GÉNÉRAUX ===== */
-.dialog-pane .button {
-    -fx-padding: 11 28;
-    -fx-font-size: 12;
-    -fx-font-weight: 600;
-    -fx-border-radius: 5;
+/* Style de base pour les boutons arrondis */
+.btn-round {
+    -fx-background-radius: 20; /* Crée l'effet arrondi */
+    -fx-border-radius: 20;
+    -fx-padding: 8 20 8 20;
     -fx-cursor: hand;
-    -fx-min-width: 110;
-    -fx-text-alignment: center;
-    -fx-effect: null;
-}
-
-/* ===== BOUTON AJOUTER/ENREGISTRER (Bleu) ===== */
-.dialog-pane .button:default {
-    -fx-background-color: #3498db;
     -fx-text-fill: white;
-    -fx-border-color: #3498db;
-    -fx-border-width: 0;
-}
-
-.dialog-pane .button:default:hover {
-    -fx-background-color: #2980b9;
-    -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.4), 8, 0, 0, 3);
-}
-
-.dialog-pane .button:default:pressed {
-    -fx-background-color: #1f618d;
-}
-
-.dialog-pane .button:default:focused {
-    -fx-border-color: #3498db;
-    -fx-border-width: 2;
-}
-
-/* ===== BOUTON ANNULER (Gris) ===== */
-.dialog-pane .button:cancel {
-    -fx-background-color: #95a5a6;
-    -fx-text-fill: white;
-    -fx-border-color: #95a5a6;
-    -fx-border-width: 0;
-}
-
-.dialog-pane .button:cancel:hover {
-    -fx-background-color: #7f8c8d;
-    -fx-effect: dropshadow(gaussian, rgba(149, 165, 166, 0.3), 5, 0, 0, 2);
-}
-
-.dialog-pane .button:cancel:pressed {
-    -fx-background-color: #6c7a7b;
-}
-
-/* ===== ALERTE DE CONFIRMATION (Supprimer) ===== */
-.alert {
-    -fx-padding: 0;
-}
-
-.alert .dialog-pane {
-    -fx-padding: 0;
-    -fx-background-color: #ffffff;
-    -fx-border-color: #e0e0e0;
-    -fx-border-width: 1;
-}
-
-.alert .dialog-pane .header-panel {
-    -fx-background-color: linear-gradient(to right, #e74c3c, #ec7063);
-    -fx-padding: 20 25;
-    -fx-border-radius: 0;
-}
-
-.alert .dialog-pane .header-panel .text {
-    -fx-text-fill: white;
-    -fx-font-size: 16;
     -fx-font-weight: bold;
 }
 
-.alert .content-text {
-    -fx-text-fill: #34495e;
-    -fx-font-size: 12;
-    -fx-padding: 30 40 20 40;
-    -fx-line-spacing: 1.5;
+/* Bouton OK / Supprimer (Rouge comme votre image) */
+.btn-delete-style {
+    -fx-background-color: #ff7675;
+}
+.btn-delete-style:hover {
+    -fx-background-color: #d63031;
 }
 
-.alert .graphic {
-    -fx-padding: 0 15 0 0;
+/* Bouton OK (Standard) */
+.btn-ok-style {
+    -fx-background-color: #6d8c6d;
 }
 
-/* ===== BOUTONS ALERTE ===== */
-.alert .dialog-pane .button-bar {
-    -fx-padding: 15 40 20 40;
-    -fx-background-color: #ecf0f5;
-    -fx-border-color: #d0d7de;
-    -fx-border-width: 1 0 0 0;
-    -fx-spacing: 12;
+/* Bouton Annuler (Gris arrondi) */
+.btn-cancel-style {
+    -fx-background-color: #dfe6e9;
+    -fx-text-fill: #2d3436;
+}
+.btn-cancel-style:hover {
+    -fx-background-color: #b2bec3;
 }
 
-.alert .dialog-pane .button {
-    -fx-padding: 10 25;
-    -fx-font-size: 12;
-    -fx-font-weight: 600;
-    -fx-border-radius: 5;
-    -fx-cursor: hand;
-    -fx-min-width: 100;
-}
-
-/* Bouton OK Confirmation (Rouge) */
-.alert .dialog-pane .button:default {
-    -fx-background-color: #e74c3c;
-    -fx-text-fill: white;
-    -fx-border-color: #e74c3c;
-    -fx-border-width: 0;
-}
-
-.alert .dialog-pane .button:default:hover {
-    -fx-background-color: #c0392b;
-    -fx-effect: dropshadow(gaussian, rgba(231, 76, 60, 0.4), 8, 0, 0, 3);
-}
-
-.alert .dialog-pane .button:default:pressed {
-    -fx-background-color: #a93226;
-}
-
-/* Bouton Annuler Alerte (Gris) */
-.alert .dialog-pane .button:cancel {
-    -fx-background-color: #95a5a6;
-    -fx-text-fill: white;
-    -fx-border-color: #95a5a6;
-}
-
-.alert .dialog-pane .button:cancel:hover {
-    -fx-background-color: #7f8c8d;
-}
-
-/* ===== ALERTE ERREUR ===== */
-.alert.error .dialog-pane .header-panel {
-    -fx-background-color: linear-gradient(to right, #e74c3c, #ec7063);
-}
-
-.alert.error .content-text {
-    -fx-text-fill: #c0392b;
-    -fx-font-weight: 500;
-}
-
-/* ===== ALERTE SUCCÈS/INFORMATION ===== */
-.alert.information .dialog-pane .header-panel {
-    -fx-background-color: linear-gradient(to right, #27ae60, #2ecc71);
-}
-
-.alert.information .content-text {
-    -fx-text-fill: #1e8449;
+/* Cacher la zone graphique par défaut si nécessaire */
+.custom-dialog > .graphic-container {
+    -fx-padding: 0;
+    -fx-pref-width: 0;
+    -fx-min-width: 0;
 }
