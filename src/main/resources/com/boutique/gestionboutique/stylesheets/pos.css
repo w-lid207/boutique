@@ -1,462 +1,356 @@
-/* ============================================
-   PRODUCTS.CSS - Styles pour la page Produits
-   ============================================ */
+/* === Variables & Color Palette (Strictly from Dashboard) === */
 @import "font.css";
 
+/* Apply Font Globally */
+* {
+    -fx-font-family: 'Poppins';
 
-/* ==================== GÉNÉRAL ==================== */
-.root {
-    -fx-background-color: #f5f5f5;
+    /* Exact Background from Dashboard */
+    -fx-bg-color: #EEF6EC;
+
+    /* Card Background */
+    -fx-card-bg: white;
+
+    /* Primary Accent (The "Active Toggle" Green) */
+    -fx-primary-color: #5B7065;
+
+    /* Secondary Accent (The "Trend Up" Muted Green) */
+    -fx-secondary-green: #7da08f;
+
+    /* Text Colors */
+    -fx-text-main: #2d3b36;   /* From .page-title */
+    -fx-text-sub: #8EA096;    /* From .toggle-btn (Muted Sage) */
+    -fx-text-muted: #888888;  /* From .axis labels */
+
+    /* Warning/Discount (The "Trend Down" Orange) */
+    -fx-text-warning: #e0aa55;
+
+    -fx-font-family: 'Segoe UI', sans-serif;
 }
 
-/* ==================== BARRE DU HAUT ==================== */
-.top-bar {
-    -fx-background-color: white;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 8, 0, 0, 2);
-    -fx-padding: 15px;
+.root-container {
+    -fx-background-color: -fx-bg-color;
 }
 
-/* ==================== CHAMP DE RECHERCHE ==================== */
-.search-field {
-    -fx-pref-height: 45px;
-    -fx-font-size: 14px;
-    -fx-padding: 0 15px;
-    -fx-background-color: #f8f9fa;
-    -fx-background-radius: 25px;
-    -fx-border-radius: 25px;
-    -fx-border-color: #e0e0e0;
-    -fx-border-width: 1px;
-    -fx-prompt-text-fill: #999;
-}
-
-.search-field:focused {
-    -fx-background-color: white;
-    -fx-border-color: #6c757d;
-    -fx-border-width: 2px;
-    -fx-effect: dropshadow(three-pass-box, rgba(108, 117, 125, 0.2), 5, 0, 0, 0);
-}
-
-/* ==================== BOUTONS PRINCIPAUX ==================== */
-
-/* Bouton Rechercher (Gris) */
-.btn-search {
-    -fx-background-color: #6c757d;
-    -fx-text-fill: white;
+/* === Typography === */
+.main-title {
+    -fx-font-size: 28px; /* Matched to .page-title */
     -fx-font-weight: bold;
-    -fx-font-size: 14px;
-    -fx-pref-height: 45px;
-    -fx-pref-width: 130px;
-    -fx-background-radius: 25px;
-    -fx-cursor: hand;
-    -fx-border-width: 0;
+    -fx-text-fill: -fx-text-main;
 }
 
-.btn-search:hover {
-    -fx-background-color: #5a6268;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 8, 0, 0, 2);
-}
-
-.btn-search:pressed {
-    -fx-background-color: #545b62;
-    -fx-translate-y: 1px;
-}
-
-/* Bouton Ajouter Produit (Gris) */
-.btn-add {
-    -fx-background-color: #6c757d;
-    -fx-text-fill: white;
+.card-title, .card-title-small {
+    -fx-font-size: 18px; /* Matched to .section-title */
     -fx-font-weight: bold;
-    -fx-font-size: 14px;
-    -fx-pref-height: 45px;
-    -fx-pref-width: 160px;
-    -fx-background-radius: 25px;
-    -fx-cursor: hand;
-    -fx-border-width: 0;
+    -fx-text-fill: -fx-text-main;
 }
 
-.btn-add:hover {
-    -fx-background-color: #5a6268;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 8, 0, 0, 2);
+.subtitle {
+    -fx-font-size: 13px; /* Matched to .kpi-label */
+    -fx-text-fill: -fx-text-sub;
 }
 
-.btn-add:pressed {
-    -fx-background-color: #545b62;
-    -fx-translate-y: 1px;
+/* === Header Area === */
+.search-bar-container {
+    -fx-background-color: -fx-card-bg;
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+    /* Using faint green tint for border to match toggle hover vibe */
+    -fx-border-color: rgba(91, 112, 101, 0.1);
+    -fx-pref-width: 350;
+    -fx-padding: 5 15;
 }
 
-/* ==================== FILTRES CATÉGORIES ==================== */
-
-/* Label Catégorie */
-.label-category {
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #2c3e50;
-    -fx-padding: 8px 10px 8px 0;
-}
-
-/* Boutons de Filtre - Style de Base */
-.filter-btn {
-    -fx-background-color: #95a5a6;
-    -fx-text-fill: white;
-    -fx-font-size: 13px;
-    -fx-font-weight: bold;
-    -fx-padding: 10px 20px;
-    -fx-background-radius: 8px;
-    -fx-cursor: hand;
-    -fx-border-width: 0;
-    -fx-transition: all 0.3s ease;
-}
-
-.filter-btn:hover {
-    -fx-background-color: #7f8c8d;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.12), 6, 0, 0, 2);
-    -fx-translate-y: -1px;
-}
-
-.filter-btn:pressed {
-    -fx-background-color: #707b7c;
-    -fx-translate-y: 1px;
-}
-
-
-
-
-
-/* ==================== GRILLE DE PRODUITS ==================== */
-.products-grid {
-    -fx-background-color: transparent;
-    -fx-padding: 20px;
-}
-
-/* ==================== CARTES PRODUITS ==================== */
-.product-card {
-    -fx-background-color: white;
-    -fx-background-radius: 12px;
-    -fx-padding: 15px;
-    -fx-spacing: 10px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 10, 0, 0, 2);
-    -fx-border-radius: 12px;
-    -fx-border-color: #e9ecef;
-    -fx-border-width: 1px;
-}
-
-.product-card:hover {
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 15, 0, 0, 4);
-    -fx-translate-y: -3px;
-    -fx-border-color: #dee2e6;
-}
-
-/* Container Image Produit */
-.product-image-container {
-    -fx-background-color: #f8f9fa;
-    -fx-min-height: 200px;
-    -fx-background-radius: 8px;
-}
-
-/* Titre du Produit */
-.product-title {
+.search-icon {
     -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #2c3e50;
-    -fx-wrap-text: true;
+    -fx-text-fill: -fx-text-sub;
+    -fx-padding: 0 10 0 0;
 }
 
-/* Catégorie du Produit */
-.product-category {
-    -fx-font-size: 12px;
-    -fx-text-fill: #7f8c8d;
-    -fx-padding: 3px 0;
-}
-
-/* Stock du Produit */
-.product-stock {
-    -fx-font-size: 12px;
-    -fx-text-fill: #95a5a6;
-    -fx-padding: 3px 0;
-}
-
-/* Prix du Produit */
-.product-price {
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #4444;
-    -fx-padding: 8px 0;
-}
-
-/* Container Boutons */
-.product-buttons {
-    -fx-spacing: 8px;
-    -fx-alignment: center-left;
-}
-
-/* ==================== BOUTONS ACTIONS PRODUITS ==================== */
-
-/* Bouton Éditer (Jaune/Orange) */
-.btn-edit {
-    -fx-background-color: gray;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-font-size: 13px;
-    -fx-pref-width: 90px;
-    -fx-pref-height: 35px;
-    -fx-background-radius: 6px;
-    -fx-cursor: hand;
-    -fx-border-width: 0;
-}
-
-.btn-edit:hover {
-    -fx-background-color: #gray;
-    -fx-effect: dropshadow(three-pass-box, rgba(243, 156, 18, 0.3), 6, 0, 0, 2);
-}
-
-.btn-edit:pressed {
-    -fx-background-color: gray;
-    -fx-translate-y: 1px;
-}
-
-/* Bouton Supprimer (Rouge) */
-.btn-delete {
-    -fx-background-color: #e74c3c;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-font-size: 13px;
-    -fx-pref-width: 90px;
-    -fx-pref-height: 35px;
-    -fx-background-radius: 6px;
-    -fx-cursor: hand;
-    -fx-border-width: 0;
-}
-
-.btn-delete:hover {
-    -fx-background-color: #c0392b;
-    -fx-effect: dropshadow(three-pass-box, rgba(231, 76, 60, 0.3), 6, 0, 0, 2);
-}
-
-.btn-delete:pressed {
-    -fx-background-color: #a93226;
-    -fx-translate-y: 1px;
-}
-
-/* ==================== BARRE DE STATUT ==================== */
-.status-bar {
-    -fx-background-color: #ecf0f1;
-    -fx-padding: 12px 20px;
-    -fx-border-color: #bdc3c7;
-    -fx-border-width: 1px 0 0 0;
-}
-
-.status-bar Label {
-    -fx-text-fill: #34495e;
-    -fx-font-size: 13px;
-    -fx-font-weight: 500;
-}
-
-/* ===== ScrollPane: FULLY TRANSPARENT ===== */
-.scroll-pane {
+.transparent-text-field {
     -fx-background-color: transparent;
-    -fx-border-color: transparent;
-    -fx-background-insets: 0;
+    -fx-prompt-text-fill: -fx-text-sub;
+    -fx-text-fill: -fx-text-main;
+}
+.transparent-text-field:focused {
+    -fx-background-color: transparent;
+}
+
+.user-name {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px; /* Matched to .profile-name */
+    -fx-text-fill: -fx-text-main;
+}
+.user-role {
+    -fx-text-fill: -fx-text-sub;
+    -fx-font-size: 12px;
+}
+
+/* === Cards === */
+.content-card {
+    -fx-background-color: -fx-card-bg;
+    -fx-background-radius: 15;
+    /* Exact shadow from your Dashboard CSS */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.03), 10, 0, 0, 5);
+}
+
+/* === Category Buttons (Pills) === */
+/* Modeled after .toggle-btn in Dashboard */
+.category-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-text-sub; /* #8EA096 */
+    -fx-background-radius: 25;
+    -fx-padding: 6 16;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.category-btn:hover {
+    -fx-text-fill: -fx-primary-color;
+    -fx-background-color: rgba(91, 112, 101, 0.05); /* From .toggle-btn:hover */
+}
+
+.category-btn.active {
+    -fx-background-color: -fx-primary-color; /* #5B7065 */
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(91, 112, 101, 0.4), 8, 0, 0, 3);
+}
+
+/* === Scroll Panes === */
+.product-scroll-pane, .cart-scroll-pane {
+    -fx-background-color: transparent;
     -fx-padding: 0;
 }
-
-/* This is the IMPORTANT part */
 .scroll-pane > .viewport {
     -fx-background-color: transparent;
 }
-
-/* Content wrapper */
-.scroll-pane > .content {
-    -fx-background-color: transparent;
+.scroll-bar:vertical, .scroll-bar:horizontal {
+    -fx-opacity: 0.5;
 }
 
-/* Corner when both scrollbars appear */
-.scroll-pane > .corner {
-    -fx-background-color: transparent;
+/* === Checkout Section === */
+.order-id {
+    -fx-text-fill: -fx-text-sub;
+    -fx-font-size: 12px;
 }
 
-/* ===== Scrollbar styling (kept) ===== */
-.scroll-pane .scroll-bar:vertical {
-    -fx-background-color: transparent;
-    -fx-pref-width: 10px;
+.cart-separator {
+    -fx-padding: 15 0;
+}
+.separator *.line {
+    -fx-border-color: rgba(0,0,0,0.05);
+    -fx-border-width: 1;
 }
 
-.scroll-pane .scroll-bar:vertical .track {
-    -fx-background-color: transparent;
+.pricing-section {
+    -fx-padding: 10 0 20 0;
 }
 
-.scroll-pane .scroll-bar:vertical .thumb {
-    -fx-background-color: #bdc3c7;
-    -fx-background-radius: 5px;
+.price-label {
+    -fx-text-fill: -fx-text-sub;
+    -fx-font-size: 14px;
 }
 
-.scroll-pane .scroll-bar:vertical .thumb:hover {
-    -fx-background-color: #95a5a6;
-}
-
-/* ==================== ANIMATIONS & TRANSITIONS ==================== */
-.product-card,
-.filter-btn,
-.btn-search,
-.btn-add,
-.btn-edit,
-.btn-delete {
-    -fx-transition: all 0.2s ease-in-out;
-}
-
-/* ==================== RESPONSIVE ==================== */
-/* Les ajustements responsive se font généralement dans le code Java
-   mais on peut définir des styles de secours ici */
-
-.product-card-small {
-    -fx-pref-width: 280px;
-    -fx-pref-height: 320px;
-}
-
-.product-card-medium {
-    -fx-pref-width: 320px;
-    -fx-pref-height: 350px;
-}
-
-.product-card-large {
-    -fx-pref-width: 360px;
-    -fx-pref-height: 380px;
-}
-
-/* CART */
-.totalPayment-container{
-    -fx-font-size: 20;
+.price-value {
+    -fx-text-fill: -fx-text-main;
     -fx-font-weight: bold;
-    -fx-border-width: 2 0 2 0;
-    -fx-border-color: rgba(128, 128, 128, 0.39);
-    -fx-padding: 15 0 15 0;
-}
-.cart{
-    -fx-pref-width: 400 !important;
-    -fx-padding: 15;
-    -fx-spacing: 15;
-    -fx-alignment: center;
-}
-.orderDone-btn{
-    -fx-padding: 10 20;
-    -fx-background-color: #BEC400;
-    -fx-font-weight: bold;
-    -fx-pref-width: 350;
-    -fx-cursor: hand;
-    -fx-font-size: 16;
-}
-.orderDone-btn:hover{
-    -fx-background-color: #a5ab01;
-}
-/* ===============================
-   Cart Item Card
-================================ */
-.cartItemContainer {
-    -fx-background-color: white;
-    -fx-background-radius: 12;
-    -fx-border-radius: 12;
-    -fx-padding: 12;
-    -fx-spacing: 12;
-    -fx-alignment: CENTER_LEFT;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);
-}
-#cart{
-    -fx-spacing: 12;
-}
-.cartItemContainer:hover {
-    -fx-background-color: #fafafa;
+    -fx-font-size: 14px;
 }
 
-/* ===============================
-   Product Image
-================================ */
-.cart-image {
+/* Using the "Trend Down" orange color for discounts/negatives */
+.price-value-discount {
+    -fx-text-fill: -fx-text-warning; /* #e0aa55 */
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.total-row {
+    -fx-padding: 10 0 0 0;
+}
+
+.total-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-main;
+}
+
+.total-value-grand {
+    -fx-font-size: 24px;
+    -fx-font-weight: 900;
+    -fx-text-fill: -fx-text-main;
+}
+
+/* === Buttons === */
+.btn-confirm {
+    -fx-background-color: -fx-primary-color; /* #5B7065 */
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
     -fx-background-radius: 8;
-}
-
-/* ===============================
-   Right Content Column
-================================ */
-.cart-info {
-    -fx-spacing: 6;
-}
-
-/* ===============================
-   Top Row (Title + Delete)
-================================ */
-.cart-top {
-    -fx-alignment: CENTER_LEFT;
-}
-
-.product-title {
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #2c2c2c;
-}
-
-/* ===============================
-   Bottom Row (Price + Quantity)
-================================ */
-.cart-bottom {
-    -fx-alignment: CENTER_LEFT;
-}
-
-/* Price */
-.product-price {
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #000000;
-}
-
-/* ===============================
-   Quantity Controls
-================================ */
-.qty-btn {
-    -fx-background-color: #f4f4f4;
-    -fx-background-radius: 6;
-    -fx-min-width: 28;
-    -fx-min-height: 28;
+    -fx-padding: 12 20;
     -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(91, 112, 101, 0.4), 8, 0, 0, 3);
+}
+.btn-confirm:hover {
+    -fx-background-color: derive(-fx-primary-color, -5%);
+}
+
+.btn-draft {
+    -fx-background-color: white;
+    -fx-text-fill: -fx-text-main;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-border-color: rgba(91, 112, 101, 0.2);
+    -fx-border-radius: 8;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+}
+.btn-draft:hover {
+    -fx-background-color: #F2F7F2; /* From .chart-toggle-box */
+}
+
+.payment-type-btn {
+    -fx-background-color: #F2F7F2; /* From .chart-toggle-box */
+    -fx-text-fill: -fx-text-sub;
+    -fx-background-radius: 15;
+    -fx-padding: 5 12;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+.payment-type-btn.active {
+    -fx-background-color: -fx-primary-color;
+    -fx-text-fill: white;
+}
+
+/* === 1. Font Import === */
+/* Assumes 'Fonts' folder is a sibling of 'stylesheets' folder */
+@font-face {
+    font-family: 'Poppins';
+    src: url('../Fonts/Poppins-Regular.ttf');
+}
+
+
+
+/* === 2. Product Card (No Hover Movement, Permanent Shadow) === */
+.product-card {
+    -fx-background-color: white;
+    -fx-background-radius: 18; /* More rounded */
+    -fx-padding: 20;
+
+    /* Permanent "Stand Out" Sage Shadow */
+    -fx-effect: dropshadow(three-pass-box, rgba(91, 112, 101, 0.25), 15, 0, 0, 4);
+}
+
+/* Removed .product-card:hover block so it stays static */
+
+/* Image Background */
+.product-image-container {
+    -fx-background-color: linear-gradient(to bottom right, #dbe9db, #eff7f2);
+    -fx-background-radius: 14;
+}
+
+/* Typography */
+.product-name {
+    -fx-font-size: 16px; /* Slightly bigger */
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-main;
+}
+
+.product-category {
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-sub;
+}
+
+.stock-dot { -fx-fill: -fx-secondary-green; }
+
+.stock-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: -fx-text-sub;
+    -fx-font-weight: bold;
+}
+
+.product-price {
+    -fx-font-size: 16px;
+    -fx-font-weight: 900;
+    -fx-text-fill: -fx-text-main;
+}
+
+/* === 3. Right-Aligned Button === */
+.product-add-btn {
+    -fx-background-color: -fx-primary-color; /* Solid Sage */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-background-radius: 20; /* Pill shape */
+    -fx-padding: 8 18; /* Compact padding */
+    -fx-cursor: hand;
+}
+
+.product-add-btn:hover {
+    -fx-background-color: derive(-fx-primary-color, -10%);
+}
+/* === Cart Item Container === */
+.cart-item-container {
+    -fx-background-color: transparent;
+    -fx-padding: 10 0; /* Vertical spacing between items */
+    -fx-border-color: transparent transparent #f0f0f0 transparent; /* Bottom border separator */
+    -fx-border-width: 0 0 1 0;
+}
+
+/* === Left Side: Info === */
+.cart-product-title {
+    -fx-font-family: 'Poppins', sans-serif;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2d3b36; /* Dark Green/Black */
+}
+
+.cart-unit-price {
+    -fx-font-family: 'Poppins', sans-serif;
+    -fx-font-size: 11px;
+    -fx-text-fill: #9CA3AF; /* Light Gray text "Unit $34.00" */
+}
+
+/* === Quantity Pill === */
+.qty-container {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb; /* Light border */
+    -fx-border-radius: 15;      /* Rounded Pill Shape */
+    -fx-background-radius: 15;
+    -fx-padding: 0 2;
+}
+
+.qty-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #6B7280; /* Gray +/- signs */
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 3 8;
+    -fx-min-width: 25;
 }
 
 .qty-btn:hover {
-    -fx-background-color: #e6e6e6;
+    -fx-text-fill: #2d3b36;
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 50%; /* Circle hover effect */
 }
 
 .qty-label {
-    -fx-font-size: 13px;
+    -fx-font-family: 'Poppins', sans-serif;
+    -fx-font-size: 12px;
+    -fx-text-fill: #2d3b36;
     -fx-font-weight: bold;
-    -fx-padding: 0 8 0 8;
 }
 
-/* ===============================
-   Delete Button (Trash)
-================================ */
-.delete-btn {
-    -fx-background-color: #ff6b6b;
-    -fx-background-radius: 10;
-    -fx-padding: 6 8 6 8;
-    -fx-cursor: hand;
-    -fx-border-color: transparent;
-
-    -fx-min-width: 32;
-    -fx-min-height: 32;
-    -fx-max-width: 32;
-    -fx-max-height: 32;
-}
-
-.delete-btn:hover {
-    -fx-background-color: #ff4c4c;
-}
-
-.delete-btn:pressed {
-    -fx-background-color: #e63e3e;
-}
-
-.delete-btn:focused {
-    -fx-background-insets: 0;
-}
-
-/* Trash icon */
-.trash-icon {
-    -fx-fill: white;
+/* === Total Price (Right) === */
+.cart-total-price {
+    -fx-font-family: 'Poppins', sans-serif;
+    -fx-font-size: 13px;
+    -fx-font-weight: 900; /* Extra Bold */
+    -fx-text-fill: #374151; /* Dark Gray/Black */
+    -fx-min-width: 60;      /* Fixed width for alignment */
+    -fx-alignment: CENTER_RIGHT;
 }

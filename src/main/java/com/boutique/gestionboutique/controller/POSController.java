@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.SVGPath;
 
 import java.net.URL;
@@ -83,21 +85,24 @@ public class POSController implements Initializable {
 
     // FIXED: Added defensive image loading to prevent "Invalid URL" crash
     private VBox createProductCard(Product product) {
-        VBox card = new VBox(10);
+        // 1. Main Card Container (Bigger Width)
+        VBox card = new VBox();
         card.getStyleClass().add("product-card");
+        card.setSpacing(12);
+        card.setPrefWidth(260); // INCREASED WIDTH
 
-        BorderPane imageContainer = new BorderPane();
+        // 2. Image Container
+        StackPane imageContainer = new StackPane();
         imageContainer.getStyleClass().add("product-image-container");
+        imageContainer.setPrefHeight(160); // INCREASED HEIGHT SLIGHTLY
 
         ImageView imageView = new ImageView();
-        imageView.setFitWidth(180);
-        imageView.setFitHeight(180);
+        imageView.setFitWidth(120); // BIGGER IMAGE
+        imageView.setFitHeight(120);
         imageView.setPreserveRatio(true);
 
-        // SAFE IMAGE LOADING
         if (product.getImagePath() != null && !product.getImagePath().trim().isEmpty()) {
             try {
-                // Use background loading (true) to keep UI fast
                 Image image = new Image(product.getImagePath(), true);
                 imageView.setImage(image);
             } catch (Exception e) {
@@ -105,34 +110,61 @@ public class POSController implements Initializable {
             }
         }
 
-        imageContainer.setCenter(imageView);
+        if (imageView.getImage() == null) {
+            Label placeholderText = new Label("Visual Product");
+            placeholderText.setStyle("-fx-text-fill: #8EA096; -fx-font-size: 14px;");
+            imageContainer.getChildren().add(placeholderText);
+        } else {
+            imageContainer.getChildren().add(imageView);
+        }
+
+        // 3. Details Section
+        VBox detailsBox = new VBox(5);
 
         Label nameLabel = new Label(product.getName());
-        nameLabel.getStyleClass().add("product-title");
+        nameLabel.getStyleClass().add("product-name");
         nameLabel.setWrapText(true);
 
-        Label categoryLabel = new Label("Catégorie: " + product.getCategoryName());
+        Label categoryLabel = new Label(product.getCategoryName());
         categoryLabel.getStyleClass().add("product-category");
 
-        Label stockLabel = new Label("Stock: " + product.getQuantity());
-        stockLabel.getStyleClass().add("product-stock");
+        detailsBox.getChildren().addAll(nameLabel, categoryLabel);
 
-        Label priceLabel = new Label("MAD " + String.format("%.2f", product.getPrice()));
+        // 4. Info Row: Stock (Left) + Price (Right)
+        HBox infoRow = new HBox();
+        infoRow.setAlignment(Pos.CENTER_LEFT);
+
+        HBox stockBox = new HBox(6);
+        stockBox.setAlignment(Pos.CENTER_LEFT);
+        Circle stockDot = new Circle(4);
+        stockDot.getStyleClass().add("stock-dot");
+        Label stockLabel = new Label("En stock • " + product.getQuantity());
+        stockLabel.getStyleClass().add("stock-label");
+        stockBox.getChildren().addAll(stockDot, stockLabel);
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        Label priceLabel = new Label(String.format("%.0f MAD", product.getPrice()));
         priceLabel.getStyleClass().add("product-price");
 
-        HBox button_container = new HBox(8);
-        button_container.getStyleClass().add("product-buttons");
+        infoRow.getChildren().addAll(stockBox, spacer, priceLabel);
 
-        Button addToCart = new Button("Ajouter au panier");
-        addToCart.getStyleClass().add("btn-add-to-cart");
+        // 5. Button Container (Aligned Right)
+        HBox btnContainer = new HBox();
+        btnContainer.setAlignment(Pos.CENTER_RIGHT); // ALIGN RIGHT
+        btnContainer.setPadding(new Insets(5, 0, 0, 0));
+
+        Button addToCart = new Button("Ajouter +");
+        addToCart.getStyleClass().add("product-add-btn");
         addToCart.setOnAction(e -> addToCart(product));
 
-        button_container.getChildren().addAll(addToCart);
-        card.getChildren().addAll(imageContainer, nameLabel, categoryLabel, stockLabel, priceLabel, button_container);
-        return card;
-    }
+        btnContainer.getChildren().add(addToCart);
 
-    // FIXED: Re-added this method which was missing and causing FXML LoadException
+        // Combine
+        card.getChildren().addAll(imageContainer, detailsBox, infoRow, btnContainer);
+        return card;
+    }    // FIXED: Re-added this method which was missing and causing FXML LoadException
     @FXML
     private void filterByCategory(javafx.event.ActionEvent event) {
         Button btn = (Button) event.getSource();
@@ -178,54 +210,41 @@ public class POSController implements Initializable {
         refreshCartDisplay();
     }
 
-    private HBox createCartItem(Product product){
+    private HBox createCartItem(Product product) {
+        // 1. Main Container
         HBox itemContainer = new HBox();
-        itemContainer.getStyleClass().add("cartItemContainer");
+        itemContainer.setAlignment(Pos.CENTER_LEFT);
+        itemContainer.getStyleClass().add("cart-item-container");
+        itemContainer.setSpacing(10);
 
-        ImageView imageView = new ImageView();
-        if (product.getImagePath() != null && !product.getImagePath().trim().isEmpty()) {
-            try {
-                imageView.setImage(new Image(product.getImagePath(), true));
-            } catch (Exception e) {}
-        }
-        imageView.setFitWidth(50);
-        imageView.setFitHeight(50);
-        imageView.setPreserveRatio(true);
-        imageView.getStyleClass().add("cart-image");
+        // 2. Left Side: Product Name & Unit Price
+        VBox infoBox = new VBox(2); // 2px spacing between name and unit price
+        infoBox.setAlignment(Pos.CENTER_LEFT);
 
-        VBox info = new VBox();
-        info.getStyleClass().add("cart-info");
-        HBox.setHgrow(info, ALWAYS);
-
-        HBox top = new HBox();
-        top.getStyleClass().add("cart-top");
         Label productTitle = new Label(product.getName());
-        productTitle.getStyleClass().add("product-title");
+        productTitle.getStyleClass().add("cart-product-title");
+        productTitle.setWrapText(true);
 
+        // Assuming product.getPrice() is the unit price.
+        // If you only have total price, calculate unit: total / quantity
+        double unitPriceVal = (product.getqCartItem() > 0) ? (product.getqPrice() / product.getqCartItem()) : 0;
+        Label unitPriceLabel = new Label("Unit " + String.format("%.2f DH", unitPriceVal));
+        unitPriceLabel.getStyleClass().add("cart-unit-price");
+
+        infoBox.getChildren().addAll(productTitle, unitPriceLabel);
+
+        // 3. Spacer to push Right Side to the edge
         Region spacer = new Region();
-        HBox.setHgrow(spacer, ALWAYS);
+        HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        Button deleteBtn = new Button();
-        deleteBtn.getStyleClass().add("delete-btn");
-        SVGPath trashIcon = new SVGPath();
-        trashIcon.setContent("M33.9602 5.71429H24.0833V1.42857C24.0833 1.04969 23.9341 0.686328 23.6684 0.418419C23.4027 0.15051 23.0424 0H22.6667 0H11.3333C10.9576 0 10.5973 0.15051 10.3316 0.418419C10.0659 0.686328 9.91667 1.04969 9.91667 1.42857V5.71429H0.0398435L0 9.28571H2.92187L4.70068 37.3214C4.7457 38.0464 5.06289 38.7269 5.58773 39.2245C6.11258 39.7221 6.80567 39.9994 7.52604 40H26.474C27.1939 39.9999 27.8868 39.7234 28.412 39.2267C28.9371 38.7301 29.255 38.0504 29.3011 37.3259L31.0781 9.28571H34L33.9602 5.71429ZM9.91667 34.2857L9.11979 11.4286H12.0417L12.8385 34.2857H9.91667ZM18.4167 34.2857H15.5833V11.4286H18.4167V34.2857ZM20.5417 5.71429H13.4583V3.21429C13.4583 3.11957 13.4956 3.02872 13.5621 2.96175C13.6285 2.89477 13.7186 2.85714 13.8125 2.85714H20.1875C20.2814 2.85714 20.3715 2.89477 20.4379 2.96175C20.5044 3.02872 20.5417 3.11957 20.5417 3.21429V5.71429ZM24.0833 34.2857H21.1615L21.9583 11.4286H24.8802L24.0833 34.2857Z");
-        trashIcon.setScaleX(0.4);
-        trashIcon.setScaleY(0.4);
-        trashIcon.getStyleClass().add("trash-icon");
-        deleteBtn.setGraphic(trashIcon);
-        deleteBtn.setOnAction(e -> deleteItem(product));
+        // 4. Right Side: Quantity & Total Price
+        HBox rightSide = new HBox(15); // Gap between Quantity Pill and Total Price
+        rightSide.setAlignment(Pos.CENTER_RIGHT);
 
-        top.getChildren().addAll(productTitle, spacer, deleteBtn);
-
-        HBox bottom = new HBox(5);
-        bottom.setAlignment(Pos.CENTER_LEFT);
-        bottom.getStyleClass().add("cart-bottom");
-
-        Label price = new Label(String.format("%.2f DH", product.getqPrice()));
-        price.getStyleClass().add("product-price");
-
-        Region spacer2 = new Region();
-        HBox.setHgrow(spacer2, ALWAYS);
+        // --- Quantity Pill Container ---
+        HBox qtyContainer = new HBox();
+        qtyContainer.getStyleClass().add("qty-container");
+        qtyContainer.setAlignment(Pos.CENTER);
 
         Button minus = new Button("-");
         minus.getStyleClass().add("qty-btn");
@@ -233,18 +252,27 @@ public class POSController implements Initializable {
 
         Label quantity = new Label(String.valueOf(product.getqCartItem()));
         quantity.getStyleClass().add("qty-label");
+        // Ensure label doesn't shrink
+        quantity.setMinWidth(20);
+        quantity.setAlignment(Pos.CENTER);
 
         Button plus = new Button("+");
         plus.getStyleClass().add("qty-btn");
         plus.setOnAction(e -> handleQuantity(product.getId(), '+'));
 
-        bottom.getChildren().addAll(price, spacer2, minus, quantity, plus);
-        info.getChildren().addAll(top, bottom);
-        itemContainer.getChildren().addAll(imageView, info);
+        qtyContainer.getChildren().addAll(minus, quantity, plus);
+
+        // --- Total Price ---
+        Label totalPriceLabel = new Label(String.format("%.2f", product.getqPrice()));
+        totalPriceLabel.getStyleClass().add("cart-total-price");
+
+        rightSide.getChildren().addAll(qtyContainer, totalPriceLabel);
+
+        // 5. Add all to main container
+        itemContainer.getChildren().addAll(infoBox, spacer, rightSide);
 
         return itemContainer;
     }
-
     private void refreshCartDisplay(){
         cart.getChildren().clear();
         for(Product product : cartManager.getCartItems()){

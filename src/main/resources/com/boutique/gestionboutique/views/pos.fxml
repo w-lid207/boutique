@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -11,80 +12,152 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 
-<BorderPane stylesheets="@../stylesheets/pos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.boutique.gestionboutique.controller.POSController">
+<BorderPane prefHeight="900.0" prefWidth="1400.0" styleClass="root-container" stylesheets="@../stylesheets/pos.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.boutique.gestionboutique.controller.POSController">
 
-    <!-- Grille de Produits -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="top-header">
+            <padding>
+                <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
+            </padding>
+            <children>
+                <VBox>
+                    <children>
+                        <Label styleClass="main-title" text="Point of Sale" />
+                        <Label styleClass="subtitle" text="Boutique &amp; cosmetic counter · New order" />
+                    </children>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS" />
+
+                <HBox alignment="CENTER_LEFT" styleClass="search-bar-container">
+                    <children>
+                        <Label styleClass="search-icon" text="🔍" />
+                        <TextField fx:id="searchField" onAction="#searchProducts" promptText="Search products or scan barcode" styleClass="transparent-text-field" HBox.hgrow="ALWAYS" />
+                    </children>
+                </HBox>
+
+                <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                    <children>
+                        <VBox alignment="CENTER_RIGHT">
+                            <children>
+                                <Label styleClass="user-name" text="Admin" />
+                                <Label styleClass="user-role" text="Store Manager" />
+                            </children>
+                        </VBox>
+                        <Circle fill="#a1b5a3" radius="20.0" />
+                    </children>
+                </HBox>
+            </children>
+        </HBox>
+    </top>
+
     <center>
-      <ScrollPane fitToWidth="true">
-         <content>
-            <VBox>
-               <children>
-                  <VBox styleClass="top-bar">
-                     <children>
+        <VBox styleClass="content-card" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets bottom="30.0" left="30.0" right="15.0" top="10.0" />
+            </BorderPane.margin>
 
-                           <!-- Filtres par Catégorie -->
-                           <HBox spacing="10">
-                               <padding>
-                                   <Insets bottom="15" left="15" right="15" top="0" />
-                               </padding>
+            <children>
+                <HBox alignment="CENTER_LEFT" spacing="20.0">
+                    <padding>
+                        <Insets bottom="15.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                    <children>
+                        <VBox>
+                            <children>
+                                <Label styleClass="card-title" text="Products" />
+                                <Label styleClass="subtitle" text="Browse items on the shelves" />
+                            </children>
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS" />
 
-                               <Label styleClass="label-category" text="Catégorie:" />
+                        <HBox spacing="10">
+                            <Button onAction="#filterByCategory" styleClass="category-btn, active" text="Tous" userData="all" />
+                            <Button onAction="#filterByCategory" styleClass="category-btn" text="Sérums" userData="Sérums" />
+                            <Button onAction="#filterByCategory" styleClass="category-btn" text="Maquillage" userData="Maquillage" />
+                            <Button onAction="#filterByCategory" styleClass="category-btn" text="Produits Bio (Soins &amp; Divers)" userData="Produits Bio (Soins &amp; Divers)" />
+                            <Button onAction="#filterByCategory" styleClass="category-btn" text="Vitamines &amp; Suppléments" userData="Vitamines &amp; Suppléments" />
+                        </HBox>
+                    </children>
+                </HBox>
 
-                               <Button onAction="#filterByCategory" styleClass="filter-btn, filter-btn-active" text="Tous" userData="all" />
-
-                               <Button onAction="#filterByCategory" styleClass="filter-btn" text="Sérums" userData="Sérums" />
-
-                               <Button onAction="#filterByCategory" styleClass="filter-btn" text="Maquillage" userData="Maquillage" />
-
-                               <Button onAction="#filterByCategory" styleClass="filter-btn" text="Produits Bio (Soins &amp; Divers)" userData="Produits Bio (Soins &amp; Divers)" />
-
-                               <Button onAction="#filterByCategory" styleClass="filter-btn" text="Vitamines &amp; Suppléments" userData="Vitamines &amp; Suppléments" />
-                           </HBox>
-                           <HBox spacing="10">
-                               <padding>
-                                   <Insets bottom="15" left="15" right="15" top="15" />
-                               </padding>
-
-                               <TextField fx:id="searchField" onAction="#searchProducts" promptText="Rechercher un produit..." styleClass="search-field" HBox.hgrow="ALWAYS" />
-
-                               <Button onAction="#searchProducts" styleClass="btn-search" text="🔍 Rechercher" />
-                           </HBox>
-                     </children>
-                  </VBox>
-                     <GridPane fx:id="productsGrid" hgap="20" styleClass="products-grid" vgap="20">
-                         <padding>
-                             <Insets bottom="20" left="20" right="20" top="20" />
-                         </padding>
-
-                         <columnConstraints>
-                             <ColumnConstraints percentWidth="33.33" />
-                             <ColumnConstraints percentWidth="33.33" />
-                             <ColumnConstraints percentWidth="33.33" />
-                         </columnConstraints>
-                     </GridPane>
-               </children>
-            </VBox>
-         </content>
-      </ScrollPane>
+                <ScrollPane fitToWidth="true" styleClass="product-scroll-pane" VBox.vgrow="ALWAYS">
+                    <content>
+                        <GridPane fx:id="productsGrid" hgap="20" styleClass="products-grid" vgap="20">
+                            <padding>
+                                <Insets bottom="20" left="20" right="20" top="10" />
+                            </padding>
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" percentWidth="33.33" />
+                                <ColumnConstraints hgrow="SOMETIMES" percentWidth="33.33" />
+                                <ColumnConstraints hgrow="SOMETIMES" percentWidth="33.33" />
+                            </columnConstraints>
+                        </GridPane>
+                    </content>
+                </ScrollPane>
+            </children>
+        </VBox>
     </center>
-   <right>
-      <VBox prefHeight="181.0" prefWidth="400.0" styleClass="cart" BorderPane.alignment="CENTER">
-         <children>
-            <ScrollPane VBox.vgrow="ALWAYS" fitToWidth="true">
-               <content>
-                  <VBox fx:id="cart" />
-               </content>
-            </ScrollPane>
-            <Region VBox.vgrow="ALWAYS" />
-            <HBox styleClass="totalPayment-container">
-               <children>
-                  <Label styleClass="totalPayement" text="Total Payment" />
-                  <Region HBox.hgrow="ALWAYS" />
-                  <Label fx:id="totalPrice" layoutX="10.0" layoutY="10.0" styleClass="paymentValue" text="0 DH" />
-               </children>
-            </HBox>
-            <Button fx:id="orderDone" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#processSaleUpdates" styleClass="orderDone-btn" text="Order done" />
-         </children></VBox>
-   </right>
+
+    <right>
+        <VBox prefWidth="420.0" spacing="20.0" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets bottom="30.0" left="15.0" right="30.0" top="10.0" />
+            </BorderPane.margin>
+
+            <children>
+                <VBox styleClass="content-card" VBox.vgrow="ALWAYS">
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                    <children>
+                        <HBox alignment="CENTER_LEFT">
+                            <children>
+                                <VBox>
+                                    <children>
+                                        <Label styleClass="card-title" text="Checkout" />
+                                        <Label styleClass="subtitle" text="Cart" />
+                                    </children>
+                                </VBox>
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Label styleClass="order-id" text="Order #POS-2047" />
+                            </children>
+                        </HBox>
+
+                        <ScrollPane fitToWidth="true" styleClass="cart-scroll-pane" VBox.vgrow="ALWAYS">
+                            <content>
+                                <VBox fx:id="cart" spacing="15.0">
+                                    <padding>
+                                        <Insets top="15.0" />
+                                    </padding>
+                                </VBox>
+                            </content>
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                        </ScrollPane>
+
+                        <Separator styleClass="cart-separator" />
+
+                        <VBox spacing="8.0" styleClass="pricing-section">
+                            <children>
+                                <HBox styleClass="total-row">
+                                    <Label styleClass="total-label" text="Total" /><Region HBox.hgrow="ALWAYS" /><Label fx:id="totalPrice" styleClass="total-value-grand" text="0 DH" />
+                                </HBox>
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="10.0">
+                            <Button fx:id="orderDone" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#processSaleUpdates" styleClass="btn-confirm" text="Confirm Sale" />
+                        </VBox>
+
+
+                    </children>
+                </VBox>
+
+
+            </children>
+        </VBox>
+    </right>
 </BorderPane>

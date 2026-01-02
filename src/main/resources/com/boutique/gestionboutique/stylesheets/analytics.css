@@ -1,30 +1,182 @@
-.container{
-    -fx-padding: 15 0 0 0;
+/* === Import Font === */
+@font-face {
+    font-family: 'Poppins';
+    src: url('../Fonts/Poppins-Regular.ttf');
 }
-.stat-container{
-    -fx-spacing: 15;
+@font-face {
+    font-family: 'Poppins';
+    src: url('../Fonts/Poppins-Bold.ttf');
+    font-weight: bold;
+}
+
+/* === Global === */
+.root-pane {
+    -fx-background-color: #EEF6EC; /* Light Sage Background */
+    -fx-font-family: 'Poppins', 'Segoe UI', sans-serif;
+}
+
+/* === Header === */
+.page-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2d3b36;
+}
+
+.page-subtitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: #8EA096; /* Muted Sage */
+}
+
+.btn-new-report {
+    -fx-background-color: #5B7065; /* Dark Sage */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 8;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(91, 112, 101, 0.3), 10, 0, 0, 3);
+}
+.btn-new-report:hover {
+    -fx-background-color: derive(#5B7065, -5%);
+}
+
+/* === NEW ADMIN AVATAR (Pill Shape) === */
+.admin-pill {
+    /* The light green-grey background from the image */
+    -fx-background-color: #e8f0e8;
+    -fx-background-radius: 30;
+    -fx-padding: 5 5 5 15; /* Padding to position text and circle */
+}
+
+.admin-name {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2d3b36; /* Dark text */
+}
+
+.admin-initial-circle {
+    -fx-background-color: #dbe4db; /* Slightly darker circle bg */
+    -fx-background-radius: 50%;
+    -fx-min-width: 32;
+    -fx-min-height: 32;
+    -fx-max-width: 32;
+    -fx-max-height: 32;
     -fx-alignment: center;
 }
-.stat-card{
-    -fx-alignment: center-left;
-    -fx-background-color: white;
 
-    -fx-spacing: 25;
-    -fx-pref-width: 370;
-    -fx-padding: 0 0 0 40;
+.admin-initial {
+    -fx-font-size: 14px;
+    -fx-text-fill: #6b7c70; /* Muted text color for initial */
 }
-.stat-card VBox{
-    -fx-alignment: center-left;
+
+/* === KPI Cards === */
+.kpi-container {
+    -fx-padding: 10 0;
+}
+
+.kpi-card {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-padding: 25;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.03), 15, 0, 0, 5);
+    -fx-min-width: 250;
+}
+
+/* RESTORED ORIGINAL TITLE STYLE */
+.f-title {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666666;
     -fx-font-weight: bold;
 }
-.f-title{
-    -fx-font-size: 20;
+
+.kpi-icon-badge {
+    -fx-background-color: #f0fdf4;
+    -fx-text-fill: #5B7065;
+    -fx-font-size: 16px;
+    -fx-background-radius: 50%;
+    -fx-min-width: 35;
+    -fx-min-height: 35;
+    -fx-alignment: center;
+    -fx-padding: 0;
 }
-.s-title{
-    -fx-font-size: 35;
+
+.kpi-value {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2d3b36;
+    -fx-padding: 15 0 10 0;
 }
-.default-color0.chart-pie { -fx-pie-color: #caf537; }
-.default-color1.chart-pie { -fx-pie-color: #638f00; }
-.default-color2.chart-pie { -fx-pie-color: #313a31; }
-.default-color3.chart-pie { -fx-pie-color: #eaffcf; }
-.default-color4.chart-pie { -fx-pie-color: #2c2f00; }
+
+/* === Trends === */
+.trend-badge {
+    -fx-background-radius: 15;
+    -fx-padding: 2 8;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.trend-up {
+    -fx-background-color: #dcfce7;
+    -fx-text-fill: #166534;
+}
+
+.trend-neutral {
+    -fx-background-color: #f3f4f6;
+    -fx-text-fill: #4b5563;
+}
+
+.trend-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: #9ca3af;
+}
+/* --- Beautiful Donut Chart Styling --- */
+
+/* 1. The base chart slices */
+.chart-pie {
+    /* Remove the default white border between slices for a cleaner look */
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+    /* Smooth transition for hover animations */
+    -fx-transition: all 0.25s ease-in-out;
+}
+
+/* 2. Hover Effect: Make slices "pop" out slightly */
+.chart-pie:hover {
+    /* Scale up slightly (1.05x normal size) */
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    /* Add a subtle shadow to the hovered slice */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 0);
+}
+
+/* 3. Custom Modern Color Palette */
+/* We override the default JavaFX "CHART_COLOR_X" */
+.default-color0.chart-pie { -fx-pie-color: #5F7161; } /* Primary Sage */
+.default-color1.chart-pie { -fx-pie-color: #86A789; } /* Lighter Sage */
+.default-color2.chart-pie { -fx-pie-color: #B2C8BA; } /* Pale Green */
+.default-color3.chart-pie { -fx-pie-color: #DADDB1; } /* Beige/Green */
+.default-color4.chart-pie { -fx-pie-color: #EAE7B1; } /* Cream/Yellow */
+.default-color5.chart-pie { -fx-pie-color: #A79B89; } /* Muted Taupe */
+
+/* 4. Styling the Labels inside the Donut Hole */
+.donut-center-value {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #5F7161; /* Use primary color */
+}
+
+.donut-center-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: #888888;
+}
+
+/* 5. Clean up the Legend */
+.chart-legend {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+}
+.chart-legend-item-symbol{
+    /* Make legend markers circles instead of squares */
+    -fx-background-radius: 50%;
+}
