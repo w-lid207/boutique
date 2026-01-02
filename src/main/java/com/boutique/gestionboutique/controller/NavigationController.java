@@ -49,11 +49,6 @@ public class NavigationController {
 
             if (cache.containsKey(fileName)) {
                 view = cache.get(fileName);
-
-                // Get the controller we saved earlier
-                Object controller = view.getUserData();
-
-
             } else {
                 String fullPath = "/com/boutique/gestionboutique/views/" + fileName;
                 loader = new FXMLLoader(getClass().getResource(fullPath));
@@ -63,7 +58,14 @@ public class NavigationController {
                 view.setUserData(loader.getController());
                 cache.put(fileName, view);
             }
+// 2. Retrieve the Controller
+            Object controller = view.getUserData();
 
+            // 3. Refresh if it is the Dashboard
+            // This ensures data updates every time you click "Dashboard", even if cached.
+            if (controller instanceof DashBoardController) {
+                ((DashBoardController) controller).refresh();
+            }
             borderPane.setCenter(view);
 
         } catch (IOException e) {
