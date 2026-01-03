@@ -366,7 +366,7 @@
 /* Target the cards inside the FlowPane */
 .product-card {
     /* 1. Remove hardcoded pref-width from Java and use CSS */
-    -fx-pref-width: 350px;
+    -fx-pref-width: 250px;
 
     /* 2. Set a minimum width so they don't squash too much */
     -fx-min-width: 250px;
