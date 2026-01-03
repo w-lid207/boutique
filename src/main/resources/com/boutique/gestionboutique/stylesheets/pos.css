@@ -107,8 +107,12 @@
     -fx-padding: 6 16;
     -fx-font-weight: bold;
     -fx-cursor: hand;
+    -fx-min-width: 80px;
 }
-
+.category-container {
+    -fx-alignment: TOP_LEFT;
+    -fx-padding: 5 0;
+}
 .category-btn:hover {
     -fx-text-fill: -fx-primary-color;
     -fx-background-color: rgba(190, 196, 0, 0.05);
@@ -350,4 +354,24 @@
     -fx-text-fill: #374151; /* Dark Gray/Black */
     -fx-min-width: 60;      /* Fixed width for alignment */
     -fx-alignment: CENTER_RIGHT;
+}
+/* Target the FlowPane container */
+.products-grid {
+    -fx-horizontal-gap: 20;
+    -fx-vertical-gap: 20;
+    /* Ensure the container itself takes all available width */
+    -fx-alignment: TOP_LEFT;
+}
+
+/* Target the cards inside the FlowPane */
+.product-card {
+    /* 1. Remove hardcoded pref-width from Java and use CSS */
+    -fx-pref-width: 350px;
+
+    /* 2. Set a minimum width so they don't squash too much */
+    -fx-min-width: 250px;
+
+    /* 3. The trick: Set max-width to a large number so they can
+          expand if the parent container grows */
+    -fx-max-width: 600px;
 }

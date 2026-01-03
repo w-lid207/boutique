@@ -30,7 +30,7 @@ public class POSController implements Initializable {
     @FXML
     private TextField searchField;
     @FXML
-    private GridPane productsGrid;
+    private FlowPane productsGrid;
     @FXML
     private VBox cart;
     @FXML
@@ -75,18 +75,17 @@ public class POSController implements Initializable {
 
     private void displayProducts(List<Product> products) {
         productsGrid.getChildren().clear();
-        int row = 0;
-        int col = 0;
+//        int row = 0;
+//        int col = 0;
 
         for (Product product : products) {
             VBox card = createProductCard(product);
-            productsGrid.add(card, col, row);
-
-            col++;
-            if (col == 3) {
-                col = 0;
-                row++;
-            }
+            productsGrid.getChildren().add(card);
+//            col++;
+//            if (col == 3) {
+//                col = 0;
+//                row++;
+//            }
         }
     }
 
@@ -157,6 +156,8 @@ public class POSController implements Initializable {
 
         infoRow.getChildren().addAll(stockBox, spacer, priceLabel);
 
+        Region verticalSpacer = new Region();
+        VBox.setVgrow(verticalSpacer, Priority.ALWAYS);
         // 5. Button Container (Aligned Right)
         HBox btnContainer = new HBox();
         btnContainer.setAlignment(Pos.CENTER_RIGHT); // ALIGN RIGHT
@@ -169,7 +170,7 @@ public class POSController implements Initializable {
         btnContainer.getChildren().add(addToCart);
 
         // Combine
-        card.getChildren().addAll(imageContainer, detailsBox, infoRow, btnContainer);
+        card.getChildren().addAll(imageContainer, detailsBox, infoRow, verticalSpacer, btnContainer);
         return card;
     }    // FIXED: Re-added this method which was missing and causing FXML LoadException
     @FXML

@@ -12,8 +12,35 @@
 <?import javafx.scene.layout.VBox?>
 
 
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
 <BorderPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.boutique.gestionboutique.controller.ProductsController">
-   <center>
+   <top>
+       <HBox alignment="CENTER_LEFT" spacing="20.0">
+           <padding>
+               <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+           </padding>
+           <children>
+               <Label styleClass="page-title" text="Products" />
+               <Region HBox.hgrow="ALWAYS" />
+               <HBox alignment="CENTER" spacing="10.0" styleClass="profile-container">
+                   <children>
+                       <Label styleClass="profile-name" text="Admin" />
+                       <StackPane>
+                           <children>
+                               <Circle fill="#e0e0e0" radius="18.0" />
+                               <Label text="A" textFill="#666" />
+                           </children>
+                       </StackPane>
+                   </children>
+               </HBox>
+           </children>
+       </HBox>
+
+
+   </top>
+    <center>
       <BorderPane stylesheets="@../stylesheets/products.css">
       
           <!-- Top Bar avec Recherche et Bouton Ajouter -->
