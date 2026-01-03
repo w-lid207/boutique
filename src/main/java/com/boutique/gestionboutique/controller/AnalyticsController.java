@@ -123,6 +123,8 @@ public class AnalyticsController {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         data.forEach((a, b) -> series.getData().add(new XYChart.Data<>(a, b)));
         areaChart.getData().add(series);
+        areaChart.setHorizontalGridLinesVisible(false);
+        areaChart.setVerticalGridLinesVisible(false);
 
         // Inline CSS for the Area Chart Fill (Yellow-Green Gradient feel)
         series.getNode().lookup(".chart-series-area-fill").setStyle("-fx-fill: rgba(190, 196, 0, 0.4);");
@@ -154,7 +156,8 @@ public class AnalyticsController {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         data.forEach((a, b) -> series.getData().add(new XYChart.Data<>(a, b)));
         barChart.getData().add(series);
-
+        barChart.setHorizontalGridLinesVisible(false);
+        barChart.setVerticalGridLinesVisible(false);
         // Set bar color to Yellow-Green
         for (XYChart.Data<String, Number> item : series.getData()) {
             item.getNode().setStyle("-fx-bar-fill: " + COLOR_ACCENT + "; -fx-background-radius: 5 5 0 0;");
@@ -263,6 +266,8 @@ public class AnalyticsController {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         data.forEach((a, b) -> series.getData().add(new XYChart.Data<>(a, b)));
         barChart.getData().add(series);
+        barChart.setHorizontalGridLinesVisible(false);
+        barChart.setVerticalGridLinesVisible(false);
 
         // Style bars darker yellow-green
         for (XYChart.Data<String, Number> item : series.getData()) {

@@ -104,7 +104,7 @@ public class DashBoardController implements Initializable {
     @FXML
     private void monthlyRevenueChart(){
         CategoryAxis xAxis = new CategoryAxis();
-        NumberAxis yAxis = new NumberAxis(0, 2500, 500);
+        NumberAxis yAxis = new NumberAxis(0, 40000, 2000);
         yAxis.setMinorTickVisible(false);
         xAxis.setCategories(observableArrayList(
                 List.of("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
@@ -134,6 +134,8 @@ public class DashBoardController implements Initializable {
         btnLast6Months.getStyleClass().remove("active");
         btnYearly.getStyleClass().remove("active");
         btnYearly.getStyleClass().add("active");
+        barChart.setHorizontalGridLinesVisible(false);
+        barChart.setVerticalGridLinesVisible(false);
         chartContainer.getChildren().clear();
         chartContainer.getChildren().add(barChart);
 
@@ -141,7 +143,7 @@ public class DashBoardController implements Initializable {
     @FXML
     private void monthlyRevenueChart6(){
         CategoryAxis xAxis = new CategoryAxis();
-        NumberAxis yAxis = new NumberAxis(0, 2500, 500);
+        NumberAxis yAxis = new NumberAxis(0, 40000, 2000);
         yAxis.setMinorTickVisible(false);
         xAxis.setCategories(observableArrayList(
                 List.of("Jan","Feb","Mar","Apr","May","Jun")
@@ -168,8 +170,11 @@ public class DashBoardController implements Initializable {
         barChart.setVerticalGridLinesVisible(false);
         barChart.setBarGap(10);
         barChart.setCategoryGap(20);
+        barChart.setHorizontalGridLinesVisible(false);
+        barChart.setVerticalGridLinesVisible(false);
         chartContainer.getChildren().clear();
         chartContainer.getChildren().add(barChart);
+
 
     }
 
