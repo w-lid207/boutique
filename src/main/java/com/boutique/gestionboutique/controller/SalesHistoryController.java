@@ -5,6 +5,7 @@ import com.boutique.gestionboutique.controller.Sale;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.*;
 import javafx.fxml.FXML;
+import javafx.beans.property.ReadOnlyObjectWrapper; // Add this import at the top
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -26,7 +27,7 @@ public class SalesHistoryController {
     @FXML private TableColumn<Sale, Integer> idColumn;
     @FXML private TableColumn<Sale, String> dateColumn;
     @FXML private TableColumn<Sale, Double> totalColumn;
-    @FXML private TableColumn<Sale, Void> actionColumn;
+    @FXML private TableColumn<Sale, Sale> actionColumn;
     @FXML private TextField searchField;
     @FXML private Label totalSalesLabel, totalSalesCount, todaySalesLabel, todaySalesAmount, averageSaleLabel, countLabel;
     @FXML private Button refreshButton;
@@ -34,7 +35,7 @@ public class SalesHistoryController {
 
     private SaleService saleService;
     private ObservableList<Sale> salesList = FXCollections.observableArrayList();
-    private final int ROWS_PER_PAGE = 10;
+    private final int ROWS_PER_PAGE = 4;
 
     @FXML
     public void initialize() {
@@ -60,14 +61,14 @@ public class SalesHistoryController {
         if (file != null) {
             try (PrintWriter writer = new PrintWriter(file)) {
                 // 2. Écrire l'en-tête du CSV
-                writer.println("ID;Date;Heure;Montant (MAD)");
+                writer.println("ID,Date,Heure,Montant (MAD)");
 
                 // 3. Parcourir la liste complète des ventes (pas seulement la page actuelle)
                 for (Sale sale : salesList) {
                     String date = sale.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                     String heure = sale.getDate().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 
-                    writer.println(String.format("%d;%s;%s;%.2f",
+                    writer.println(String.format("%d,%s,%s,%.2f",
                             sale.getId(),
                             date,
                             heure,
@@ -102,8 +103,17 @@ public class SalesHistoryController {
     }
 
     private void applyFilter(String query) {
+        String searchQuery = query.trim();
+        loadSales();
+
+        // If search is empty, reload all sales
+        if (searchQuery.isEmpty()) {
+            loadSales();
+            return;
+        }
+
         List<Sale> filtered = saleService.getAllSales().stream()
-                .filter(s -> String.valueOf(s.getId()).contains(query))
+                .filter(s -> String.valueOf(s.getId()).equals(searchQuery))  // Exact match
                 .collect(Collectors.toList());
         salesList.setAll(filtered);
         updatePaginationUI();
@@ -174,28 +184,41 @@ public class SalesHistoryController {
                 if (empty) setText(null);
                 else {
                     setText(String.format("%.2f MAD", value));
-                    setStyle("-fx-text-fill: #BEC400; -fx-font-weight: bold;"); setAlignment(Pos.CENTER_RIGHT);
+                    setStyle("-fx-text-fill: #2C2C2C; -fx-font-weight: bold;"); setAlignment(Pos.CENTER_RIGHT);
                 }
             }
         });
     }
 
     private void setupActionColumn() {
-        actionColumn.setCellFactory(col -> new TableCell<>() {
+        // 1. Tell the column that its value is the Sale object itself
+        actionColumn.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+
+        // 2. Render the cell
+        actionColumn.setCellFactory(param -> new TableCell<Sale, Sale>() {
             private final Button btn = new Button("👁 Voir Détails");
-            { btn.setStyle("-fx-background-color: #BEC400; -fx-text-fill: white; -fx-background-radius: 20; -fx-cursor: hand;"); }
+
+            {
+                // Styling the button
+                btn.setStyle("-fx-background-color: #2C2C2C; -fx-text-fill: white; "
+                        + "-fx-background-radius: 20; -fx-cursor: hand; -fx-font-size: 12px; -fx-padding: 5 15;");
+            }
+
             @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || getTableRow() == null || getTableRow().getItem() == null) setGraphic(null);
-                else {
-                    btn.setOnAction(e -> showSaleDetails((Sale) getTableRow().getItem()));
-                    setGraphic(btn); setAlignment(Pos.CENTER);
+            protected void updateItem(Sale sale, boolean empty) {
+                super.updateItem(sale, empty);
+
+                if (sale == null || empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btn);
+                    // Use the 'sale' object directly - no more missing buttons!
+                    btn.setOnAction(event -> showSaleDetails(sale));
+                    setAlignment(Pos.CENTER);
                 }
             }
         });
     }
-
     private void showSaleDetails(Sale sale) {
         Dialog<Void> dialog = new Dialog<>();
         dialog.initStyle(StageStyle.UTILITY);
@@ -263,5 +286,15 @@ public class SalesHistoryController {
         dialog.showAndWait();
     }
 
-    @FXML private void handleRefresh() { loadSales(); }
+    @FXML
+    private void handleRefresh() {
+        loadSales();
+        int currentPage = pagination.getCurrentPageIndex();
+        pagination.setCurrentPageIndex(0);
+        if (currentPage == 0) {
+            // Force refresh if already on page 0
+            pagination.setPageFactory(null);
+            pagination.setPageFactory(this::createPage);
+        }
+    }
 }

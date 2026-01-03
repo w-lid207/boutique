@@ -36,7 +36,6 @@
 }
 .top-bar {
     -fx-background-color: #ECECEF;
-    -fx-background-radius: 0 0 30 30;
     -fx-padding: 20;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);
 }

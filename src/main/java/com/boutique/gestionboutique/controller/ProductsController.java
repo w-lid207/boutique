@@ -109,8 +109,8 @@ public class ProductsController implements Initializable {
         imageContainer.setMinHeight(180);
 
         ImageView imageView = new ImageView();
-        imageView.setFitWidth(160);
-        imageView.setFitHeight(160);
+        imageView.setFitWidth(200);
+        imageView.setFitHeight(200);
         imageView.setPreserveRatio(true);
 
         if (product.getImagePath() != null && !product.getImagePath().trim().isEmpty()) {

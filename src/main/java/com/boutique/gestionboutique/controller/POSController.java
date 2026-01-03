@@ -103,8 +103,8 @@ public class POSController implements Initializable {
         imageContainer.setPrefHeight(160); // INCREASED HEIGHT SLIGHTLY
 
         ImageView imageView = new ImageView();
-        imageView.setFitWidth(120); // BIGGER IMAGE
-        imageView.setFitHeight(120);
+        imageView.setFitWidth(220); // BIGGER IMAGE
+        imageView.setFitHeight(220);
         imageView.setPreserveRatio(true);
 
         if (product.getImagePath() != null && !product.getImagePath().trim().isEmpty()) {

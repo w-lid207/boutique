@@ -1,3 +1,21 @@
+.page-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill:black;
+}
+
+.profile-name {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2C2C2C;
+}
+
+.profile-container {
+    -fx-background-color: #BEC400;
+    -fx-background-radius: 30;
+    -fx-padding: 5 5 5 15;
+
+}
 /* --- BARRE DE RECHERCHE --- */
 .search-field {
     -fx-background-color: white;
@@ -18,11 +36,12 @@
 
 /* --- BOUTON ACTUALISER --- */
 .btn-refresh {
-    -fx-background-color: #BEC400;
+    -fx-background-color: #2C2C2C;
     -fx-text-fill: white;
     -fx-background-radius: 30;
+    -fx-font-weight: bold;
     -fx-padding: 12 30;
-    -fx-font-family: "Poppins SemiBold";
+    -fx-font-family: "Poppins";
     -fx-cursor: hand;
 }
 
@@ -40,10 +59,6 @@
     -fx-padding: -10;
 }
 
-.modern-table .table-row-cell:selected {
-    -fx-background-color: #BEC400;
-    -fx-text-fill: white;
-}
 
 /* --- PAGINATION CIRCULAIRE (1 2 3 4 5) --- */
 .pagination .pagination-control .control-box {
@@ -86,4 +101,191 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 3);
 }
 
+
+.table-view {
+    -fx-background-color: white;
+    -fx-table-cell-border-color: transparent;
+    -fx-padding: 0px;
+    -fx-border-color: transparent;
+}
+
+.table-view:focused {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+    -fx-padding: 10 0;
+}
+
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-padding: 15 10;
+    -fx-border-color: transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #888;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+}
+/* Remove focus border from column headers */
+.table-view .column-header:focused {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-insets: 0;
+}
+
+/* Remove focus border from table cells */
+.table-view .table-cell:focused {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-insets: 0;
+}
+
+/* Remove focus border from table rows */
+.table-view .table-row-cell:focused {
+    -fx-background-insets: 0;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #f1f5f9;
+}
+
+/* Remove blue focus ring from entire table */
+.table-view:focused {
+    -fx-background-insets: 0;
+    -fx-border-width: 0;
+}
+
+.table-view .placeholder .label {
+    -fx-text-fill: #999;
+    -fx-font-size: 14px;
+}
+
+/* Remove ALL row borders and selection styling */
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-cell-size: 55px;
+    -fx-padding: 8 0;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-insets: 0;
+    -fx-min-height: 55px;
+    -fx-pref-height: 55px;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #fafafa;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.table-row-cell:odd:selected {
+    -fx-background-color: #fafafa;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.table-row-cell:focused {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.table-row-cell:odd:focused {
+    -fx-background-color: #fafafa;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.table-row-cell:selected:focused {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.table-row-cell:odd:selected:focused {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.table-row-cell:empty {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.table-cell {
+    -fx-text-fill: #2d3b36;
+    -fx-font-size: 14px;
+    -fx-alignment: CENTER;
+    -fx-padding: 0 15px;
+    -fx-border-color: transparent;
+}
+
+.table-cell:selected {
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}
+
+.table-cell:focused {
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}
+
+/* Remove the focus indicator completely */
+.table-view:focused .table-row-cell:selected {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+}
+
+.table-view:focused .table-row-cell:odd:selected {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+}
+/* Force remove ALL gray effects from column headers */
+.table-view .column-header-background .filler {
+    -fx-background-color: #f8fafc !important;
+}
+
+.table-view .column-header,
+.table-view .column-header:hover,
+.table-view .column-header:pressed,
+.table-view .column-header:focused,
+.table-view .column-header:armed,
+.table-view .column-header:selected {
+    -fx-background-color: transparent !important;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #f8fafc !important;
+}
+
+/* Remove focus from nested header */
+.table-view .nested-column-header {
+    -fx-background-color: transparent !important;
+}
+
+.table-view .nested-column-header:focused {
+    -fx-background-color: transparent !important;
+}
+
+/* Disable column reordering visual feedback */
+.table-view .column-drag-header {
+    -fx-background-color: transparent !important;
+}
+
+/* Remove any selection overlay */
+.table-view .column-overlay {
+    -fx-background-color: transparent !important;
+}
 

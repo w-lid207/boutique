@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -69,6 +71,15 @@ public class NavigationController {
         loadPage("analytics.fxml");
         analytics.getStyleClass().add("active");
 
+    }   @FXML
+    public void handleLogout() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/boutique/gestionboutique/views/hello-view.fxml"));
+            Parent view = loader.load();
+            borderPane.getScene().setRoot(view);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public void loadPage(String fileName) {
