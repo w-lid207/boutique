@@ -37,7 +37,13 @@ public class POSController implements Initializable {
     private Label totalPrice;
     @FXML
     private Button orderDone;
-
+    @FXML
+    private  Button b1;  @FXML
+    private  Button b2;  @FXML
+    private  Button b3;  @FXML
+    private  Button b4;  @FXML
+    private  Button b5;
+    private Button[] btns;
     private ProductService productService;
     private List<Product> allProducts;
     private final CartService cartManager = CartService.getInstance();
@@ -47,6 +53,7 @@ public class POSController implements Initializable {
         productService = new ProductService();
         refreshCartDisplay();
         loadProducts();
+        btns = new Button[]{b1,b2,b3,b4,b5};
     }
 
     private void loadProducts() {
@@ -155,7 +162,7 @@ public class POSController implements Initializable {
         btnContainer.setAlignment(Pos.CENTER_RIGHT); // ALIGN RIGHT
         btnContainer.setPadding(new Insets(5, 0, 0, 0));
 
-        Button addToCart = new Button("Ajouter +");
+        Button addToCart = new Button("Add to cart");
         addToCart.getStyleClass().add("product-add-btn");
         addToCart.setOnAction(e -> addToCart(product));
 
@@ -169,7 +176,10 @@ public class POSController implements Initializable {
     private void filterByCategory(javafx.event.ActionEvent event) {
         Button btn = (Button) event.getSource();
         String categoryName = (String) btn.getUserData();
-
+        for(Button b: btns){
+            b.getStyleClass().remove("active");
+        }
+        btn.getStyleClass().add("active");
         if (allProducts == null) return;
 
         if ("all".equals(categoryName)) {

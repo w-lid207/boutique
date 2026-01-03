@@ -19,7 +19,7 @@
 .page-title {
     -fx-font-size: 28px;
     -fx-font-weight: bold;
-    -fx-text-fill: #2d3b36;
+    -fx-text-fill: black;
 }
 
 .page-subtitle {

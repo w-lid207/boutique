@@ -3,7 +3,7 @@
 
 /* Apply Font Globally */
 * {
-    -fx-font-family: 'Poppins';
+    -fx-font-family: 'Poppins' !important;
 
     /* Exact Background from Dashboard */
     -fx-bg-color: #ECECEF;
@@ -25,7 +25,6 @@
     /* Warning/Discount (The "Trend Down" Orange) */
     -fx-text-warning: #e0aa55;
 
-    -fx-font-family: 'Segoe UI', sans-serif;
 }
 
 .root-container {
@@ -36,7 +35,7 @@
 .main-title {
     -fx-font-size: 28px; /* Matched to .page-title */
     -fx-font-weight: bold;
-    -fx-text-fill: -fx-text-main;
+    -fx-text-fill: black;
 }
 
 .card-title, .card-title-small {
@@ -76,19 +75,24 @@
     -fx-background-color: transparent;
 }
 
-.user-name {
+.profile-name {
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-font-size: 14px; /* Matched to .profile-name */
-    -fx-text-fill: -fx-text-main;
+    -fx-text-fill: #2C2C2C;
 }
-.user-role {
-    -fx-text-fill: -fx-text-sub;
-    -fx-font-size: 12px;
+
+.profile-container {
+    -fx-background-color: #BEC400;
+    -fx-background-radius: 30;
+    -fx-padding: 5 5 5 15;
 }
 
 /* === Cards === */
+.cart{
+    -fx-background-radius: 7;
+    -fx-background-color: white;
+}
 .content-card {
-    -fx-background-color: -fx-card-bg;
     -fx-background-radius: 15;
     /* Exact shadow from your Dashboard CSS */
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.03), 10, 0, 0, 5);
@@ -224,30 +228,23 @@
     -fx-text-fill: #2C2C2C;
 }
 
-/* === 1. Font Import === */
-/* Assumes 'Fonts' folder is a sibling of 'stylesheets' folder */
-@font-face {
-    font-family: 'Poppins';
-    src: url('../Fonts/Poppins-Regular.ttf');
-}
 
 
 
 /* === 2. Product Card (No Hover Movement, Permanent Shadow) === */
 .product-card {
     -fx-background-color: white;
-    -fx-background-radius: 18; /* More rounded */
+    -fx-background-radius: 7; /* More rounded */
     -fx-padding: 20;
 
     /* Permanent "Stand Out" Yellow-Green Shadow */
-    -fx-effect: dropshadow(three-pass-box, rgba(190, 196, 0, 0.25), 15, 0, 0, 4);
 }
 
 /* Removed .product-card:hover block so it stays static */
 
 /* Image Background */
 .product-image-container {
-    -fx-background-color: linear-gradient(to bottom right, #e8f5d0, #f5fce8);
+    -fx-background-color: transparent;
     -fx-background-radius: 14;
 }
 
@@ -263,11 +260,11 @@
     -fx-text-fill: -fx-text-sub;
 }
 
-.stock-dot { -fx-fill: -fx-secondary-green; }
+.stock-dot { -fx-fill: #555; }
 
 .stock-label {
     -fx-font-size: 12px;
-    -fx-text-fill: -fx-text-sub;
+    -fx-text-fill: #555;
     -fx-font-weight: bold;
 }
 
