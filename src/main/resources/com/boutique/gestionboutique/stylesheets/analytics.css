@@ -14,7 +14,26 @@
     -fx-background-color: #ECECEF; /* Light Sage Background */
     -fx-font-family: 'Poppins', 'Segoe UI', sans-serif;
 }
+.scroll-pane {
+    -fx-background-color: #ECECEF; /* Your light sage color */
+}
 
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #2C2C2C;
+    -fx-background-radius: 10;
+    /* Insets create the "spacious" look by shrinking the thumb away from the edges */
+    -fx-background-insets: 3;
+}
+
+/* Horizontal Scrollbar Thumb */
+.scroll-pane .scroll-bar:horizontal .thumb {
+    -fx-background-color: #2C2C2C;
+    -fx-background-radius: 10;
+    -fx-background-insets: 3;
+}
 /* === Header === */
 .page-title {
     -fx-font-size: 28px;
