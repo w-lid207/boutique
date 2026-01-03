@@ -15,9 +15,10 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.layout.FlowPane?>
 <BorderPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.boutique.gestionboutique.controller.ProductsController">
    <top>
-       <HBox alignment="CENTER_LEFT" spacing="20.0">
+       <HBox alignment="CENTER_LEFT" styleClass="header" spacing="20.0">
            <padding>
                <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
            </padding>
@@ -59,40 +60,32 @@
                   </HBox>
       
                   <!-- Filtres par Catégorie -->
-                  <HBox spacing="10" alignment="CENTER_LEFT">
+                  <VBox spacing="10" alignment="CENTER_LEFT">
                       <padding>
-                          <Insets bottom="15" left="15" right="15" top="0" />
+                          <Insets bottom="15" left="15" right="15" top="25" />
                       </padding>
-      
+
                       <Label styleClass="label-category" text="Catégorie:" />
-      
-                      <Button onAction="#filterByCategory" styleClass="filter-btn, filter-btn-active" text="Tous" userData="all" />
-      
-                      <Button onAction="#filterByCategory" styleClass="filter-btn" text="Sérums" userData="Sérums" />
-      
-                      <Button onAction="#filterByCategory" styleClass="filter-btn" text="Maquillage" userData="Maquillage" />
-      
-                      <Button onAction="#filterByCategory" styleClass="filter-btn" text="Produits Bio (Soins &amp; Divers)" userData="Produits Bio (Soins &amp; Divers)" />
-      
-                      <Button onAction="#filterByCategory" styleClass="filter-btn" text="Vitamines &amp; Suppléments" userData="Vitamines &amp; Suppléments" />
-                  </HBox>
+
+                      <FlowPane fx:id="categoryFilterPane" hgap="10" vgap="10" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                          <Button onAction="#filterByCategory" styleClass="filter-btn, filter-btn-active" text="Tous" userData="all" />
+                          <Button onAction="#filterByCategory" styleClass="filter-btn" text="Sérums" userData="Sérums" />
+                          <Button onAction="#filterByCategory" styleClass="filter-btn" text="Maquillage" userData="Maquillage" />
+                          <Button onAction="#filterByCategory" styleClass="filter-btn" text="Produits Bio (Soins &amp; Divers)" userData="Produits Bio (Soins &amp; Divers)" />
+                          <Button onAction="#filterByCategory" styleClass="filter-btn" text="Vitamines &amp; Suppléments" userData="Vitamines &amp; Suppléments" />
+                      </FlowPane>
+                  </VBox>
               </VBox>
           </top>
       
           <!-- Grille de Produits -->
           <center>
               <ScrollPane fitToWidth="true" styleClass="scroll-pane">
-                  <GridPane fx:id="productsGrid" hgap="20" styleClass="products-grid" vgap="20">
+                  <FlowPane fx:id="productsGrid" hgap="20.0" vgap="20.0" styleClass="products-grid">
                       <padding>
-                          <Insets bottom="20" left="20" right="20" top="20" />
+                          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                       </padding>
-      
-                      <columnConstraints>
-                          <ColumnConstraints percentWidth="33.33" />
-                          <ColumnConstraints percentWidth="33.33" />
-                          <ColumnConstraints percentWidth="33.33" />
-                      </columnConstraints>
-                  </GridPane>
+                  </FlowPane>
               </ScrollPane>
           </center>
       

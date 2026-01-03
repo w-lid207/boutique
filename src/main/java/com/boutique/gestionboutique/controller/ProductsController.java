@@ -6,10 +6,12 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.jetbrains.annotations.NotNull;
@@ -18,11 +20,12 @@ import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.concurrent.Flow;
 
 public class ProductsController implements Initializable {
 
     @FXML private TextField searchField;
-    @FXML private GridPane productsGrid;
+    @FXML private FlowPane productsGrid;
     @FXML private Label statusLabel;
 
     private ProductService productService;
@@ -64,9 +67,9 @@ public class ProductsController implements Initializable {
         if (products != null) {
             for (Product product : products) {
                 VBox card = createProductCard(product);
-                productsGrid.add(card, col, row);
+                productsGrid.getChildren().add(card);
                 col++;
-                if (col == 3) {
+                if (col == 4) {
                     col = 0;
                     row++;
                 }
@@ -92,16 +95,22 @@ public class ProductsController implements Initializable {
     }
 
     private VBox createProductCard(Product product) {
-        VBox card = new VBox(10);
+        // 1. Main Card Container
+        VBox card = new VBox(12);
         card.getStyleClass().add("product-card");
-        card.setPadding(new Insets(10));
+        card.setPadding(new Insets(15));
+        card.setPrefWidth(260);
+        card.setMinHeight(420);
 
-        BorderPane imageContainer = new BorderPane();
+        // 2. Image Container with Background
+        StackPane imageContainer = new StackPane();
         imageContainer.getStyleClass().add("product-image-container");
+        imageContainer.setPrefHeight(180);
+        imageContainer.setMinHeight(180);
 
         ImageView imageView = new ImageView();
-        imageView.setFitWidth(180);
-        imageView.setFitHeight(180);
+        imageView.setFitWidth(160);
+        imageView.setFitHeight(160);
         imageView.setPreserveRatio(true);
 
         if (product.getImagePath() != null && !product.getImagePath().trim().isEmpty()) {
@@ -109,34 +118,96 @@ public class ProductsController implements Initializable {
                 Image img = new Image(product.getImagePath(), true);
                 imageView.setImage(img);
             } catch (Exception e) {
-                System.err.println("URL d'image invalide pour : " + product.getName());
+                System.err.println("Invalid image URL for: " + product.getName());
             }
         }
+        imageContainer.getChildren().add(imageView);
 
-        imageContainer.setCenter(imageView);
+        // 3. Category & Stock Badge (Top Section)
+        HBox topInfo = new HBox(8);
+        topInfo.setAlignment(Pos.CENTER_LEFT);
+        topInfo.getStyleClass().add("margin");
+
+        // Category Badge
+        Label categoryLabel = new Label(product.getCategoryName() != null ? product.getCategoryName() : "Général");
+        categoryLabel.getStyleClass().add("product-category-badge");
+
+        // Stock Status
+        HBox stockInfo = new HBox(5);
+        stockInfo.setAlignment(Pos.CENTER_LEFT);
+        Label stockDot = new Label("●");
+        stockDot.getStyleClass().add(product.getQuantity() > 10 ? "stock-dot-available" : "stock-dot-low");
+        Label stockLabel = new Label("Stock: " + product.getQuantity());
+        stockLabel.getStyleClass().add("stock-label");
+        stockInfo.getChildren().addAll(stockDot, stockLabel);
+
+        topInfo.getChildren().addAll(categoryLabel, new Region(), stockInfo);
+        HBox.setHgrow(topInfo.getChildren().get(1), Priority.ALWAYS);
+
+        // 4. Product Details
+        VBox detailsBox = new VBox(8);
 
         Label nameLabel = new Label(product.getName());
         nameLabel.getStyleClass().add("product-title");
         nameLabel.setWrapText(true);
+        nameLabel.setMaxWidth(230);
 
-        Label priceLabel = new Label(String.format("%.2f MAD", product.getPrice()));
+        // Price Row with larger styling
+        HBox priceRow = new HBox(8);
+        priceRow.setAlignment(Pos.CENTER_LEFT);
+        Label priceLabel = new Label(String.format("%.2f", product.getPrice()));
         priceLabel.getStyleClass().add("product-price");
+        Label currencyLabel = new Label("MAD");
+        currencyLabel.getStyleClass().add("product-currency");
+        priceRow.getChildren().addAll(priceLabel, currencyLabel);
 
+        detailsBox.getChildren().addAll(nameLabel, priceRow);
+
+        // 5. Vertical Spacer
+        Region verticalSpacer = new Region();
+        VBox.setVgrow(verticalSpacer, Priority.ALWAYS);
+
+
+
+        // 7. Action Buttons with Better Icons
         HBox buttons = new HBox(8);
-        Button editBtn = new Button("Éditer", createIcon("✏"));
+        buttons.setAlignment(Pos.CENTER);
+
+        // Edit Button
+        SVGPath editIcon = new SVGPath();
+        editIcon.setContent("M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z");
+        editIcon.getStyleClass().add("btn-icon-svg");
+
+        Button editBtn = new Button("Modifier", editIcon);
         editBtn.getStyleClass().add("btn-edit");
+        editBtn.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(editBtn, Priority.ALWAYS);
         editBtn.setOnAction(e -> editProduct(product));
 
-        Button deleteBtn = new Button("Supprimer", createIcon("🗑"));
+        // Delete Button
+        SVGPath deleteIcon = new SVGPath();
+        deleteIcon.setContent("M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z");
+        deleteIcon.getStyleClass().add("btn-icon-svg");
+
+        Button deleteBtn = new Button("Supprimer", deleteIcon);
         deleteBtn.getStyleClass().add("btn-delete");
+        deleteBtn.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(deleteBtn, Priority.ALWAYS);
         deleteBtn.setOnAction(e -> deleteProduct(product));
 
         buttons.getChildren().addAll(editBtn, deleteBtn);
-        card.getChildren().addAll(imageContainer, nameLabel, priceLabel, buttons);
-        return card;
-    }
 
-    @FXML
+        // 8. Assemble Card
+        card.getChildren().addAll(
+                imageContainer,
+                topInfo,
+                detailsBox,
+                verticalSpacer,
+                buttons
+        );
+
+        return card;
+    }    @FXML
     private void addProduct() {
         Dialog<Product> dialog = new Dialog<>();
         dialog.initStyle(StageStyle.UTILITY);
@@ -323,7 +394,7 @@ public class ProductsController implements Initializable {
         Button clickedBtn = (Button) event.getSource();
         String categoryName = (String) clickedBtn.getUserData();
 
-        HBox parent = (HBox) clickedBtn.getParent();
+        FlowPane parent = (FlowPane) clickedBtn.getParent();
         parent.getChildren().forEach(node -> {
             if (node instanceof Button) {
                 node.getStyleClass().remove("filter-btn-active");
