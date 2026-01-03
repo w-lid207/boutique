@@ -5,83 +5,69 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="700" prefWidth="1000" stylesheets="@../stylesheets/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.boutique.gestionboutique.controller.LoginController">
+<StackPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.boutique.gestionboutique.controller.LoginController"
+           stylesheets="@../stylesheets/styles.css"
+           styleClass="root-pane">
 
-    <center>
-        <StackPane style="-fx-background-color: #A4C3A2;"> <HBox alignment="CENTER" maxHeight="550.0" maxWidth="900.0" styleClass="main-card-background">
+    <VBox alignment="CENTER" styleClass="login-container" maxWidth="400" spacing="30">
+        <padding>
+            <Insets top="50" right="50" bottom="50" left="50" />
+        </padding>
 
-            <VBox alignment="CENTER_LEFT" spacing="20.0" HBox.hgrow="ALWAYS">
-                <padding>
-                    <Insets bottom="40" left="60" right="40" top="40" />
-                </padding>
+        <!-- Logo and Brand -->
+        <HBox alignment="CENTER" spacing="10" styleClass="brand-container">
+            <Label styleClass="simple-logo-text" text="JTR" />
 
-                <HBox alignment="CENTER_LEFT" spacing="15.0">
-                    <StackPane style="-fx-background-color: rgba(255,255,255,0.3); -fx-background-radius: 10;">
-                        <padding><Insets bottom="8" left="8" right="8" top="8" /></padding>
-                        <SVGPath content="M12 18H6V14H12M21 6H3L2 12V20H22V12L21 6M12 2C14 2 15 3 15 5H9C9 3 10 2 12 2Z" scaleX="1.2" scaleY="1.2" />
-                    </StackPane>
-                    <Text styleClass="brand-text" text="Gestion de Boutique" />
-                </HBox>
+            <SVGPath content="M28.75 9.58333C11.5 13.4167 7.475 25.2425 3.48833 35.1517L7.11083 36.4167L8.93167 32.0083C9.85167 32.3342 10.81 32.5833 11.5 32.5833C32.5833 32.5833 38.3333 0 38.3333 0C36.4167 3.83333 23 4.3125 13.4167 6.22917C3.83333 8.14583 0 16.2917 0 20.125C0 23.9583 3.35417 27.3125 3.35417 27.3125C9.58333 9.58333 28.75 9.58333 28.75 9.58333Z" fill="#2d3b36" styleClass="simple-logo-svg" />
 
-                <Text styleClass="brand-subtitle" text="Une plateforme moderne pour piloter vos ventes en toute sérénité." wrappingWidth="300" />
-
-                <VBox VBox.vgrow="ALWAYS" />
-
-                <Text styleClass="welcome-big-text" text="Welcome Back" />
-                <Text styleClass="welcome-desc-text" text="Sign in to your account to access the dashboard and manage your boutique." wrappingWidth="350" />
-
-                <VBox VBox.vgrow="ALWAYS" />
-            </VBox>
-
-            <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
-                <padding>
-                    <Insets bottom="40" left="40" right="60" top="40" />
-                </padding>
-
-                <VBox maxWidth="380.0" spacing="25.0" styleClass="login-white-card">
-                    <padding>
-                        <Insets bottom="40" left="35" right="35" top="40" />
-                    </padding>
-
-                    <VBox spacing="5.0">
-                        <Text styleClass="login-header" text="Sign in to your account" />
-                        <Text styleClass="login-subheader" text="Enter your credentials to continue." />
-                    </VBox>
-
-                    <VBox spacing="15.0">
-                        <VBox spacing="8.0">
-                            <Label styleClass="field-label" text="Email / Username" />
-                            <TextField fx:id="emailField" promptText="you@example.com" styleClass="modern-input" />
-                        </VBox>
-
-                        <VBox spacing="8.0">
-                            <Label styleClass="field-label" text="Password" />
-                            <PasswordField fx:id="passwordField" promptText="••••••••" styleClass="modern-input" />
-                        </VBox>
-
-                        <HBox alignment="CENTER_RIGHT">
-                            <Label styleClass="forgot-password" text="Forgot password?" />
-                        </HBox>
-                    </VBox>
-
-                    <Label fx:id="errorLabel" styleClass="error-message" visible="false" />
-
-                    <VBox spacing="15.0" alignment="CENTER">
-                        <Button fx:id="loginButton" maxWidth="1.7976931348623157E308" onAction="#handleLogin" prefHeight="45.0" styleClass="login-btn-primary" text="→  Sign in" />
-                        <Label styleClass="create-account-label" text="Don't have an account? Contact admin" />
-                    </VBox>
-
-                </VBox>
-            </VBox>
+            <Label styleClass="simple-logo-text" text="SHOP" />
         </HBox>
-        </StackPane>
-    </center>
-</BorderPane>
+
+        <!-- Login Form -->
+        <VBox spacing="20" styleClass="form-container">
+            <!-- Email Field -->
+            <HBox alignment="CENTER_LEFT" spacing="0" styleClass="input-wrapper">
+                <StackPane styleClass="input-icon-container">
+                    <SVGPath content="M18 0H2C0.9 0 0.00999999 0.9 0.00999999 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 4L10 9L2 4V2L10 7L18 2V4Z" styleClass="email-icon" />
+                </StackPane>
+                <TextField fx:id="emailField"
+                           promptText="Enter your email"
+                           styleClass="input-field-with-icon"
+                           HBox.hgrow="ALWAYS" />
+            </HBox>
+
+            <!-- Password Field -->
+            <HBox alignment="CENTER_LEFT" spacing="0" styleClass="input-wrapper">
+                <StackPane styleClass="input-icon-container">
+                    <SVGPath content="M8 16C8.53043 16 9.03914 15.7893 9.41421 15.4142C9.78929 15.0391 10 14.5304 10 14C10 13.4696 9.78929 12.9609 9.41421 12.5858C9.03914 12.2107 8.53043 12 8 12C7.46957 12 6.96086 12.2107 6.58579 12.5858C6.21071 12.9609 6 13.4696 6 14C6 14.5304 6.21071 15.0391 6.58579 15.4142C6.96086 15.7893 7.46957 16 8 16ZM14 7C14.5304 7 15.0391 7.21071 15.4142 7.58579C15.7893 7.96086 16 8.46957 16 9V19C16 19.5304 15.7893 20.0391 15.4142 20.4142C15.0391 20.7893 14.5304 21 14 21H2C1.46957 21 0.960859 20.7893 0.585786 20.4142C0.210714 20.0391 0 19.5304 0 19V9C0 8.46957 0.210714 7.96086 0.585786 7.58579C0.960859 7.21071 1.46957 7 2 7H3V5C3 3.67392 3.52678 2.40215 4.46447 1.46447C5.40215 0.526784 6.67392 0 8 0C8.65661 0 9.30679 0.129329 9.91342 0.380602C10.52 0.631876 11.0712 1.00017 11.5355 1.46447C11.9998 1.92876 12.3681 2.47995 12.6194 3.08658C12.8707 3.69321 13 4.34339 13 5V7H14ZM8 2C7.20435 2 6.44129 2.31607 5.87868 2.87868C5.31607 3.44129 5 4.20435 5 5V7H11V5C11 4.20435 10.6839 3.44129 10.1213 2.87868C9.55871 2.31607 8.79565 2 8 2Z" styleClass="password-icon" />
+                </StackPane>
+                <PasswordField fx:id="passwordField"
+                               promptText="Enter your password"
+                               styleClass="input-field-with-icon"
+                               HBox.hgrow="ALWAYS" />
+            </HBox>
+
+            <!-- Error Label -->
+            <Label fx:id="errorLabel"
+                   styleClass="error-message"
+                   visible="false"
+                   wrapText="true" />
+
+            <!-- Login Button -->
+            <Button fx:id="loginButton"
+                    text="LOGIN"
+                    onAction="#handleLogin"
+                    styleClass="login-button"
+                    maxWidth="Infinity" />
+        </VBox>
+
+    </VBox>
+
+</StackPane>

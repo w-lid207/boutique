@@ -1,99 +1,122 @@
-/* 1. Global Font */
-.root {
-    -fx-font-family: "Segoe UI", "Helvetica", sans-serif;
+/* Root Pane */
+.root-pane {
+    -fx-background-color: #2d2d2d;
 }
 
-/* 2. The Main Green Background Card */
-.main-card-background {
-    /* The soft gradient background from the left side of the image */
-    -fx-background-color: linear-gradient(to bottom right, #D8E7D4, #C6DBC1);
-    -fx-background-radius: 30;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 20, 0, 0, 10);
+/* Login Container */
+.login-container {
+    -fx-background-color: transparent;
 }
 
-/* 3. Left Side Typography */
-.brand-text {
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-fill: #3A4A3B;
+/* Brand Container */
+.brand-container {
+    -fx-spacing: 15;
 }
 
-.brand-subtitle {
-    -fx-font-size: 12px;
-    -fx-fill: #6F8571;
-}
-
-.welcome-big-text {
-    -fx-font-size: 32px;
-    -fx-font-weight: bold;
-    -fx-fill: #2D3B2E;
-}
-
-.welcome-desc-text {
-    -fx-font-size: 14px;
-    -fx-fill: #6F8571;
-    -fx-line-spacing: 4;
-}
-
-/* 4. The White Login Card (Right Side) */
-.login-white-card {
-    -fx-background-color: #FFFFFF;
-    -fx-background-radius: 20;
-    /* Soft shadow to make it pop off the green background */
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 15, 0, 0, 5);
-}
-
-.login-header {
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-fill: #333333;
-}
-
-.login-subheader {
-    -fx-font-size: 12px;
-    -fx-fill: #888888;
-}
-
-/* 5. Inputs */
-.field-label {
-    -fx-font-size: 12px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #555555;
-}
-
-.modern-input {
-    -fx-background-color: #F5F7F5; /* Very light grey/green */
-    -fx-background-radius: 8;
-    -fx-border-color: transparent;
-    -fx-padding: 12;
-    -fx-font-size: 14px;
-}
-.modern-input:focused {
-    -fx-background-color: #FFFFFF;
-    -fx-border-color: #86A789; /* Accent color border on focus */
-    -fx-border-radius: 8;
-}
-
-/* 6. Buttons & Links */
-.forgot-password {
-    -fx-font-size: 11px;
-    -fx-text-fill: #5F7161;
-    -fx-cursor: hand;
-}
-
-.login-btn-primary {
-    -fx-background-color: #728C74; /* The dark sage green from image */
+/* Logo Text */
+.simple-logo-text {
     -fx-text-fill: white;
+    -fx-font-size: 48px;
     -fx-font-weight: bold;
-    -fx-background-radius: 30; /* Pill shape */
-    -fx-cursor: hand;
-    -fx-font-size: 14px;
-}
-.login-btn-primary:hover {
-    -fx-background-color: #5F7161;
+    -fx-letter-spacing: 2px;
 }
 
-.create-account-label {
-    -fx-font-size: 11px;
-    -fx-text-fill: #888888;
+/* Logo SVG */
+.simple-logo-svg {
+    -fx-fill: white;
+    -fx-scale-x: 1.8;
+    -fx-scale-y: 1.8;
+}
+
+/* Form Container */
+.form-container {
+    -fx-min-width: 300px;
+}
+
+/* Input Wrapper */
+.input-wrapper {
+    -fx-border-color: #4d4d4d;
+    -fx-border-width: 1px;
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+    -fx-background-color: transparent;
+}
+
+.input-wrapper:hover {
+    -fx-border-color: #6d6d6d;
+}
+
+/* Input Icon Container */
+.input-icon-container {
+    -fx-padding: 12px 15px;
+    -fx-background-color: transparent;
+}
+
+/* Email Icon */
+.email-icon {
+    -fx-fill: white;
+    -fx-opacity: 0.7;
+}
+
+/* Password Icon */
+.password-icon {
+    -fx-fill: white;
+    -fx-opacity: 0.7;
+}
+
+/* Input Fields with Icon */
+.input-field-with-icon {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #808080;
+    -fx-font-size: 14px;
+    -fx-padding: 12px 15px 12px 0;
+    -fx-cursor: hand;
+}
+
+.input-field-with-icon:focused {
+    -fx-background-color: transparent;
+}
+
+/* Input Wrapper Focus State */
+.input-wrapper:focused {
+    -fx-border-color: #c8d936;
+    -fx-background-color: rgba(200, 217, 54, 0.05);
+}
+
+/* Login Button */
+.login-button {
+    -fx-background-color: #c8d936;
+    -fx-text-fill: #1a1a1a;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 14px 20px;
+    -fx-background-radius: 3px;
+    -fx-cursor: hand;
+    -fx-letter-spacing: 1px;
+}
+
+.login-button:hover {
+    -fx-background-color: #d4e54a;
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.login-button:pressed {
+    -fx-background-color: #b5c230;
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+/* Error Message */
+.error-message {
+    -fx-text-fill: #ff6b6b;
+    -fx-font-size: 13px;
+    -fx-padding: 8px;
+    -fx-background-color: rgba(255, 107, 107, 0.1);
+    -fx-background-radius: 3px;
+    -fx-border-color: rgba(255, 107, 107, 0.3);
+    -fx-border-width: 1px;
+    -fx-border-radius: 3px;
 }
