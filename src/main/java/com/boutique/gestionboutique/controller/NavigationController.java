@@ -60,7 +60,7 @@ public class NavigationController {
     }
 
     @FXML
-    private void handleSalesHistoryClick() {
+    public void handleSalesHistoryClick() {
         loadPage("sales-history.fxml");
         sh.getStyleClass().add("active");
 

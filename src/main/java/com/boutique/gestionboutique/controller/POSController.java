@@ -23,6 +23,48 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import com.boutique.gestionboutique.service.ProductService;
+import com.boutique.gestionboutique.service.CartService;
+import javafx.concurrent.Task;
+import javafx.fxml.FXML;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+// ... SQL and Util imports ...
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+
+// --- iText Imports for PDF ---
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.borders.Border;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
+import com.itextpdf.kernel.colors.ColorConstants;
+import javafx.stage.StageStyle;
+
+import static javafx.scene.layout.Priority.ALWAYS;
 
 import static javafx.scene.layout.Priority.ALWAYS;
 
@@ -330,13 +372,208 @@ public class POSController implements Initializable {
     private void processSaleUpdates() {
         if(cartManager.getCartItems() == null || cartManager.getCartItems().isEmpty()) return;
 
+        // 1. Calculate Total & Prepare Data
+        double finalTotal = calculateTotalPrice();
+        List<Product> purchasedItems = new ArrayList<>(cartManager.getCartItems());
+
+        // 2. Show Custom Confirmation Dialog (Styled like your snippet)
+        boolean wantsReceipt = showReceiptConfirmation(finalTotal);
+
+        // 3. Generate PDF if confirmed
+        if (wantsReceipt) {
+            // call your PDF generation method here, e.g.:
+            generateReceipt(purchasedItems, finalTotal);
+            System.out.println("Receipt generation triggered."); // Placeholder
+        }
+
+        // 4. Process DB and Clear Cart
         try {
             ObservableList<Product> observableCart = FXCollections.observableArrayList(cartManager.getCartItems());
-            cartManager.processSale(observableCart, calculateTotalPrice());
+            cartManager.processSale(observableCart, finalTotal);
             cartManager.getCartItems().clear();
             refreshCartDisplay();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean showReceiptConfirmation(double totalAmount) {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.initStyle(StageStyle.UTILITY);
+        DialogPane pane = dialog.getDialogPane();
+        pane.setGraphic(null);
+
+        // --- Main Container ---
+        VBox root = new VBox(20);
+        root.setPadding(new Insets(25));
+        root.setStyle("-fx-background-color: white; -fx-min-width: 450;");
+
+        // --- Title ---
+        Label title = new Label("Succès de la vente");
+        title.setStyle("-fx-font-family: 'Poppins Bold'; -fx-font-size: 22px; -fx-text-fill: #BEC400;");
+
+        // --- Info Box (Green Background) ---
+        VBox infoBox = new VBox(10);
+        infoBox.setPadding(new Insets(15));
+        infoBox.setStyle("-fx-background-color: #f1f8e9; -fx-background-radius: 12;");
+
+        Label msgLbl = new Label("La transaction a été enregistrée avec succès.");
+        Label totalLbl = new Label("💰 Montant total: " + String.format("%.2f MAD", totalAmount));
+
+        // Question Label
+        Label askLbl = new Label("Voulez-vous télécharger le reçu PDF ?");
+        askLbl.setStyle("-fx-font-family: 'Poppins Medium'; -fx-text-fill: #3d4a4d; -fx-padding: 10 0 0 0;");
+
+        msgLbl.setStyle("-fx-font-family: 'Poppins Regular'; -fx-text-fill: #3d4a4d;");
+        totalLbl.setStyle("-fx-font-family: 'Poppins Bold'; -fx-text-fill: #BEC400; -fx-font-size: 16px;");
+
+        infoBox.getChildren().addAll(msgLbl, totalLbl, askLbl);
+
+        root.getChildren().addAll(title, infoBox);
+        pane.setContent(root);
+
+        // --- Custom Buttons ---
+        ButtonType yesType = new ButtonType("Télécharger", ButtonBar.ButtonData.OK_DONE);
+        ButtonType noType = new ButtonType("Non", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        pane.getButtonTypes().addAll(yesType, noType);
+
+        // Styling the "Yes" button (Lime/Green)
+        Button yesBtn = (Button) pane.lookupButton(yesType);
+        yesBtn.setStyle("-fx-background-color: #BEC400; -fx-text-fill: white; -fx-background-radius: 10; " +
+                "-fx-padding: 8 20; -fx-cursor: hand; -fx-font-family: 'Poppins Medium';");
+
+        // Styling the "No" button (Grey/Subtle)
+        Button noBtn = (Button) pane.lookupButton(noType);
+        noBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #94a3b8; " +
+                "-fx-padding: 8 20; -fx-cursor: hand; -fx-font-family: 'Poppins Regular';");
+
+        // Logic: Return true if they clicked "Télécharger"
+        return dialog.showAndWait().orElse(ButtonType.CANCEL) == yesType;
+    }
+    private void generateReceipt(List<Product> items, double totalAmount) {
+        // 1. Open File Chooser
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Receipt");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+        fileChooser.setInitialFileName("Receipt_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".pdf");
+
+        // Get current stage
+        Stage stage = (Stage) productsGrid.getScene().getWindow();
+        File file = fileChooser.showSaveDialog(stage);
+
+        if (file != null) {
+            try {
+                // 2. Initialize PDF Writer (iText)
+                PdfWriter writer = new PdfWriter(file);
+                PdfDocument pdf = new PdfDocument(writer);
+                Document document = new Document(pdf);
+
+                // 3. Header
+                document.add(new Paragraph("JTR SHOP")
+                        .setBold()
+                        .setFontSize(20)
+                        .setTextAlignment(TextAlignment.CENTER));
+
+                document.add(new Paragraph("EST AGADIR\nPhone: +212 600-000000")
+                        .setFontSize(10)
+                        .setTextAlignment(TextAlignment.CENTER)
+                        .setFontColor(ColorConstants.GRAY));
+
+                document.add(new Paragraph("\n------------------------------------------------------------------\n"));
+
+                String dateStr = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date());
+                document.add(new Paragraph("Date: " + dateStr).setFontSize(10));
+
+                // 4. Create Table
+                float[] columnWidths = {4, 1, 2, 2};
+                Table table = new Table(UnitValue.createPercentArray(columnWidths));
+                table.setWidth(UnitValue.createPercentValue(100));
+                table.setMarginTop(10);
+
+                // Table Headers
+                table.addHeaderCell(new Cell().add(new Paragraph("Item")).setBold().setBorder(Border.NO_BORDER).setBorderBottom(Border.NO_BORDER));
+                table.addHeaderCell(new Cell().add(new Paragraph("Qty")).setBold().setBorder(Border.NO_BORDER).setBorderBottom(Border.NO_BORDER));
+                table.addHeaderCell(new Cell().add(new Paragraph("Price")).setBold().setBorder(Border.NO_BORDER).setBorderBottom(Border.NO_BORDER));
+                table.addHeaderCell(new Cell().add(new Paragraph("Total")).setBold().setBorder(Border.NO_BORDER).setBorderBottom(Border.NO_BORDER));
+
+                // Table Rows
+                for (Product p : items) {
+                    table.addCell(new Cell().add(new Paragraph(p.getName())).setBorder(Border.NO_BORDER));
+                    table.addCell(new Cell().add(new Paragraph(String.valueOf(p.getqCartItem()))).setBorder(Border.NO_BORDER));
+
+                    double unitPrice = p.getqCartItem() > 0 ? (p.getqPrice() / p.getqCartItem()) : 0;
+                    table.addCell(new Cell().add(new Paragraph(String.format("%.2f", unitPrice))).setBorder(Border.NO_BORDER));
+                    table.addCell(new Cell().add(new Paragraph(String.format("%.2f", p.getqPrice()))).setBorder(Border.NO_BORDER));
+                }
+
+                document.add(table);
+
+                // 5. Total & Footer
+                document.add(new Paragraph("\n------------------------------------------------------------------\n"));
+                Paragraph totalPara = new Paragraph(String.format("TOTAL: %.2f DH", totalAmount))
+                        .setBold()
+                        .setFontSize(16)
+                        .setTextAlignment(TextAlignment.RIGHT);
+                document.add(totalPara);
+
+                document.add(new Paragraph("\n\nThank you for your purchase!")
+                        .setTextAlignment(TextAlignment.CENTER)
+                        .setItalic());
+
+                document.close();
+
+                // --- CHANGED: Use Styled Alert for Success ---
+                showStyledAlert("Succès", "Le reçu a été enregistré avec succès !");
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                // --- CHANGED: Use Styled Alert for Error ---
+                showStyledAlert("Erreur", "Impossible d'enregistrer le fichier (il est peut-être ouvert).");
+            } catch (Exception e) {
+                e.printStackTrace();
+                showStyledAlert("Erreur", "Une erreur s'est produite lors de la création du reçu.");
+            }
+        }
+    }
+    // Helper method for alerts
+    private void showStyledAlert(String titleText, String messageText) {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.initStyle(StageStyle.UTILITY);
+        DialogPane pane = dialog.getDialogPane();
+        pane.setGraphic(null);
+
+        // 1. Root Container
+        VBox root = new VBox(20);
+        root.setPadding(new Insets(25));
+        root.setStyle("-fx-background-color: white; -fx-min-width: 400;");
+
+        // 2. Title Label (Lime Color)
+        Label title = new Label(titleText);
+        title.setStyle("-fx-font-family: 'Poppins Bold'; -fx-font-size: 22px; -fx-text-fill: #BEC400;");
+
+        // 3. Message Container (Light Green Background)
+        VBox infoBox = new VBox(10);
+        infoBox.setPadding(new Insets(15));
+        infoBox.setStyle("-fx-background-color: #f1f8e9; -fx-background-radius: 12;");
+
+        Label msgLbl = new Label(messageText);
+        msgLbl.setWrapText(true);
+        msgLbl.setStyle("-fx-font-family: 'Poppins Regular'; -fx-text-fill: #3d4a4d; -fx-font-size: 14px;");
+
+        infoBox.getChildren().add(msgLbl);
+
+        root.getChildren().addAll(title, infoBox);
+        pane.setContent(root);
+
+        // 4. "OK" Button Styled
+        ButtonType okType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        pane.getButtonTypes().add(okType);
+
+        Button okBtn = (Button) pane.lookupButton(okType);
+        okBtn.setStyle("-fx-background-color: #BEC400; -fx-text-fill: white; -fx-background-radius: 10; " +
+                "-fx-padding: 8 25; -fx-cursor: hand; -fx-font-family: 'Poppins Medium';");
+
+        dialog.showAndWait();
     }
 }

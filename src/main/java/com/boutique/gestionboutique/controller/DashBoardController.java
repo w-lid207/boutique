@@ -99,7 +99,7 @@ public class DashBoardController implements Initializable {
     }
     @FXML
     private void handleSalesHistoryClick(){
-        NavigationController.navigationController.handleAnalyticsClick();
+        NavigationController.navigationController.handleSalesHistoryClick();
     }
     @FXML
     private void monthlyRevenueChart(){

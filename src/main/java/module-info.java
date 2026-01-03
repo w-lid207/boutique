@@ -11,6 +11,8 @@ module com.boutique.gestionboutique {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires annotations;
+    requires kernel;
+    requires layout;
 
     opens com.boutique.gestionboutique to javafx.fxml;
     exports com.boutique.gestionboutique;

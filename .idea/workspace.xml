@@ -5,18 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="23e1f19a-0b2c-479d-8873-f727148e6c7f" name="Changes" comment="Merge branch 'main' of github.com:w-lid207/boutique&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/HelloApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/DashBoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/DashBoardController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/NavigationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/NavigationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/ProductsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/ProductsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/POSController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/POSController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/SalesHistoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/SalesHistoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/stylesheets/products.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/stylesheets/products.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/stylesheets/sales.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/stylesheets/sales.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/stylesheets/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/stylesheets/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/views/MainLayout.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/views/MainLayout.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/views/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/views/hello-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/views/sales-history.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/views/sales-history.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -289,6 +289,7 @@ public class SalesHistoryController {
     @FXML
     private void handleRefresh() {
         loadSales();
+        searchField.setText("");
         int currentPage = pagination.getCurrentPageIndex();
         pagination.setCurrentPageIndex(0);
         if (currentPage == 0) {
