@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="23e1f19a-0b2c-479d-8873-f727148e6c7f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/POSController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/POSController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/stylesheets/pos.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/stylesheets/pos.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/stylesheets/products.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/stylesheets/products.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/views/pos.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/views/pos.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/views/product.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/views/product.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/stylesheets/dialogue.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/stylesheets/dialogue.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,7 +129,7 @@
       <workItem from="1767397307760" duration="138000" />
       <workItem from="1767397844089" duration="7691000" />
       <workItem from="1767406514802" duration="1118000" />
-      <workItem from="1767447987464" duration="2584000" />
+      <workItem from="1767447987464" duration="651000" />
     </task>
     <servers />
   </component>
