@@ -113,7 +113,7 @@
                            <Label styleClass="section-title" text="Recent Transactions" />
                         </VBox>
                         <Region HBox.hgrow="ALWAYS" />
-                        <Label styleClass="link-label" text="View All" />
+                        <Label onMouseClicked="#handleSalesHistoryClick" styleClass="link-label" text="View All" />
                      </children>
                      <padding>
                         <Insets bottom="15.0" />

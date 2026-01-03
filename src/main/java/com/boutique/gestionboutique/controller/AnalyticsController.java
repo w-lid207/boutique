@@ -34,12 +34,16 @@ public class AnalyticsController {
     private Label monthRevenue;
     @FXML
     private Label totalProducts;
-
-    // Color Palette based on the image
-    private final String COLOR_PRIMARY = "#5F7161";   // Dark Green
-    private final String COLOR_ACCENT  = "#86A789";   // Sage Green
+    @FXML
+    private Label compareYandT;
+    @FXML
+    private Label compareMandLM;
+    // Color Palette based on #BEC400
+    private final String COLOR_PRIMARY = "#9FA300";   // Darker Yellow-Green
+    private final String COLOR_ACCENT  = "#BEC400";   // Primary Yellow-Green
     private final String COLOR_BG      = "#FFFFFF";   // White Card
-    private final String COLOR_TEXT    = "#666666";   // Grey Text
+    private final String COLOR_TEXT    = "#666666";
+ // Grey Text
 
     @FXML
     public void initialize() {
@@ -47,6 +51,16 @@ public class AnalyticsController {
         todaySales.setText(statService.getTodayRevenue() + " DH");
         monthRevenue.setText(statService.getMonthRevenue() + " DH");
         totalProducts.setText(statService.getTotalProductCount());
+        String dailyChange = statService.getSalesComparisonPercentage();
+        String monthlyChange = statService.getMonthlyComparisonPercentage();
+
+        // Daily comparison styling
+        String dailyIcon = dailyChange.startsWith("+") ? "↑" : "↓";
+        compareYandT.setText(dailyIcon + " " + dailyChange + "%");
+
+        // Monthly comparison styling
+        String monthlyIcon = monthlyChange.startsWith("+") ? "↑" : "↓";
+        compareMandLM.setText(monthlyIcon + " " + monthlyChange + "%");
 
         // 2. Setup Grid Layout to match the image
         GridPane dashboardGrid = new GridPane();
@@ -110,8 +124,8 @@ public class AnalyticsController {
         data.forEach((a, b) -> series.getData().add(new XYChart.Data<>(a, b)));
         areaChart.getData().add(series);
 
-        // Inline CSS for the Area Chart Fill (Green Gradient feel)
-        series.getNode().lookup(".chart-series-area-fill").setStyle("-fx-fill: rgba(134, 167, 137, 0.4);");
+        // Inline CSS for the Area Chart Fill (Yellow-Green Gradient feel)
+        series.getNode().lookup(".chart-series-area-fill").setStyle("-fx-fill: rgba(190, 196, 0, 0.4);");
         series.getNode().lookup(".chart-series-area-line").setStyle("-fx-stroke: " + COLOR_PRIMARY + "; -fx-stroke-width: 2px;");
 
         return createCard("Daily Sales", "This week's trend", areaChart);
@@ -141,7 +155,7 @@ public class AnalyticsController {
         data.forEach((a, b) -> series.getData().add(new XYChart.Data<>(a, b)));
         barChart.getData().add(series);
 
-        // Set bar color to Green
+        // Set bar color to Yellow-Green
         for (XYChart.Data<String, Number> item : series.getData()) {
             item.getNode().setStyle("-fx-bar-fill: " + COLOR_ACCENT + "; -fx-background-radius: 5 5 0 0;");
         }
@@ -181,8 +195,8 @@ public class AnalyticsController {
         legend.setPadding(new Insets(10, 0, 10, 20));
         legend.setAlignment(Pos.CENTER_LEFT);
 
-        // Define colors matching CSS
-        String[] colors = {"#5F7161", "#86A789", "#B2C8BA", "#DADDB1", "#EAE7B1", "#A79B89"};
+        // Define colors matching #BEC400 theme
+        String[] colors = {"#BEC400", "#9FA300", "#D4DB00", "#A0C44E", "#E0E870", "#8A9B3D"};
 
         int colorIndex = 0;
         for (PieChart.Data data : pieChart.getData()) {
@@ -250,7 +264,7 @@ public class AnalyticsController {
         data.forEach((a, b) -> series.getData().add(new XYChart.Data<>(a, b)));
         barChart.getData().add(series);
 
-        // Style bars darker green
+        // Style bars darker yellow-green
         for (XYChart.Data<String, Number> item : series.getData()) {
             item.getNode().setStyle("-fx-bar-fill: " + COLOR_PRIMARY + "; -fx-background-radius: 0 5 5 0;");
         }

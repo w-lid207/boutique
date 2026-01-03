@@ -62,7 +62,7 @@ public class DashBoardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resource) {
         setupTableColumns();
-        transactionsTable.setFixedCellSize(45);
+        transactionsTable.setFixedCellSize(50);
 
         // We can leave this empty or load initial data.
         // The NavigationController will call refresh() immediately after loading anyway.
@@ -96,6 +96,10 @@ public class DashBoardController implements Initializable {
         new Thread(task).start();
         monthlyRevenueChart();
         loadRecentSales();
+    }
+    @FXML
+    private void handleSalesHistoryClick(){
+        NavigationController.navigationController.handleAnalyticsClick();
     }
     @FXML
     private void monthlyRevenueChart(){
@@ -227,39 +231,17 @@ public class DashBoardController implements Initializable {
             {
                 // Style the button
                 viewBtn.setStyle(
-                        "-fx-background-color: #5B7065; " +
-                                "-fx-text-fill: white; " +
+                        "-fx-background-color: #BEC400; " +
+                                "-fx-text-fill: #2C2C2C; " +
                                 "-fx-background-radius: 5; " +
                                 "-fx-cursor: hand; " +
-                                "-fx-padding: 5 10; " +
+                                "-fx-padding: 10 10; " +
                                 "-fx-font-size: 11px; " +
                                 "-fx-font-weight: bold;"
                 );
 
-                // Add hover effect
-                viewBtn.setOnMouseEntered(e ->
-                        viewBtn.setStyle(
-                                "-fx-background-color: #4a5f54; " +
-                                        "-fx-text-fill: white; " +
-                                        "-fx-background-radius: 5; " +
-                                        "-fx-cursor: hand; " +
-                                        "-fx-padding: 5 10; " +
-                                        "-fx-font-size: 11px; " +
-                                        "-fx-font-weight: bold;"
-                        )
-                );
 
-                viewBtn.setOnMouseExited(e ->
-                        viewBtn.setStyle(
-                                "-fx-background-color: #5B7065; " +
-                                        "-fx-text-fill: white; " +
-                                        "-fx-background-radius: 5; " +
-                                        "-fx-cursor: hand; " +
-                                        "-fx-padding: 5 10; " +
-                                        "-fx-font-size: 11px; " +
-                                        "-fx-font-weight: bold;"
-                        )
-                );
+
 
                 // Handle button click
                 viewBtn.setOnAction(event -> {
@@ -267,6 +249,7 @@ public class DashBoardController implements Initializable {
                     showSaleDetails(sale);
                 });
             }
+
 
             @Override
             protected void updateItem(Void item, boolean empty) {
@@ -353,15 +336,11 @@ public class DashBoardController implements Initializable {
         // CRITICAL: Run on JavaFX thread
         Platform.runLater(() -> {
             transactionsTable.setItems(FXCollections.observableArrayList(recentFive));
-            int rowCount = recentFive.size();
-            double rowHeight = 55; // Same as fixedCellSize
-            double headerHeight = 35;
-            double newHeight = (rowCount * rowHeight) + headerHeight;
 
-            transactionsTable.setPrefHeight(newHeight);
-            transactionsTable.setMinHeight(newHeight);
-            System.out.println("DEBUG: Table items count: " + transactionsTable.getItems().size());
-            System.out.println("DEBUG: Table columns count: " + transactionsTable.getColumns().size());
+
+            transactionsTable.setPrefHeight(350);
+            transactionsTable.setMinHeight(350);
+
 
             if (!recentFive.isEmpty()) {
                 System.out.println("DEBUG: First item test: " + recentFive.get(0).getId());

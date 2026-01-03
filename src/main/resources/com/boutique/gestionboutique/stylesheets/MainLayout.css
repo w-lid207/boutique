@@ -1,21 +1,26 @@
+@import "font.css";
+*{
+    -fx-font-family: "Poppins", "Inter", "Segoe UI";
+}
 /* --- Sidebar Container --- */
 .sidebar {
-    -fx-background-color: #3D4A4E; /* Dark Slate */
+    -fx-background-color: #2C2C2C; /* Dark Slate */
 }
 
 /* --- Branding --- */
 .brand-text {
-    -fx-font-family: "Segoe UI", sans-serif;
+
     -fx-font-size: 20px;
     -fx-font-weight: bold;
-    -fx-text-fill: white;
+    -fx-text-fill: #CBD4C3;
 }
-
+.brand-container{
+    -fx-padding: 0 0 30 0;
+}
 /* --- Sidebar Buttons --- */
 .sidebar-btn {
     -fx-background-color: transparent;
-    -fx-text-fill: #9CA5AB; /* Muted Grey Text */
-    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-text-fill: #888585; /* Muted Grey Text */
     -fx-font-size: 14px;
     -fx-padding: 12 15;
     -fx-background-radius: 8px;
@@ -32,22 +37,34 @@
 /* Hover State */
 .sidebar-btn:hover {
     -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-background-radius: 30;
     -fx-text-fill: white;
 }
 
 .sidebar-btn:hover .sidebar-icon {
     -fx-fill: white;
 }
+/* Simple Text Styling */
+.simple-logo-text {
+    -fx-font-size: 24px;
+    -fx-text-fill: white; /* Dark Sage/Grey color */
+}
 
+/* Simple SVG Styling */
+.simple-logo-svg {
+    /* No effects, just ensuring the fill color matches the text if needed */
+    -fx-fill: white;
+}
 /* --- Active State (Green) --- */
 .sidebar-btn.active {
-    -fx-background-color: #6C8174; /* Sage Green */
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
+    -fx-background-color: #444444;
+    -fx-border-radius: 30;
+    -fx-effect: dropshadow(three-pass-box, rgba(155, 155, 155, 0.07), 30, 0.5, 0, 0);    -fx-background-radius: 30;
+    -fx-text-fill: #BEC400;
 }
 
 .sidebar-btn.active .sidebar-icon {
-    -fx-fill: white;
+    -fx-fill: #BEC400;
 }
 
 /* --- Logout Icon Specifics --- */
@@ -55,7 +72,7 @@
    it looks better as standard grey/white.
    If you really want red, change fill below. */
 .logout-icon {
-    -fx-fill: #ffffff;
+    -fx-fill: #9CA5AB;
     -fx-scale-x: 0.8;
     -fx-scale-y: 0.8;
 }

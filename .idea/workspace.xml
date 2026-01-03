@@ -5,10 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="23e1f19a-0b2c-479d-8873-f727148e6c7f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/images/shopicon.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/HelloApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/stylesheets/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/stylesheets/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/views/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/views/hello-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/AnalyticsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/AnalyticsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/DashBoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/DashBoardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/NavigationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/NavigationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/service/StatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/service/StatService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/stylesheets/MainLayout.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/stylesheets/MainLayout.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/stylesheets/analytics.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/stylesheets/analytics.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/stylesheets/dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/stylesheets/dashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/stylesheets/pos.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/stylesheets/pos.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/views/MainLayout.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/views/MainLayout.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/views/analytics.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/views/analytics.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/views/dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/views/dashboard.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +66,7 @@
     "git-widget-placeholder": "main",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "E:/CODE/JAVA/gestionBoutique/src/main/resources/com/boutique/gestionboutique/images",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -70,7 +81,11 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\CODE\JAVA\gestionBoutique\src\main\resources\com\boutique\gestionboutique\images" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\CODE\JAVA\gestionBoutique\src\main\resources\com\boutique\gestionboutique\images" />
       <recent name="E:\CODE\JAVA\gestionBoutique" />
     </key>
   </component>
@@ -122,7 +137,9 @@
       <workItem from="1766004034724" duration="57000" />
       <workItem from="1766135568700" duration="7796000" />
       <workItem from="1767206745132" duration="7654000" />
-      <workItem from="1767385036615" duration="4721000" />
+      <workItem from="1767385036615" duration="4943000" />
+      <workItem from="1767397307760" duration="138000" />
+      <workItem from="1767397844089" duration="7556000" />
     </task>
     <servers />
   </component>

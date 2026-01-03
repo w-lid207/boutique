@@ -6,12 +6,10 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.shape.SVGPath?>
 
-<BorderPane fx:id="borderPane" prefHeight="800.0" prefWidth="1285.0" stylesheets="@../stylesheets/MainLayout.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.boutique.gestionboutique.controller.NavigationController">
+<BorderPane fx:id="borderPane" prefHeight="800.0" prefWidth="1285.0" stylesheets="@../stylesheets/MainLayout.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.boutique.gestionboutique.controller.NavigationController">
 
     <left>
         <VBox prefHeight="799.0" prefWidth="260.0" styleClass="sidebar" BorderPane.alignment="CENTER">
@@ -20,49 +18,42 @@
             </padding>
             <children>
 
-                <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="brand-container">
-                    <children>
-                        <StackPane>
-                            <children>
-                                <Rectangle arcHeight="10.0" arcWidth="10.0" fill="#4d5a5e" height="35.0" width="35.0" />
-                                <Label style="-fx-font-size: 16px;" text="🏠" textFill="white" />
-                            </children>
-                        </StackPane>
-                        <Label styleClass="brand-text" text="JTR SHOP" />
-                    </children>
-                    <VBox.margin>
-                        <Insets bottom="40.0" />
-                    </VBox.margin>
+                <HBox alignment="CENTER" spacing="10" styleClass="brand-container">
+                    <Label styleClass="simple-logo-text" text="JTR" />
+
+                    <SVGPath content="M28.75 9.58333C11.5 13.4167 7.475 25.2425 3.48833 35.1517L7.11083 36.4167L8.93167 32.0083C9.85167 32.3342 10.81 32.5833 11.5 32.5833C32.5833 32.5833 38.3333 0 38.3333 0C36.4167 3.83333 23 4.3125 13.4167 6.22917C3.83333 8.14583 0 16.2917 0 20.125C0 23.9583 3.35417 27.3125 3.35417 27.3125C9.58333 9.58333 28.75 9.58333 28.75 9.58333Z" fill="#2d3b36" styleClass="simple-logo-svg" />
+
+                    <Label styleClass="simple-logo-text" text="SHOP" />
                 </HBox>
 
                 <VBox spacing="10.0" VBox.vgrow="ALWAYS">
                     <children>
 
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="20.0" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleDashboardClick" styleClass="sidebar-btn, active" text="Dashboard">
+                        <Button fx:id="dashboard" alignment="BASELINE_LEFT" graphicTextGap="20.0" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleDashboardClick" styleClass="sidebar-btn, active" text="Dashboard">
                             <graphic>
                                 <SVGPath content="M16.25 11.25V3.75H26.25V11.25H16.25ZM3.75 16.25V3.75H13.75V16.25H3.75ZM16.25 26.25V13.75H26.25V26.25H16.25ZM3.75 26.25V18.75H13.75V26.25H3.75ZM6.25 13.75H11.25V6.25H6.25V13.75ZM18.75 23.75H23.75V16.25H18.75V23.75ZM18.75 8.75H23.75V6.25H18.75V8.75ZM6.25 23.75H11.25V21.25H6.25V23.75Z" styleClass="sidebar-icon" />
                             </graphic>
                         </Button>
 
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="20.0" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleProductsClick" styleClass="sidebar-btn" text="Products">
+                        <Button fx:id="products" alignment="BASELINE_LEFT" graphicTextGap="20.0" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleProductsClick" styleClass="sidebar-btn" text="Products">
                             <graphic>
                                 <SVGPath content="M26.0002 7.25L13.5002 1L1.00022 7.25V19.75L13.5002 26L26.0002 19.75V7.25Z M1.00022 7.25L13.5002 13.5 M13.5002 26V13.5 M26.0002 7.25L13.5002 13.5 M19.7502 4.125L7.25022 10.375" styleClass="sidebar-icon" />
                             </graphic>
                         </Button>
 
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="20.0" maxWidth="Infinity" mnemonicParsing="false" onAction="#handlePOSClick" styleClass="sidebar-btn" text="POS">
+                        <Button fx:id="pos" alignment="BASELINE_LEFT" graphicTextGap="20.0" maxWidth="Infinity" mnemonicParsing="false" onAction="#handlePOSClick" styleClass="sidebar-btn" text="POS">
                             <graphic>
                                 <SVGPath content="M18.75 9.25L15 16.75L11.25 9.25H3.75V-2H26.25V9.25M7.5 1.75V5.5H22.5V1.75M0 28L3.75 13H26.25L30 28M3.75 22.375V24.25H26.25V22.375" styleClass="sidebar-icon" />
                             </graphic>
                         </Button>
 
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="20.0" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleSalesHistoryClick" styleClass="sidebar-btn" text="Sales History">
+                        <Button fx:id="sh" alignment="BASELINE_LEFT" graphicTextGap="20.0" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleSalesHistoryClick" styleClass="sidebar-btn" text="Sales History">
                             <graphic>
                                 <SVGPath content="M15 26.25C12.375 26.25 10.0521 25.4533 8.03125 23.86C6.01042 22.2667 4.69792 20.23 4.09375 17.75C4.01042 17.4375 4.07292 17.1512 4.28125 16.8912C4.48958 16.6312 4.77083 16.48 5.125 16.4375C5.45833 16.3958 5.76042 16.4583 6.03125 16.625C6.30208 16.7917 6.48958 17.0417 6.59375 17.375C7.09375 19.25 8.125 20.7813 9.6875 21.9688C11.25 23.1562 13.0208 23.75 15 23.75C17.4375 23.75 19.5054 22.9012 21.2037 21.2037C22.9021 19.5062 23.7508 17.4383 23.75 15C23.7492 12.5617 22.9004 10.4942 21.2037 8.7975C19.5071 7.10083 17.4392 6.25167 15 6.25C13.5625 6.25 12.2188 6.58333 10.9687 7.25C9.71875 7.91667 8.66667 8.83333 7.8125 10H10C10.3542 10 10.6513 10.12 10.8913 10.36C11.1313 10.6 11.2508 10.8967 11.25 11.25C11.2492 11.6033 11.1292 11.9004 10.89 12.1413C10.6508 12.3821 10.3542 12.5017 10 12.5H5C4.64583 12.5 4.34917 12.38 4.11 12.14C3.87083 11.9 3.75083 11.6033 3.75 11.25V6.25C3.75 5.89583 3.87 5.59917 4.11 5.36C4.35 5.12083 4.64667 5.00083 5 5C5.35333 4.99917 5.65042 5.11917 5.89125 5.36C6.13208 5.60083 6.25167 5.8975 6.25 6.25V7.9375C7.3125 6.60417 8.60958 5.57292 10.1412 4.84375C11.6729 4.11458 13.2925 3.75 15 3.75C16.5625 3.75 18.0262 4.04708 19.3912 4.64125C20.7562 5.23542 21.9438 6.03708 22.9538 7.04625C23.9638 8.05542 24.7658 9.24292 25.36 10.6088C25.9542 11.9746 26.2508 13.4383 26.25 15C26.2492 16.5617 25.9525 18.0254 25.36 19.3912C24.7675 20.7571 23.9654 21.9446 22.9538 22.9538C21.9421 23.9629 20.7546 24.765 19.3912 25.36C18.0279 25.955 16.5642 26.2517 15 26.25ZM16.25 14.5L19.375 17.625C19.6042 17.8542 19.7188 18.1458 19.7188 18.5C19.7188 18.8542 19.6042 19.1458 19.375 19.375C19.1458 19.6042 18.8542 19.7188 18.5 19.7188C18.1458 19.7188 17.8542 19.6042 17.625 19.375L14.125 15.875C14 15.75 13.9062 15.6096 13.8438 15.4537C13.7812 15.2979 13.75 15.1363 13.75 14.9688V10C13.75 9.64583 13.87 9.34917 14.11 9.11C14.35 8.87083 14.6467 8.75083 15 8.75C15.3533 8.74917 15.6504 8.86917 15.8913 9.11C16.1321 9.35083 16.2517 9.6475 16.25 10V14.5Z" styleClass="sidebar-icon" />
                             </graphic>
                         </Button>
 
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="20.0" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleAnalyticsClick" styleClass="sidebar-btn" text="Analytics">
+                        <Button fx:id="analytics" alignment="BASELINE_LEFT" graphicTextGap="20.0" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleAnalyticsClick" styleClass="sidebar-btn" text="Analytics">
                             <graphic>
                                 <SVGPath content="M26.25 26.25H3.75V3.75 M7.5 17.5L13.75 11.25L18.75 16.25C19.275 15.7237 20.6863 14.3162 22.1438 12.8625L24.1287 10.8825L24.1337 10.8775L26.255 8.7625 M21.25 8.75H26.25V13.75" styleClass="sidebar-icon" />
                             </graphic>

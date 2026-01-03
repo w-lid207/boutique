@@ -11,7 +11,7 @@
 
 /* === Global === */
 .root-pane {
-    -fx-background-color: #EEF6EC; /* Light Sage Background */
+    -fx-background-color: #ECECEF; /* Light Sage Background */
     -fx-font-family: 'Poppins', 'Segoe UI', sans-serif;
 }
 
@@ -41,35 +41,17 @@
     -fx-background-color: derive(#5B7065, -5%);
 }
 
-/* === NEW ADMIN AVATAR (Pill Shape) === */
-.admin-pill {
-    /* The light green-grey background from the image */
-    -fx-background-color: #e8f0e8;
-    -fx-background-radius: 30;
-    -fx-padding: 5 5 5 15; /* Padding to position text and circle */
-}
-
-.admin-name {
+.profile-name {
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-text-fill: #2d3b36; /* Dark text */
+    -fx-text-fill: #2C2C2C;
 }
 
-.admin-initial-circle {
-    -fx-background-color: #dbe4db; /* Slightly darker circle bg */
-    -fx-background-radius: 50%;
-    -fx-min-width: 32;
-    -fx-min-height: 32;
-    -fx-max-width: 32;
-    -fx-max-height: 32;
-    -fx-alignment: center;
+.profile-container {
+    -fx-background-color: #BEC400;
+    -fx-background-radius: 30;
+    -fx-padding: 5 5 5 15;
 }
-
-.admin-initial {
-    -fx-font-size: 14px;
-    -fx-text-fill: #6b7c70; /* Muted text color for initial */
-}
-
 /* === KPI Cards === */
 .kpi-container {
     -fx-padding: 10 0;
@@ -91,8 +73,8 @@
 }
 
 .kpi-icon-badge {
-    -fx-background-color: #f0fdf4;
-    -fx-text-fill: #5B7065;
+    -fx-background-color: white;
+    -fx-text-fill: #444;
     -fx-font-size: 16px;
     -fx-background-radius: 50%;
     -fx-min-width: 35;
@@ -117,8 +99,8 @@
 }
 
 .trend-up {
-    -fx-background-color: #dcfce7;
-    -fx-text-fill: #166534;
+    -fx-background-color: #BEC400;
+    -fx-text-fill: #222;
 }
 
 .trend-neutral {
@@ -130,6 +112,7 @@
     -fx-font-size: 12px;
     -fx-text-fill: #9ca3af;
 }
+/* --- Beautiful Donut Chart Styling --- */
 /* --- Beautiful Donut Chart Styling --- */
 
 /* 1. The base chart slices */
@@ -150,20 +133,20 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 0);
 }
 
-/* 3. Custom Modern Color Palette */
-/* We override the default JavaFX "CHART_COLOR_X" */
-.default-color0.chart-pie { -fx-pie-color: #5F7161; } /* Primary Sage */
-.default-color1.chart-pie { -fx-pie-color: #86A789; } /* Lighter Sage */
-.default-color2.chart-pie { -fx-pie-color: #B2C8BA; } /* Pale Green */
-.default-color3.chart-pie { -fx-pie-color: #DADDB1; } /* Beige/Green */
-.default-color4.chart-pie { -fx-pie-color: #EAE7B1; } /* Cream/Yellow */
-.default-color5.chart-pie { -fx-pie-color: #A79B89; } /* Muted Taupe */
+/* 3. Custom Color Palette - Based on #BEC400 */
+/* Vibrant yellow-green theme with harmonious variations */
+.default-color0.chart-pie { -fx-pie-color: #BEC400; } /* Primary - Base Color */
+.default-color1.chart-pie { -fx-pie-color: #9FA300; } /* Darker Yellow-Green */
+.default-color2.chart-pie { -fx-pie-color: #D4DB00; } /* Lighter Yellow */
+.default-color3.chart-pie { -fx-pie-color: #A0C44E; } /* Yellow-Green with more green */
+.default-color4.chart-pie { -fx-pie-color: #E0E870; } /* Pale Yellow-Green */
+.default-color5.chart-pie { -fx-pie-color: #8A9B3D; } /* Muted Olive */
 
 /* 4. Styling the Labels inside the Donut Hole */
 .donut-center-value {
     -fx-font-size: 22px;
     -fx-font-weight: bold;
-    -fx-text-fill: #5F7161; /* Use primary color */
+    -fx-text-fill: #9FA300; /* Use darker shade for better contrast */
 }
 
 .donut-center-text {

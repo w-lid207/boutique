@@ -1,6 +1,10 @@
 /* --- Base Structure --- */
+@import "font.css";
+*{
+    -fx-font-family: "Poppins";
+}
 .root-pane {
-    -fx-background-color: #EEF6EC; /* Light Sage Background */
+    -fx-background-color: #ECECEF; /* Light Sage Background */
     -fx-background: #EEF6EC;
 }
 
@@ -8,23 +12,40 @@
     -fx-background-color: transparent;
 }
 
+/* Vertical Scrollbar Thumb */
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #2C2C2C;
+    -fx-background-radius: 10;
+    /* Insets create the "spacious" look by shrinking the thumb away from the edges */
+    -fx-background-insets: 3;
+}
+
+/* Horizontal Scrollbar Thumb */
+.scroll-pane .scroll-bar:horizontal .thumb {
+    -fx-background-color: #2C2C2C;
+    -fx-background-radius: 10;
+    -fx-background-insets: 3;
+}
+
+/* Make the track (background) transparent so it looks cleaner */
+.scroll-pane .scroll-bar .track {
+    -fx-background-color: transparent;
+}
 /* --- Typography --- */
 .page-title {
-    -fx-font-family: "Segoe UI", sans-serif;
     -fx-font-size: 28px;
     -fx-font-weight: bold;
-    -fx-text-fill: #2d3b36;
+    -fx-text-fill:black;
 }
 
 .profile-name {
-    -fx-font-family: "Segoe UI", sans-serif;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-text-fill: #2d3b36;
+    -fx-text-fill: #2C2C2C;
 }
 
 .profile-container {
-    -fx-background-color: #e3ebe1;
+    -fx-background-color: #BEC400;
     -fx-background-radius: 30;
     -fx-padding: 5 5 5 15;
 }
@@ -44,8 +65,7 @@
 
 .kpi-icon {
     -fx-font-size: 18px;
-    -fx-text-fill: #999;
-    -fx-background-color: #f5f5f5;
+    -fx-text-fill: rgba(44, 44, 44, 0.8);
     -fx-background-radius: 5;
     -fx-padding: 5 10;
 }
@@ -87,7 +107,7 @@
 
 /* --- Chart Toggle Container (The "Track") --- */
 .chart-toggle-box {
-    -fx-background-color: #F2F7F2; /* Very light sage/grey to contrast with white card */
+    -fx-background-color: rgba(226, 255, 176, 0.88); /* Very light sage/grey to contrast with white card */
     -fx-background-radius: 30px;   /* Fully rounded pill shape */
     -fx-padding: 4px;              /* Padding creates space between edge and buttons */
     /* Optional: subtle internal border or shadow if you want depth */
@@ -97,8 +117,7 @@
 /* --- The Buttons (Inactive State) --- */
 .toggle-btn {
     -fx-background-color: transparent;
-    -fx-text-fill: #8EA096; /* Muted sage text */
-    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-text-fill: #75757c; /* Muted sage text */
     -fx-font-size: 12px;
     -fx-font-weight: bold;
     -fx-background-radius: 25px; /* Matches container roundness */
@@ -116,15 +135,15 @@
 
 /* --- Active/Selected State --- */
 .toggle-btn.active {
-    -fx-background-color: #5B7065; /* Your Primary Sage Green */
-    -fx-text-fill: white;
+    -fx-background-color: #BEC400; /* Your Primary Sage Green */
+    -fx-text-fill: #2C2C2C;
     /* Adds a soft shadow to make it "pop" */
     -fx-effect: dropshadow(three-pass-box, rgba(91, 112, 101, 0.4), 8, 0, 0, 3);
 }
 
 /* Chart Styling */
 .chart-bar {
-    -fx-bar-fill: #769083; /* The Sage Green Bar Color */
+    -fx-bar-fill: #BEC400; /* The Sage Green Bar Color */
     -fx-background-radius: 5 5 0 0; /* Rounded top bars */
 }
 
@@ -149,7 +168,9 @@
     -fx-font-size: 12px;
     -fx-font-weight: bold;
 }
-
+.link-label:hover{
+    -fx-underline: true;
+}
 .table-view {
     -fx-background-color: transparent;
     -fx-table-cell-border-color: transparent;
@@ -272,8 +293,8 @@
     -fx-background-color: #fafafa;
     -fx-border-color: transparent;
 }
-/* Note: To achieve the Green/Yellow "Pills" for 'Completed'/'Pending' 
-   exactly as shown in the image, you must implement a custom CellFactory 
-   in Java code. CSS alone cannot wrap text in a styled shape dynamically 
+/* Note: To achieve the Green/Yellow "Pills" for 'Completed'/'Pending'
+   exactly as shown in the image, you must implement a custom CellFactory
+   in Java code. CSS alone cannot wrap text in a styled shape dynamically
    inside a table cell.
 */

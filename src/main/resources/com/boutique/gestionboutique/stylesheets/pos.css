@@ -1,4 +1,4 @@
-/* === Variables & Color Palette (Strictly from Dashboard) === */
+/* === Variables & Color Palette (Updated to Dashboard Theme) === */
 @import "font.css";
 
 /* Apply Font Globally */
@@ -6,13 +6,13 @@
     -fx-font-family: 'Poppins';
 
     /* Exact Background from Dashboard */
-    -fx-bg-color: #EEF6EC;
+    -fx-bg-color: #ECECEF;
 
     /* Card Background */
     -fx-card-bg: white;
 
-    /* Primary Accent (The "Active Toggle" Green) */
-    -fx-primary-color: #5B7065;
+    /* Primary Accent (Updated to Dashboard #BEC400) */
+    -fx-primary-color: #BEC400;
 
     /* Secondary Accent (The "Trend Up" Muted Green) */
     -fx-secondary-green: #7da08f;
@@ -55,8 +55,8 @@
     -fx-background-color: -fx-card-bg;
     -fx-background-radius: 30;
     -fx-border-radius: 30;
-    /* Using faint green tint for border to match toggle hover vibe */
-    -fx-border-color: rgba(91, 112, 101, 0.1);
+    /* Using faint yellow-green tint for border */
+    -fx-border-color: rgba(190, 196, 0, 0.1);
     -fx-pref-width: 350;
     -fx-padding: 5 15;
 }
@@ -98,7 +98,7 @@
 /* Modeled after .toggle-btn in Dashboard */
 .category-btn {
     -fx-background-color: transparent;
-    -fx-text-fill: -fx-text-sub; /* #8EA096 */
+    -fx-text-fill: #75757c; /* Muted text */
     -fx-background-radius: 25;
     -fx-padding: 6 16;
     -fx-font-weight: bold;
@@ -107,13 +107,13 @@
 
 .category-btn:hover {
     -fx-text-fill: -fx-primary-color;
-    -fx-background-color: rgba(91, 112, 101, 0.05); /* From .toggle-btn:hover */
+    -fx-background-color: rgba(190, 196, 0, 0.05);
 }
 
 .category-btn.active {
-    -fx-background-color: -fx-primary-color; /* #5B7065 */
-    -fx-text-fill: white;
-    -fx-effect: dropshadow(three-pass-box, rgba(91, 112, 101, 0.4), 8, 0, 0, 3);
+    -fx-background-color: -fx-primary-color; /* #BEC400 */
+    -fx-text-fill: #2C2C2C;
+    -fx-effect: dropshadow(three-pass-box, rgba(190, 196, 0, 0.4), 8, 0, 0, 3);
 }
 
 /* === Scroll Panes === */
@@ -182,14 +182,14 @@
 
 /* === Buttons === */
 .btn-confirm {
-    -fx-background-color: -fx-primary-color; /* #5B7065 */
-    -fx-text-fill: white;
+    -fx-background-color: -fx-primary-color; /* #BEC400 */
+    -fx-text-fill: #2C2C2C;
     -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-background-radius: 8;
     -fx-padding: 12 20;
     -fx-cursor: hand;
-    -fx-effect: dropshadow(three-pass-box, rgba(91, 112, 101, 0.4), 8, 0, 0, 3);
+    -fx-effect: dropshadow(three-pass-box, rgba(190, 196, 0, 0.4), 8, 0, 0, 3);
 }
 .btn-confirm:hover {
     -fx-background-color: derive(-fx-primary-color, -5%);
@@ -201,18 +201,18 @@
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-background-radius: 8;
-    -fx-border-color: rgba(91, 112, 101, 0.2);
+    -fx-border-color: rgba(190, 196, 0, 0.2);
     -fx-border-radius: 8;
     -fx-padding: 10 20;
     -fx-cursor: hand;
 }
 .btn-draft:hover {
-    -fx-background-color: #F2F7F2; /* From .chart-toggle-box */
+    -fx-background-color: rgba(226, 255, 176, 0.88);
 }
 
 .payment-type-btn {
-    -fx-background-color: #F2F7F2; /* From .chart-toggle-box */
-    -fx-text-fill: -fx-text-sub;
+    -fx-background-color: rgba(226, 255, 176, 0.88);
+    -fx-text-fill: #75757c;
     -fx-background-radius: 15;
     -fx-padding: 5 12;
     -fx-font-size: 11px;
@@ -221,7 +221,7 @@
 }
 .payment-type-btn.active {
     -fx-background-color: -fx-primary-color;
-    -fx-text-fill: white;
+    -fx-text-fill: #2C2C2C;
 }
 
 /* === 1. Font Import === */
@@ -239,15 +239,15 @@
     -fx-background-radius: 18; /* More rounded */
     -fx-padding: 20;
 
-    /* Permanent "Stand Out" Sage Shadow */
-    -fx-effect: dropshadow(three-pass-box, rgba(91, 112, 101, 0.25), 15, 0, 0, 4);
+    /* Permanent "Stand Out" Yellow-Green Shadow */
+    -fx-effect: dropshadow(three-pass-box, rgba(190, 196, 0, 0.25), 15, 0, 0, 4);
 }
 
 /* Removed .product-card:hover block so it stays static */
 
 /* Image Background */
 .product-image-container {
-    -fx-background-color: linear-gradient(to bottom right, #dbe9db, #eff7f2);
+    -fx-background-color: linear-gradient(to bottom right, #e8f5d0, #f5fce8);
     -fx-background-radius: 14;
 }
 
@@ -279,8 +279,8 @@
 
 /* === 3. Right-Aligned Button === */
 .product-add-btn {
-    -fx-background-color: -fx-primary-color; /* Solid Sage */
-    -fx-text-fill: white;
+    -fx-background-color: -fx-primary-color; /* #BEC400 */
+    -fx-text-fill: #2C2C2C;
     -fx-font-weight: bold;
     -fx-font-size: 12px;
     -fx-background-radius: 20; /* Pill shape */
