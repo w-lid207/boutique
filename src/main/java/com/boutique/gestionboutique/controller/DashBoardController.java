@@ -272,7 +272,7 @@ public class DashBoardController implements Initializable {
         root.setStyle("-fx-background-color: white; -fx-min-width: 450;");
 
         Label title = new Label("Détails de la Vente #" + sale.getId());
-        title.setStyle("-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #5B7065;");
+        title.setStyle("-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #BEC400;");
 
         VBox infoBox = new VBox(10);
         infoBox.setPadding(new Insets(15));
@@ -312,7 +312,7 @@ public class DashBoardController implements Initializable {
         dialogPane.getButtonTypes().add(closeBtnType);
         Button closeBtn = (Button) dialogPane.lookupButton(closeBtnType);
         closeBtn.setStyle(
-                "-fx-background-color: #5B7065; " +
+                "-fx-background-color: #BEC400; " +
                         "-fx-text-fill: white; " +
                         "-fx-background-radius: 8; " +
                         "-fx-cursor: hand; " +
