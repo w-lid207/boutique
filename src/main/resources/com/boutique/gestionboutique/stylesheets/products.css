@@ -33,7 +33,7 @@
 /* État lors du clic sur la barre de recherche (CORRECTION ARRONDIE) */
 .search-field:focused {
     -fx-background-color: white;
-    -fx-border-color: #6d8c6d;
+    -fx-border-color: #BEC400;
     -fx-border-width: 2px;
     -fx-background-radius: 20;
     -fx-border-radius: 20;
@@ -57,7 +57,7 @@
 }
 
 .btn-add {
-    -fx-background-color: #6d8c6d;
+    -fx-background-color: #BEC400;
     -fx-text-fill: white;
 }
 
@@ -80,9 +80,9 @@
 
 /* État actif (Couleur verte demandée) */
 .filter-btn-active {
-    -fx-background-color: #6d8c6d !important;
+    -fx-background-color: #BEC400 !important;
     -fx-text-fill: white !important;
-    -fx-border-color: #6d8c6d !important;
+    -fx-border-color: #BEC400 !important;
 }
 
 /* --- CARTES PRODUITS --- */
@@ -125,13 +125,13 @@
 
 /* Le "pouce" (la barre mobile) en vert */
 .scroll-pane .scroll-bar .thumb {
-    -fx-background-color: #6d8c6d;
+    -fx-background-color: #BEC400;
     -fx-background-radius: 15; /* Arrondi pour aller avec vos boutons */
 }
 
 /* Couleur un peu plus foncée quand on passe la souris */
 .scroll-pane .scroll-bar .thumb:hover {
-    -fx-background-color: #5a755a;
+    -fx-background-color: #BEC400;
 }
 
 /* Supprimer les boutons fléchés pour un look propre */

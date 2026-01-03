@@ -174,7 +174,7 @@ public class SalesHistoryController {
                 if (empty) setText(null);
                 else {
                     setText(String.format("%.2f MAD", value));
-                    setStyle("-fx-text-fill: #6d8c6d; -fx-font-weight: bold;"); setAlignment(Pos.CENTER_RIGHT);
+                    setStyle("-fx-text-fill: #BEC400; -fx-font-weight: bold;"); setAlignment(Pos.CENTER_RIGHT);
                 }
             }
         });
@@ -183,7 +183,7 @@ public class SalesHistoryController {
     private void setupActionColumn() {
         actionColumn.setCellFactory(col -> new TableCell<>() {
             private final Button btn = new Button("👁 Voir Détails");
-            { btn.setStyle("-fx-background-color: #6d8c6d; -fx-text-fill: white; -fx-background-radius: 20; -fx-cursor: hand;"); }
+            { btn.setStyle("-fx-background-color: #BEC400; -fx-text-fill: white; -fx-background-radius: 20; -fx-cursor: hand;"); }
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
@@ -208,7 +208,7 @@ public class SalesHistoryController {
 
         // Titre de la fenêtre
         Label title = new Label("Détails de la Vente #" + sale.getId());
-        title.setStyle("-fx-font-family: 'Poppins Bold'; -fx-font-size: 22px; -fx-text-fill: #6d8c6d;");
+        title.setStyle("-fx-font-family: 'Poppins Bold'; -fx-font-size: 22px; -fx-text-fill: #BEC400;");
 
         // Bloc d'information principale (Date et Montant)
         VBox infoBox = new VBox(10);
@@ -219,7 +219,7 @@ public class SalesHistoryController {
         Label totalLbl = new Label("💰 Montant: " + String.format("%.2f MAD", sale.getTotal()));
 
         dateLbl.setStyle("-fx-font-family: 'Poppins Medium'; -fx-text-fill: #3d4a4d;");
-        totalLbl.setStyle("-fx-font-family: 'Poppins Bold'; -fx-text-fill: #6d8c6d;");
+        totalLbl.setStyle("-fx-font-family: 'Poppins Bold'; -fx-text-fill: #BEC400;");
         infoBox.getChildren().addAll(dateLbl, totalLbl);
 
         // --- SECTION PRODUITS VENDUS ---
@@ -257,7 +257,7 @@ public class SalesHistoryController {
         ButtonType closeBtnType = new ButtonType("Fermer", ButtonBar.ButtonData.CANCEL_CLOSE);
         pane.getButtonTypes().add(closeBtnType);
         Button closeBtn = (Button) pane.lookupButton(closeBtnType);
-        closeBtn.setStyle("-fx-background-color: #6d8c6d; -fx-text-fill: white; -fx-background-radius: 10; " +
+        closeBtn.setStyle("-fx-background-color: #BEC400; -fx-text-fill: white; -fx-background-radius: 10; " +
                 "-fx-padding: 8 25; -fx-cursor: hand; -fx-font-family: 'Poppins Medium';");
 
         dialog.showAndWait();

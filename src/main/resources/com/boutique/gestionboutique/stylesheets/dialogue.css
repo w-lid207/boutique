@@ -5,7 +5,7 @@
 
 /* En-tête vert (comme sur votre image) */
 .custom-dialog .header-panel {
-    -fx-background-color: #718c6a;
+    -fx-background-color: #BEC400;
     -fx-padding: 20px;
 }
 
@@ -35,7 +35,7 @@
 
 /* Bouton OK (Standard) */
 .btn-ok-style {
-    -fx-background-color: #6d8c6d;
+    -fx-background-color: #BEC400;
 }
 
 /* Bouton Annuler (Gris arrondi) */

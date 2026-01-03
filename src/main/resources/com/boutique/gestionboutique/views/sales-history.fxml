@@ -12,7 +12,7 @@
 
     <VBox spacing="15">
         <HBox alignment="CENTER_LEFT" spacing="15">
-            <Label style="-fx-font-size: 36px; -fx-text-fill: #6d8c6d;" text="📋" />
+            <Label style="-fx-font-size: 36px; -fx-text-fill: #BEC400;" text="📋" />
             <VBox spacing="5">
                 <Label style="-fx-font-family: 'Poppins Bold'; -fx-font-size: 28px; -fx-text-fill: #3d4a4d;" text="Historique des Ventes" />
                 <Label style="-fx-font-family: 'Poppins Light'; -fx-font-size: 14px; -fx-text-fill: #64748b;" text="Consultez toutes vos transactions" />
@@ -26,7 +26,7 @@
         <HBox spacing="20">
             <VBox spacing="10" HBox.hgrow="ALWAYS" styleClass="stat-card">
                 <Label style="-fx-font-family: 'Poppins Medium'; -fx-font-size: 14px; -fx-text-fill: #64748b;" text="Total des Ventes" />
-                <Label fx:id="totalSalesLabel" style="-fx-font-family: 'Poppins Bold'; -fx-font-size: 24px; -fx-text-fill: #6d8c6d;" text="0 MAD" />
+                <Label fx:id="totalSalesLabel" style="-fx-font-family: 'Poppins Bold'; -fx-font-size: 24px; -fx-text-fill: #BEC400;" text="0 MAD" />
                 <Label fx:id="totalSalesCount" style="-fx-font-family: 'Poppins Regular'; -fx-font-size: 12px; -fx-text-fill: #94a3b8;" text="0 ventes" />
             </VBox>
 

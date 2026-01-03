@@ -11,14 +11,14 @@
 }
 
 .search-field:focused {
-    -fx-border-color:  #6d8c6d;
+    -fx-border-color:  #BEC400;
     -fx-border-width: 2;
     -fx-effect: dropshadow(gaussian, rgba(100, 116, 139, 0.2), 10, 0, 0, 0);
 }
 
 /* --- BOUTON ACTUALISER --- */
 .btn-refresh {
-    -fx-background-color: #6d8c6d;
+    -fx-background-color: #BEC400;
     -fx-text-fill: white;
     -fx-background-radius: 30;
     -fx-padding: 12 30;
@@ -41,7 +41,7 @@
 }
 
 .modern-table .table-row-cell:selected {
-    -fx-background-color: #6d8c6d;
+    -fx-background-color: #BEC400;
     -fx-text-fill: white;
 }
 
@@ -69,13 +69,13 @@
 .pagination .pagination-control .control-box .number-button:selected,
 .pagination .pagination-control .control-box .toggle-button:selected,
 .pagination .pagination-control .control-box .bullet-button:selected {
-    -fx-background-color: #6d8c6d !important;
+    -fx-background-color: #BEC400 !important;
     -fx-text-fill: white !important;
     -fx-border-color: #64748b !important;
 }
 
 .pagination .left-arrow, .pagination .right-arrow {
-    -fx-background-color: #6d8c6d;
+    -fx-background-color: #BEC400;
 }
 
 /* --- CARTES STATISTIQUES --- */
