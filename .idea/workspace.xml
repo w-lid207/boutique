@@ -5,13 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="23e1f19a-0b2c-479d-8873-f727148e6c7f" name="Changes" comment="Merge branch 'main' of github.com:w-lid207/boutique&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/DashBoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/DashBoardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/NavigationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/NavigationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/POSController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/POSController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/SalesHistoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/SalesHistoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/ProductsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/controller/ProductsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boutique/gestionboutique/service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/views/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/views/hello-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/views/product.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/boutique/gestionboutique/views/product.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,8 +105,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435" />
-        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-IU-251.23774.435" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.28539.13" />
+        <option value="bundled-js-predefined-d6986cc7102b-a71380e98a7c-JavaScript-IU-252.28539.13" />
       </set>
     </attachedChunks>
   </component>
@@ -135,6 +135,7 @@
       <workItem from="1767397844089" duration="7691000" />
       <workItem from="1767406514802" duration="1118000" />
       <workItem from="1767447987464" duration="651000" />
+      <workItem from="1767533531823" duration="2838000" />
     </task>
     <servers />
   </component>

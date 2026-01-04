@@ -51,7 +51,7 @@ public class Product {
     }
     public void setqPrice(double qPrice) {
         if(qCartItem == 1){
-            this.qPrice = this.price;
+            this.qPrice = this.price; /*qPrice=prix total price=prix unitaire*/
             return;
         }
         this.qPrice = qPrice;

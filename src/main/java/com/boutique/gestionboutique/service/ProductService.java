@@ -27,8 +27,8 @@ public class ProductService {
                 "LEFT JOIN categories c ON p.category_id = c.id " +
                 "ORDER BY p.name";
 
-        try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+        try (Statement stmt = connection.createStatement();/*excuter requete*/
+             ResultSet rs = stmt.executeQuery(query)) {/*ResultSet contient les résultats*/
 
             while (rs.next()) {
                 Product product = new Product();
@@ -39,7 +39,7 @@ public class ProductService {
                 product.setCategoryId(rs.getInt("category_id"));
                 product.setImagePath(rs.getString("image_path"));
                 product.setCategoryName(rs.getString("category_name"));
-                products.add(product);
+                products.add(product);/*Ajoute le produit à la liste*/
             }
         }
         return products;

@@ -59,6 +59,9 @@ public class ProductsController implements Initializable {
             System.err.println("Erreur chargement products.css: " + e.getMessage());
         }
     }
+    /*Charge le fichier CSS
+
+Si la scène existe déjà, ajoute le CSS Sinon, attend qu'elle soit disponible via un listener*/
 
     private void displayProducts(List<Product> products) {
         productsGrid.getChildren().clear();
