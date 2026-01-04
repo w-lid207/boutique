@@ -1,6 +1,6 @@
 package com.boutique.gestionboutique.service;
 
-import com.boutique.gestionboutique.controller.Sale;
+import com.boutique.gestionboutique.model.Sale;
 import com.boutique.gestionboutique.database.Database;
 import java.sql.*;
 import java.util.ArrayList;

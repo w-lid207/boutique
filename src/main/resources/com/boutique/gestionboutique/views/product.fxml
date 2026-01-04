@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.layout.FlowPane?>
-<BorderPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.boutique.gestionboutique.controller.ProductsController">
+<BorderPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../stylesheets/products.css" fx:controller="com.boutique.gestionboutique.controller.ProductsController">
    <top>
        <HBox alignment="CENTER_LEFT" styleClass="header" spacing="20.0">
            <padding>
@@ -81,7 +81,7 @@
           <!-- Grille de Produits -->
           <center>
               <ScrollPane fitToWidth="true" styleClass="scroll-pane">
-                  <FlowPane fx:id="productsGrid" hgap="20.0" vgap="20.0" styleClass="products-grid">
+                  <FlowPane fx:id="productsFlowPane" hgap="20.0" vgap="20.0" styleClass="products-grid">
                       <padding>
                           <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                       </padding>

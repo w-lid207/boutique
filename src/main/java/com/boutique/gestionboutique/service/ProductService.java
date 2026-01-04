@@ -1,6 +1,6 @@
 package com.boutique.gestionboutique.service;
 
-import com.boutique.gestionboutique.controller.Product;
+import com.boutique.gestionboutique.model.Product;
 import com.boutique.gestionboutique.database.Database;
 import java.sql.*;
 import java.util.ArrayList;
@@ -24,11 +24,10 @@ public class ProductService {
         List<Product> products = new ArrayList<>();
         String query = "SELECT p.id, p.name, p.price, p.quantity, p.category_id, p.image_path, c.name as category_name " +
                 "FROM products p " +
-                "LEFT JOIN categories c ON p.category_id = c.id " +
-                "ORDER BY p.name";
+                "LEFT JOIN categories c ON p.category_id = c.id "
+                ;
 
-        try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+        try ( Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(query) ) {
 
             while (rs.next()) {
                 Product product = new Product();
@@ -45,63 +44,6 @@ public class ProductService {
         return products;
     }
 
-    /**
-     * Récupérer un produit par ID
-     */
-    public Product getProductById(int id) throws SQLException {
-        String query = "SELECT p.id, p.name, p.price, p.quantity, p.category_id, p.image_path, c.name as category_name " +
-                "FROM products p " +
-                "LEFT JOIN categories c ON p.category_id = c.id " +
-                "WHERE p.id = ?";
-        Product product = null;
-
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setInt(1, id);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    product = new Product();
-                    product.setId(rs.getInt("id"));
-                    product.setName(rs.getString("name"));
-                    product.setPrice(rs.getDouble("price"));
-                    product.setQuantity(rs.getInt("quantity"));
-                    product.setCategoryId(rs.getInt("category_id"));
-                    product.setImagePath(rs.getString("image_path"));
-                    product.setCategoryName(rs.getString("category_name"));
-                }
-            }
-        }
-        return product;
-    }
-
-    /**
-     * Récupérer les produits par catégorie
-//     */
-    public List<Product> getProductsByCategory(int categoryId) throws SQLException {
-        List<Product> products = new ArrayList<>();
-        String query = "SELECT p.id, p.name, p.price, p.quantity, p.category_id, p.image_path, c.name as category_name " +
-                "FROM products p " +
-                "LEFT JOIN categories c ON p.category_id = c.id " +
-                "WHERE p.category_id = ? " +
-                "ORDER BY p.name";
-
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setInt(1, categoryId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    Product product = new Product();
-                    product.setId(rs.getInt("id"));
-                    product.setName(rs.getString("name"));
-                    product.setPrice(rs.getDouble("price"));
-                    product.setQuantity(rs.getInt("quantity"));
-                    product.setCategoryId(rs.getInt("category_id"));
-                    product.setImagePath(rs.getString("image_path"));
-                    product.setCategoryName(rs.getString("category_name"));
-                    products.add(product);
-                }
-            }
-        }
-        return products;
-    }
 
     /**
      * Ajouter un produit
@@ -147,49 +89,7 @@ public class ProductService {
         }
     }
 
-    /**
-     * Rechercher des produits par nom
-     */
-    public List<Product> searchProducts(String keyword) throws SQLException {
-        List<Product> products = new ArrayList<>();
-        String query = "SELECT p.id, p.name, p.price, p.quantity, p.category_id, p.image_path, c.name as category_name " +
-                "FROM products p " +
-                "LEFT JOIN categories c ON p.category_id = c.id " +
-                "WHERE p.name LIKE ? " +
-                "ORDER BY p.name";
 
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setString(1, "%" + keyword + "%");
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    Product product = new Product();
-                    product.setId(rs.getInt("id"));
-                    product.setName(rs.getString("name"));
-                    product.setPrice(rs.getDouble("price"));
-                    product.setQuantity(rs.getInt("quantity"));
-                    product.setCategoryId(rs.getInt("category_id"));
-                    product.setImagePath(rs.getString("image_path"));
-                    product.setCategoryName(rs.getString("category_name"));
-                    products.add(product);
-                }
-            }
-        }
-        return products;
-    }
 
-    /**
-     * Obtenir toutes les catégories
-     */
-    public List<String> getAllCategories() throws SQLException {
-        List<String> categories = new ArrayList<>();
-        String query = "SELECT DISTINCT name FROM categories ORDER BY name";
 
-        try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-            while (rs.next()) {
-                categories.add(rs.getString("name"));
-            }
-        }
-        return categories;
-    }
 }

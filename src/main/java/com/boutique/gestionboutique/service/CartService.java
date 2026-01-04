@@ -1,10 +1,8 @@
 package com.boutique.gestionboutique.service;
-import com.boutique.gestionboutique.controller.Product;
-import javafx.beans.Observable;
+import com.boutique.gestionboutique.model.Product;
 import javafx.collections.FXCollections;
 import com.boutique.gestionboutique.database.Database;
 import javafx.collections.ObservableList;
-import kotlin.contracts.ReturnsNotNull;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

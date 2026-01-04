@@ -18,4 +18,6 @@ module com.boutique.gestionboutique {
     exports com.boutique.gestionboutique;
     exports com.boutique.gestionboutique.controller;
     opens com.boutique.gestionboutique.controller to javafx.fxml;
+    exports com.boutique.gestionboutique.model;
+    opens com.boutique.gestionboutique.model to javafx.fxml;
 }

@@ -1,4 +1,4 @@
-package com.boutique.gestionboutique.controller;
+package com.boutique.gestionboutique.model;
 
 public class Product {
     // Attributs du produit
@@ -102,16 +102,5 @@ public class Product {
         this.categoryName = categoryName;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                ", categoryId=" + categoryId +
-                ", imagePath='" + imagePath + '\'' +
-                ", categoryName='" + categoryName + '\'' +
-                '}';
-    }
+
 }

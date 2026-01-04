@@ -1,10 +1,9 @@
 package com.boutique.gestionboutique.controller;
 
+import com.boutique.gestionboutique.model.Product;
 import com.boutique.gestionboutique.service.ProductService;
-import com.boutique.gestionboutique.controller.Product; // Importation nécessaire
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -19,13 +18,11 @@ import org.jetbrains.annotations.NotNull;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.concurrent.Flow;
 
-public class ProductsController implements Initializable {
+public class ProductsController {
 
     @FXML private TextField searchField;
-    @FXML private FlowPane productsGrid;
+    @FXML private FlowPane productsFlowPane;
     @FXML private Label statusLabel;
 
     private ProductService productService;
@@ -33,46 +30,19 @@ public class ProductsController implements Initializable {
 
     private static final String CSS_PATH = "/com/boutique/gestionboutique/stylesheets/";
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    @FXML
+    public void initialize() {
         productService = new ProductService();
-        loadStylesheet();
         loadProducts();
     }
 
-    private void loadStylesheet() {
-        try {
-            URL cssResource = getClass().getResource(CSS_PATH + "products.css");
-            if (cssResource != null) {
-                String css = cssResource.toExternalForm();
-                if (productsGrid.getScene() != null) {
-                    productsGrid.getScene().getStylesheets().add(css);
-                } else {
-                    productsGrid.sceneProperty().addListener((obs, oldScene, newScene) -> {
-                        if (newScene != null) {
-                            newScene.getStylesheets().add(css);
-                        }
-                    });
-                }
-            }
-        } catch (Exception e) {
-            System.err.println("Erreur chargement products.css: " + e.getMessage());
-        }
-    }
 
     private void displayProducts(List<Product> products) {
-        productsGrid.getChildren().clear();
-        int row = 0;
-        int col = 0;
+        productsFlowPane.getChildren().clear();
         if (products != null) {
             for (Product product : products) {
                 VBox card = createProductCard(product);
-                productsGrid.getChildren().add(card);
-                col++;
-                if (col == 4) {
-                    col = 0;
-                    row++;
-                }
+                productsFlowPane.getChildren().add(card);
             }
         }
     }
@@ -115,8 +85,13 @@ public class ProductsController implements Initializable {
 
         if (product.getImagePath() != null && !product.getImagePath().trim().isEmpty()) {
             try {
-                Image img = new Image(product.getImagePath(), true);
-                imageView.setImage(img);
+                Image img = new Image(product.getImagePath(),
+                        200,  // requestedWidth
+                        200,  // requestedHeight
+                        true, // preserveRatio
+                        true, // smooth
+                        true  // backgroundLoading
+                );                imageView.setImage(img);
             } catch (Exception e) {
                 System.err.println("Invalid image URL for: " + product.getName());
             }
@@ -368,11 +343,6 @@ public class ProductsController implements Initializable {
         return product;
     }
 
-    private Label createIcon(String emoji) {
-        Label icon = new Label(emoji);
-        icon.setStyle("-fx-font-size: 14;");
-        return icon;
-    }
 
     @FXML
     private void searchProducts() {

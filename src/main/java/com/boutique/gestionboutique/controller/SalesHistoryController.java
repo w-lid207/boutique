@@ -1,7 +1,7 @@
 package com.boutique.gestionboutique.controller;
 
 import com.boutique.gestionboutique.service.SaleService;
-import com.boutique.gestionboutique.controller.Sale;
+import com.boutique.gestionboutique.model.Sale;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.*;
 import javafx.fxml.FXML;

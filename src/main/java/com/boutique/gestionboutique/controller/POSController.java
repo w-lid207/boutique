@@ -1,5 +1,6 @@
 package com.boutique.gestionboutique.controller;
 
+import com.boutique.gestionboutique.model.Product;
 import com.boutique.gestionboutique.service.ProductService;
 import com.boutique.gestionboutique.service.CartService;
 import javafx.concurrent.Task;
@@ -16,40 +17,22 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.SVGPath;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import com.boutique.gestionboutique.service.ProductService;
-import com.boutique.gestionboutique.service.CartService;
-import javafx.concurrent.Task;
-import javafx.fxml.FXML;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
-import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 // ... SQL and Util imports ...
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URL;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
 
 // --- iText Imports for PDF ---
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -63,10 +46,6 @@ import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.kernel.colors.ColorConstants;
 import javafx.stage.StageStyle;
-
-import static javafx.scene.layout.Priority.ALWAYS;
-
-import static javafx.scene.layout.Priority.ALWAYS;
 
 public class POSController implements Initializable {
     @FXML
@@ -151,7 +130,13 @@ public class POSController implements Initializable {
 
         if (product.getImagePath() != null && !product.getImagePath().trim().isEmpty()) {
             try {
-                Image image = new Image(product.getImagePath(), true);
+                Image image = new Image(product.getImagePath(),
+                        200,  // requestedWidth
+                        200,  // requestedHeight
+                        true, // preserveRatio
+                        true, // smooth
+                        true  // backgroundLoading
+                );
                 imageView.setImage(image);
             } catch (Exception e) {
                 System.err.println("Skipping invalid image path: " + product.getImagePath());
@@ -349,10 +334,6 @@ public class POSController implements Initializable {
         refreshCartDisplay();
     }
 
-    private void deleteItem(Product product){
-        cartManager.getCartItems().remove(product);
-        refreshCartDisplay();
-    }
 
     private void updateTotalPriceDisplay() {
         totalPrice.setText(String.format("%.2f DH", calculateTotalPrice()));

@@ -1,4 +1,5 @@
 package com.boutique.gestionboutique.controller;
+import com.boutique.gestionboutique.model.Sale;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
@@ -11,7 +12,6 @@ import com.boutique.gestionboutique.service.AnalyticService;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,7 +26,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
@@ -71,29 +70,17 @@ public class DashBoardController implements Initializable {
 
     // This method is public so NavigationController can call it
     public void refresh() {
-        Task<Void> task = new Task<>() {
-            @Override
-            protected Void call() {
-                StatService statService = new StatService();
+        StatService statService = new StatService();
 
-                // Fetch data (Background Thread)
-                String count = statService.getTodaySaleCount();
-                String revenue = statService.getTodayRevenue();
-                String lowStock = statService.getLowStockItems();
-                String totalProd = statService.getProductCount();
-
-                // Update UI (JavaFX Thread)
-                Platform.runLater(() -> {
-                    todaySaleCount.setText(count);
-                    revenueForToday.setText(revenue + " DH");
-                    lowStockItems.setText(lowStock);
-                    TotalProducts.setText(totalProd);
-                });
-
-                return null;
-            }
-        };
-        new Thread(task).start();
+        // Fetch data (Background Thread)
+        String count = statService.getTodaySaleCount();
+        String revenue = statService.getTodayRevenue();
+        String lowStock = statService.getLowStockItems();
+        String totalProd = statService.getProductCount();
+        todaySaleCount.setText(count);
+        revenueForToday.setText(revenue + " DH");
+        lowStockItems.setText(lowStock);
+        TotalProducts.setText(totalProd);
         monthlyRevenueChart();
         loadRecentSales();
     }
@@ -113,7 +100,6 @@ public class DashBoardController implements Initializable {
 
         BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
         XYChart.Series<String, Number> series = new XYChart.Series<>();
-        barChart.setLegendVisible(false); // Add this line!
 
         Map<String, Double> data = analyticService.monthlyData();
 
@@ -128,7 +114,6 @@ public class DashBoardController implements Initializable {
         // Disable the default animation
         barChart.setAnimated(false);
         barChart.setLegendVisible(false);
-        barChart.setVerticalGridLinesVisible(false);
         barChart.setBarGap(10);
         barChart.setCategoryGap(20);
         btnLast6Months.getStyleClass().remove("active");
@@ -199,10 +184,9 @@ public class DashBoardController implements Initializable {
     }
 
     private void setupTableColumns() {
-        // 1. Order ID: Add "#ORD-" prefix
         orderIdCol.setCellValueFactory(cellData -> {
             try {
-                return new SimpleStringProperty("#ORD-" + cellData.getValue().getId());
+                return new SimpleStringProperty("#" + cellData.getValue().getId());
             } catch (Exception e) {
                 System.err.println("Error in orderIdCol: " + e.getMessage());
                 return new SimpleStringProperty("ERROR");

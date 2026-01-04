@@ -1,4 +1,4 @@
-package com.boutique.gestionboutique.controller;
+package com.boutique.gestionboutique.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

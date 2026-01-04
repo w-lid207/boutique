@@ -118,12 +118,4 @@ public class NavigationController {
         }
     }
 
-    private void showPlaceholder(String fileName) {
-        // Afficher un message temporaire si le fichier n'existe pas
-        javafx.scene.control.Label label = new javafx.scene.control.Label(
-                "Page en développement\n" + fileName
-        );
-        label.setStyle("-fx-font-size: 24px; -fx-text-fill: #666; -fx-padding: 50px;");
-        borderPane.setCenter(label);
-    }
 }
