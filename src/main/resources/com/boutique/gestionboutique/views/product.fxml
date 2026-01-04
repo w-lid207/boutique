@@ -44,7 +44,7 @@
     <center>
       <BorderPane stylesheets="@../stylesheets/products.css">
       
-          <!-- Top Bar avec Recherche et Bouton Ajouter -->
+
           <top>
               <VBox styleClass="top-bar">
                   <HBox spacing="10">
@@ -59,7 +59,7 @@
                       <Button onAction="#addProduct" styleClass="btn-add" text="➕ Ajouter Produit" />
                   </HBox>
       
-                  <!-- Filtres par Catégorie -->
+
                   <VBox spacing="10" alignment="CENTER_LEFT">
                       <padding>
                           <Insets bottom="15" left="15" right="15" top="25" />
@@ -78,7 +78,7 @@
               </VBox>
           </top>
       
-          <!-- Grille de Produits -->
+
           <center>
               <ScrollPane fitToWidth="true" styleClass="scroll-pane">
                   <FlowPane fx:id="productsFlowPane" hgap="20.0" vgap="20.0" styleClass="products-grid">
@@ -89,7 +89,7 @@
               </ScrollPane>
           </center>
       
-          <!-- Barre de Statut -->
+
           <bottom>
               <HBox styleClass="status-bar">
                   <padding>
